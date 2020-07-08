@@ -1,0 +1,25 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
+export enum AuthType {
+  OIDC = "OIDC",
+  IMODELJS = "iModelJs",
+}
+
+export const AuthTypeKey = "ViewerSampleAuth";
+
+export const RedirectKey = "LoginRedirect";
+
+/**
+ * store the redirect path
+ * @param path
+ */
+export const setLoginRedirect = (path: string) => {
+  sessionStorage.setItem(RedirectKey, path);
+};
+
+export * from "./AuthorizationClient";
+export * from "./OidcClient";
+export * from "./AuthInstances";
