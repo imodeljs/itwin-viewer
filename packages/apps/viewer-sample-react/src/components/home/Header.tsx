@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ReactComponent as Home } from "@bentley/svg-icons/icons/home.svg";
+import { ReactComponent as Home } from "@bentley/icons-generic/icons/home.svg";
 import { Button, ButtonType } from "@bentley/ui-core";
 import React from "react";
 import { Link } from "react-router-dom";
