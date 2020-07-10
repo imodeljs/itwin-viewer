@@ -40,6 +40,7 @@ dependencies:
   '@testing-library/user-event': 7.2.1
   '@types/classnames': 2.2.10
   '@types/history': 4.7.6
+  '@types/jest': 26.0.4
   '@types/node': 14.0.20
   '@types/react': 16.9.41
   '@types/react-dom': 16.9.8
@@ -4334,12 +4335,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-P/W9yOX/3oPZSpaYOCQzGqgCQRXn0FFO/V8bWrCQs+wLmvVVxk6CRBXALEvNs9OHIatlnlFokfhuDo2ug01ciw==
-  /@types/jest/24.9.1:
-    dependencies:
-      jest-diff: 24.9.0
-    dev: false
-    resolution:
-      integrity: sha512-Fb38HkXSVA4L8fGKEZ6le5bB8r6MRWlOCZbVuWZcmOMSCd2wCYOwN1ibj8daIoV9naq7aaOZjrLCoCMptKU/4Q==
   /@types/jest/26.0.4:
     dependencies:
       jest-diff: 25.5.0
@@ -18075,7 +18070,7 @@ packages:
       '@testing-library/react': 10.4.5_react-dom@16.13.1+react@16.13.1
       '@testing-library/user-event': 7.2.1
       '@types/history': 4.7.6
-      '@types/jest': 24.9.1
+      '@types/jest': 26.0.4
       '@types/node': 14.0.20
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
@@ -18096,7 +18091,7 @@ packages:
       react-redux: '*'
       redux: '*'
     resolution:
-      integrity: sha512-+jjJZfpU+94CBvv+JkCR/maxfB1fp/0uRAgyIdJwk+3XYBDo9qTWMhyy2hM8eUV4bmD/5ra2L6nlZfjimCzdpg==
+      integrity: sha512-6mp23UdR9pLJ5nU4RrTyh36ZFthr4XMeLunjvkG9OzosQayjpgrJfQ9/sYxOIP7Yudj2GbcyPYzPbMFgqbIbuQ==
       tarball: 'file:projects/viewer-sample-react.tgz'
     version: 0.0.0
 registry: ''
@@ -18142,6 +18137,7 @@ specifiers:
   '@testing-library/user-event': ^7.1.2
   '@types/classnames': ^2.2.10
   '@types/history': ^4.7.6
+  '@types/jest': ^26.0.4
   '@types/node': ^14.0.19
   '@types/react': ^16.9.0
   '@types/react-dom': ^16.9.0
