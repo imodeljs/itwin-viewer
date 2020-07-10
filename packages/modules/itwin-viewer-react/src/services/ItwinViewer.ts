@@ -62,7 +62,7 @@ export class ItwinViewer {
     namedVersionId?: string
   ) => {
     trackEvent("iTwinViewer.Viewer.Load");
-    // ensure iModelJs initialization completes
+    // ensure iModel.js initialization completes
     await Initializer.initialized;
     // render the viewer for the given iModel on the given element
     ReactDOM.render(

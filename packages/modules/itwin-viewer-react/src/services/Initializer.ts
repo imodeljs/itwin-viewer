@@ -19,7 +19,7 @@ import store from "../store";
 import { IModelBackendOptions } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
 
-// initialize required iModelJs services
+// initialize required iModel.js services
 class Initializer {
   private static _initialized: Promise<void>;
 
@@ -50,15 +50,15 @@ class Initializer {
     if (backendOptions?.hostedBackend) {
       if (!backendOptions.hostedBackend.hostType) {
         //TODO localize
-        throw new Error("Please provide a host type for the iModelJs backend");
+        throw new Error("Please provide a host type for the iModel.js backend");
       }
       if (!backendOptions.hostedBackend.title) {
         //TODO localize
-        throw new Error("Please provide the title for the iModelJs backend");
+        throw new Error("Please provide the title for the iModel.js backend");
       }
       if (!backendOptions.hostedBackend.version) {
         //TODO localize
-        throw new Error("Please provide a version for the iModelJs backend");
+        throw new Error("Please provide a version for the iModel.js backend");
       }
       const orchestratorUrl = await urlClient.discoverUrl(
         requestContext,
@@ -110,7 +110,7 @@ class Initializer {
     /* eslint-enable @typescript-eslint/camelcase */
   }
 
-  /** initialize required iModelJs services */
+  /** initialize required iModel.js services */
   public static async initialize(
     iModelAppOptions?: IModelAppOptions,
     appInsightsKey?: string,
@@ -168,7 +168,7 @@ class Initializer {
         await Initializer._initializeRpc(backendOptions);
 
         trackEvent("iTwinViewer.Viewer.Initialized");
-        console.log("iModelJs initialized");
+        console.log("iModel.js initialized");
 
         resolve();
       } catch (error) {

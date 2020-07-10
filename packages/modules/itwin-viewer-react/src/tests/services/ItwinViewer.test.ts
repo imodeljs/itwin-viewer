@@ -58,7 +58,7 @@ describe("iTwinViewer", () => {
     ); //TODO localize
   });
 
-  it("initializes iModelJs with the passed in oidc client", () => {
+  it("initializes iModel.js with the passed in oidc client", () => {
     new ItwinViewer({
       elementId: "viewerRoot",
       authOptions: {
@@ -111,7 +111,7 @@ describe("iTwinViewer", () => {
     );
   });
 
-  it("initializes iModelJs with the passed in backend configuration", () => {
+  it("initializes iModel.js with the passed in backend configuration", () => {
     const backendConfig: IModelBackendOptions = {
       hostedBackend: {
         title: IModelBackend.GeneralPurpose,

@@ -22,13 +22,13 @@ interface ModelProps {
 
 export const IModelViewer = ({ frontstage }: ModelProps) => {
   useEffect(() => {
-    // Need to call setActiveFrontstageDef in the useEffect as required by iModelJs at this time for proper widget initialization
+    // Need to call setActiveFrontstageDef in the useEffect as required by iModel.js at this time for proper widget initialization
     // First render will call this twice (on render and in useEffect), but it's necessary for now
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     FrontstageManager.setActiveFrontstageDef(frontstage.frontstageDef);
   }, [frontstage]);
 
-  // N.B. make checks to see if we really need to add the fronstage (initializes the fronstagedef) or set it active. When threads are created
+  // N.B. make checks to see if we really need to add the frontstage (initializes the frontstagedef) or set it active. When threads are created
   // this is called multiple times and we lose opened XSection/Profile views because the content layout resets (briefly until the thread
   // restores its snapshot).
   if (

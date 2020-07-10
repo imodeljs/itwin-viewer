@@ -5,7 +5,7 @@
 
 export enum AuthType {
   OIDC = "OIDC",
-  IMODELJS = "iModelJs",
+  IMODELJS = "iModeljs",
 }
 
 export const AuthTypeKey = "ViewerSampleAuth";

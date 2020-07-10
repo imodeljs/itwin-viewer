@@ -1,7 +1,7 @@
 {
   "name": "@bentley/itwin-viewer-react",
   "version": "1.0.0",
-  "description": "Configurable iModelJs viewer",
+  "description": "Configurable iModel.js viewer",
   "main": "lib/index.js",
   "module": "build/index.js",
   "types": "lib/index.d.ts",

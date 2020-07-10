@@ -6,7 +6,7 @@ import AuthorizationClient from "../../../services/auth/AuthorizationClient";
 import MockOidcClient from "../../mocks/MockOidcClient";
 
 describe("AuthorizationClient", () => {
-  it("initializes iModelJs client properties properly", () => {
+  it("initializes iModel.js client properties properly", () => {
     const oidcClient = new MockOidcClient();
     const authClient = new AuthorizationClient(oidcClient.getUserManager);
     expect(authClient.hasExpired).toEqual(true);
