@@ -2,9 +2,5 @@
   {
     "policyName": "independentModule",
     "definitionName": "individualVersion"
-  },
-  {
-    "policyName": "independentApp",
-    "definitionName": "individualVersion"
   }
 ]
