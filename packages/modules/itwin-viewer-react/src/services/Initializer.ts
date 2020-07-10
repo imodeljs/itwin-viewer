@@ -75,11 +75,11 @@ class Initializer {
     } else {
       const orchestratorUrl = await urlClient.discoverUrl(
         requestContext,
-        "iModelJsOrchestrator.SF",
+        "iModelJsOrchestrator.K8S",
         backendOptions?.buddiRegion
       );
       return {
-        info: { title: "navigator-backend", version: "v3.0" },
+        info: { title: "general-purpose-imodeljs-backend", version: "v2.0" },
         uriPrefix: orchestratorUrl,
       };
     }
