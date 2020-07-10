@@ -25,9 +25,9 @@ export const AuthClientHome = () => {
 
   const backend: IModelBackendOptions = {
     hostedBackend: {
-      title: IModelBackend.GeneralPurpose,
-      version: "v2.0",
-      hostType: IModelBackendHost.K8S,
+      title: IModelBackend.DesignReview,
+      version: "v3.0",
+      hostType: IModelBackendHost.ServiceFabric,
     },
   };
 
