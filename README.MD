@@ -12,4 +12,4 @@ The iTwin Viewer is a configurable iModel.js viewer. This monorepo contains the 
 
 ## Contributing
 
-For information on how to contribute to this project, please read [CONTRIBUTING](CONTRIBUTING.md).
+For information on how to contribute to this project, please read [CONTRIBUTING](CONTRIBUTING.MD).
