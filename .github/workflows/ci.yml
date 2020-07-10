@@ -36,5 +36,3 @@ jobs:
         node common/scripts/install-run-rush.js test --verbose
         echo 'Building...'
         node common/scripts/install-run-rush.js rebuild
-    - env:
-        CI: true
