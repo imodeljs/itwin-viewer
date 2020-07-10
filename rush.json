@@ -5,10 +5,6 @@
   "nodeSupportedVersionRange": ">=10.13.0 <13.0.0",
   "projectFolderMinDepth": 2,
   "projectFolderMaxDepth": 3,
-  "gitPolicy": {
-    "allowedEmailRegExps": ["[^@]+@users\\.noreply\\.github\\.com"],
-    "sampleEmail": "mrexample@users.noreply.github.com"
-  },
   "repository": {
     "url": "https://github.com/imodeljs/itwin-viewer"
   },
