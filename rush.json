@@ -1,8 +1,10 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.21.0",
-  "pnpmVersion": "2.15.1",
-  "nodeSupportedVersionRange": ">=10.13.0 <11.0.0",
+  "rushVersion": "5.28.0",
+  "pnpmVersion": "4.12.5",
+  "nodeSupportedVersionRange": ">=10.13.0 <13.0.0",
+  "projectFolderMinDepth": 2,
+  "projectFolderMaxDepth": 3,
   "gitPolicy": {
     "allowedEmailRegExps": ["[^@]+@users\\.noreply\\.github\\.com"],
     "sampleEmail": "mrexample@users.noreply.github.com"
@@ -14,17 +16,19 @@
     {
       "packageName": "@bentley/itwin-viewer-react",
       "projectFolder": "packages/modules/itwin-viewer-react",
-      "versionPolicyName": "independentModule"
+      "versionPolicyName": "independentModule",
+      "shouldPublish": true
     },
     {
       "packageName": "@bentley/itwin-error-handling",
       "projectFolder": "packages/modules/itwin-error-handling",
-      "versionPolicyName": "independentModule"
+      "versionPolicyName": "independentModule",
+      "shouldPublish": true
     },
     {
       "packageName": "@bentley/viewer-sample-react",
       "projectFolder": "packages/apps/viewer-sample-react",
-      "versionPolicyName": "independentApp"
+      "shouldPublish": false
     }
   ]
 }

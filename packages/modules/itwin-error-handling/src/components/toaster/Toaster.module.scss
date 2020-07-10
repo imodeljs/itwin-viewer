@@ -1,0 +1,42 @@
+// Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+@import "../../index.scss";
+
+:global .bwc-toast-wrapper .bwc-toast-all {
+  .bwc-toast-success,
+  .bwc-toast-error,
+  .bwc-toast-informational {
+    background-color: $buic-background-1;
+
+    .message {
+      color: $buic-foreground-body;
+    }
+  }
+
+  .close-icon-container .close-icon.close-icon {
+    fill: $buic-text-color-muted;
+  }
+
+  .bwc-toast-error {
+    border: 1px solid $buic-foreground-alert;
+
+    .status-icon-background.status-icon-background {
+      background-color: #cc0000; // expected to be hardcoded: https://app.zeplin.io/project/5db889562b4d7d2c21822f6b/screen/5dbb13c2317d2b5743d724b3
+    }
+  }
+
+  .bwc-toast-success {
+    border: 1px solid $buic-foreground-success;
+
+    .status-icon-background.status-icon-background {
+      background-color: #56aa1c; // expected to be hardcoded: https://app.zeplin.io/project/5db889562b4d7d2c21822f6b/screen/5dbb13c295afcf22ed8b608c
+    }
+  }
+
+  .bwc-toast-informational {
+    border: 1px solid $buic-foreground-primary;
+
+    .status-icon-background.status-icon-background {
+      background-color: $buic-accessory-primary;
+    }
+  }
+}
