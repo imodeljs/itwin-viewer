@@ -5,7 +5,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { IModelApp } from "@bentley/imodeljs-frontend";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
 import { Viewer } from "../../";
@@ -75,8 +75,7 @@ describe("Viewer", () => {
       />
     );
 
-    // TODO Broken
-    const viewerContainer = getByTestId("loader-wrapper");
+    const viewerContainer = await waitFor(() => getByTestId("loader-wrapper"));
 
     expect(viewerContainer).toBeInTheDocument();
   });
@@ -106,8 +105,7 @@ describe("Viewer", () => {
       />
     );
 
-    // TODO Broken
-    // await waitFor(() => getByTestId("loader-wrapper"));
+    await waitFor(() => getByTestId("loader-wrapper"));
 
     expect(
       IModelApp.extensionAdmin.addExtensionLoaderFront
@@ -134,8 +132,7 @@ describe("Viewer", () => {
       />
     );
 
-    // TODO Broken
-    const viewerContainer = getByTestId("loader-wrapper");
+    const viewerContainer = await waitFor(() => getByTestId("loader-wrapper"));
 
     expect(viewerContainer).toBeInTheDocument();
 
