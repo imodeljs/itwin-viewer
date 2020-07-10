@@ -47,12 +47,13 @@ dependencies:
   '@types/react-router': 5.1.8
   '@types/react-router-dom': 5.1.5
   '@types/react-transition-group': 4.4.0
-  apollo-client: 2.6.10
+  apollo-client: 2.6.10_graphql@14.7.0
   babel-jest: 25.5.1
   babel-plugin-import-remove-resource-query: 1.0.0
   classnames: 2.2.6
   concurrently: 5.2.0
   copyfiles: 2.3.0
+  graphql: 14.7.0
   history: 4.10.1
   i18next: 19.5.5
   i18next-browser-languagedetector: 4.3.1
@@ -4915,21 +4916,23 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-mM8522psRCqzV+6LhomX5wgp25YVibjh8Wj23I5RPkPppSVSjyKD2A2mBJmWGa+KN7f2D6LNh9jkBCeyLktzjg==
-  /apollo-cache/1.3.5:
+  /apollo-cache/1.3.5_graphql@14.7.0:
     dependencies:
-      apollo-utilities: 1.3.4
+      apollo-utilities: 1.3.4_graphql@14.7.0
+      graphql: 14.7.0
       tslib: 1.13.0
     dev: false
     peerDependencies:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-1XoDy8kJnyWY/i/+gLTEbYLnoiVtS8y7ikBr/IfmML4Qb+CM7dEEbIUOjnY716WqmZ/UpXIxTfJsY7rMcqiCXA==
-  /apollo-client/2.6.10:
+  /apollo-client/2.6.10_graphql@14.7.0:
     dependencies:
       '@types/zen-observable': 0.8.0
-      apollo-cache: 1.3.5
-      apollo-link: 1.2.14
-      apollo-utilities: 1.3.4
+      apollo-cache: 1.3.5_graphql@14.7.0
+      apollo-link: 1.2.14_graphql@14.7.0
+      apollo-utilities: 1.3.4_graphql@14.7.0
+      graphql: 14.7.0
       symbol-observable: 1.2.0
       ts-invariant: 0.4.4
       tslib: 1.13.0
@@ -4939,9 +4942,10 @@ packages:
       graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-jiPlMTN6/5CjZpJOkGeUV0mb4zxx33uXWdj/xQCfAMkuNAC3HN7CvYDyMHHEzmcQ5GV12LszWoQ/VlxET24CtA==
-  /apollo-link/1.2.14:
+  /apollo-link/1.2.14_graphql@14.7.0:
     dependencies:
-      apollo-utilities: 1.3.4
+      apollo-utilities: 1.3.4_graphql@14.7.0
+      graphql: 14.7.0
       ts-invariant: 0.4.4
       tslib: 1.13.0
       zen-observable-ts: 0.8.21
@@ -4950,10 +4954,11 @@ packages:
       graphql: ^0.11.3 || ^0.12.3 || ^0.13.0 || ^14.0.0 || ^15.0.0
     resolution:
       integrity: sha512-p67CMEFP7kOG1JZ0ZkYZwRDa369w5PIjtMjvrQd/HnIV8FRsHRqLqK+oAZQnFa1DDdZtOtHTi+aMIW6EatC2jg==
-  /apollo-utilities/1.3.4:
+  /apollo-utilities/1.3.4_graphql@14.7.0:
     dependencies:
       '@wry/equality': 0.1.11
       fast-json-stable-stringify: 2.1.0
+      graphql: 14.7.0
       ts-invariant: 0.4.4
       tslib: 1.13.0
     dev: false
@@ -8820,6 +8825,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+  /graphql/14.7.0:
+    dependencies:
+      iterall: 1.3.0
+    dev: false
+    engines:
+      node: '>= 6.x'
+    resolution:
+      integrity: sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==
   /growly/1.3.0:
     dev: false
     resolution:
@@ -10079,6 +10092,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-9tZvz7AiR3PEDNGiV9vIouQ/EAcqMXFmkcA1CDFTwOB98OZVDL0PH9glHotf5Ugp6GCOTypfzGWI/OqjWNCRUw==
+  /iterall/1.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
   /jest-changed-files/24.9.0:
     dependencies:
       '@jest/types': 24.9.0
@@ -17936,12 +17953,13 @@ packages:
       '@types/react': 16.9.41
       '@types/react-dom': 16.9.8
       '@types/react-transition-group': 4.4.0
-      apollo-client: 2.6.10
+      apollo-client: 2.6.10_graphql@14.7.0
       babel-jest: 25.5.1
       babel-plugin-import-remove-resource-query: 1.0.0
       classnames: 2.2.6
       concurrently: 5.2.0
       copyfiles: 2.3.0
+      graphql: 14.7.0
       i18next: 19.5.5
       i18next-browser-languagedetector: 4.3.1
       identity-obj-proxy: 3.0.0
@@ -17966,7 +17984,7 @@ packages:
       '@bentley/imodeljs-i18n': '*'
       '@bentley/ui-abstract': '*'
     resolution:
-      integrity: sha512-dYg+hflI6vQQ4un/UQybzeMFNiy5wSc9+JCwhSXLFlcMCU20ijEHBLYRtZ/8yEzvoC3ZOYamWcgIvBiC65wZSQ==
+      integrity: sha512-Hhamk0crsVvtat5kDtj6XrvW84W5qSquUWzdd8fDavsEQkBlSa2rZS5Da6L9CTnFsBh1Qcqm77hF/ZISnch0XA==
       tarball: 'file:projects/itwin-error-handling.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-react.tgz':
@@ -18137,6 +18155,7 @@ specifiers:
   classnames: ^2.2.6
   concurrently: ^5.2.0
   copyfiles: ^2.1.0
+  graphql: ^14.4.2
   history: ^4.10.1
   i18next: ^19.3.2
   i18next-browser-languagedetector: ^4.0.2
