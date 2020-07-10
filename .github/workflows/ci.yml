@@ -28,10 +28,12 @@ jobs:
         set -e
         echo 'Installing...'
         node common/scripts/install-run-rush.js install
-        echo 'Installing...'
+        
+        echo 'Verifying...'
         node common/scripts/install-run-rush.js check
         
-        echo 'Testing...'
-        node common/scripts/install-run-rush.js test --verbose
         echo 'Building...'
         node common/scripts/install-run-rush.js rebuild
+             
+        echo 'Testing...'
+        node common/scripts/install-run-rush.js test --verbose
