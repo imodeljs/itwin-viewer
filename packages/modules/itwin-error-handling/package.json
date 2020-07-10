@@ -5,10 +5,12 @@
   "main": "lib/index.js",
   "module": "build/index.js",
   "types": "lib/index.d.ts",
-  "repository": "https://bentleycs.visualstudio.com/beconnect/_git/TCDEAppService/packages/modules/itwin-error-handling",
-  "author": "Bentley Systems, Inc.",
+  "repository": "https://github.com/imodeljs/itwin-viewer/tree/master/packages/modules/itwin-error-handling",
+  "author": {
+    "name": "Bentley Systems, Inc.",
+    "url": "http://www.bentley.com"
+  },
   "license": "MIT",
-  "private": false,
   "scripts": {
     "start": "concurrently npm:watch-build npm:watch-scss npm:watch-images",
     "watch-build": "concurrently \"npm:dev-build -- -w\" \"npm:prod-build -- -w\"",

@@ -23,6 +23,7 @@ node_modules/
 # Rush temporary files
 common/temp/
 **/.rush/temp/
+/**/.rush
 
 # Error reports
 **/report.**.json
