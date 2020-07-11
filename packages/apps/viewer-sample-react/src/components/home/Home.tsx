@@ -35,7 +35,7 @@ export const Home = ({ history }: RouteComponentProps) => {
             onClick={() => history.push("/authclient")}
             buttonType={ButtonType.Blue}
           >
-            {"Use iModelJs Auth Client"}
+            {"Use iModel.js Auth Client"}
           </Button>
         </div>
       </div>

@@ -45,7 +45,7 @@ export interface CustomBackendConfig {
  * Authorization options. Must provide one.
  */
 export interface AuthorizationOptions {
-  /** provide an existing iModelJs authorization client */
+  /** provide an existing iModel.js authorization client */
   oidcClient?: FrontendAuthorizationClient;
   /** reference to a function that returns a pre-configured oidc UserManager */
   getUserManagerFunction?: () => UserManager;

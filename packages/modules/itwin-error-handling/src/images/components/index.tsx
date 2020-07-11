@@ -1,4 +1,7 @@
-// Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
 export { default as Svg4019ZuiWeb } from "./4019ZuiWeb";
 export { default as Svg4039ZuiWeb } from "./4039ZuiWeb";
 export { default as Svg404Web } from "./404Web";

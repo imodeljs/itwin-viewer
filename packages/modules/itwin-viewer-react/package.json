@@ -1,14 +1,16 @@
 {
   "name": "@bentley/itwin-viewer-react",
-  "description": "Configurable iModelJs viewer",
-  "repository": "https://bentleycs.visualstudio.com/beconnect/_git/TCDEAppService/packages/modules/itwin-viewer-react",
-  "private": false,
   "version": "1.0.0",
+  "description": "Configurable iModel.js viewer",
   "main": "lib/index.js",
   "module": "build/index.js",
   "types": "lib/index.d.ts",
-  "author": "Bentley Systems, Inc.",
+  "author": {
+    "name": "Bentley Systems, Inc.",
+    "url": "http://www.bentley.com"
+  },
   "license": "MIT",
+  "repository": "https://github.com/imodeljs/itwin-viewer/tree/master/packages/modules/itwin-viewer-react",
   "scripts": {
     "start": "concurrently npm:watch-build npm:watch-scss npm:watch-images",
     "watch-build": "concurrently \"npm:dev-build -- -w\" \"npm:prod-build -- -w\"",
@@ -118,10 +120,6 @@
     "@bentley/webgl-compatibility": "^2.2.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
-  },
-  "publishConfig": {
-    "registry": "https://pkgs.dev.azure.com/bentleycs/_packaging/Packages/npm/registry/",
-    "access": "public"
   },
   "jest": {
     "roots": [
