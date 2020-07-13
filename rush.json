@@ -16,8 +16,8 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@bentley/itwin-error-handling",
-      "projectFolder": "packages/modules/itwin-error-handling",
+      "packageName": "@bentley/itwin-error-handling-react",
+      "projectFolder": "packages/modules/itwin-error-handling-react",
       "versionPolicyName": "independentModule",
       "shouldPublish": true
     },

@@ -9,7 +9,7 @@ import { Logger } from "@bentley/bentleyjs-core";
 import { GetMetaDataFunction } from "@bentley/imodeljs-common";
 import { IModelApp, IModelConnection } from "@bentley/imodeljs-frontend";
 import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
-import { Toaster } from "@bentley/itwin-error-handling";
+import { Toaster } from "@bentley/itwin-error-handling-react";
 import { Field } from "@bentley/presentation-common";
 import {
   PresentationPropertyDataProvider,
