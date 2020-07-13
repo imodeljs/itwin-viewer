@@ -104,7 +104,6 @@
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.7",
     "eslint-plugin-simple-import-sort": "^5.0.3",
-    "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "stylelint": "^13.6.1",
@@ -164,24 +163,19 @@
       "<rootDir>/src/**"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged --verbose"
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "node ../../../common/scripts/copyright-linter.js --",
       "node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js --config ../../../common/config/.eslintrc.ts.autofix.json --ignore-path ../../../common/config/.eslintignore --fix",
-      "prettier --write --config ../../../common/config/.prettierrc --ignore-path ../../../common/config/.prettierignore",
+      "prettier --write --config ../../../.prettierrc --ignore-path ../../../.prettierignore",
       "node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js --config ../../../common/config/.eslintrc.ts.json --ignore-path ../../../common/config/.eslintignore --color"
     ],
     "*.{md,json}": [
-      "prettier --write --config ../../../common/config/.prettierrc --ignore-path ../../../common/config/.prettierignore"
+      "prettier --write --config ../../../.prettierrc --ignore-path ../../../.prettierignore"
     ],
     "*.{scss,css}": [
       "node ../../../common/config/scripts/copyright-linter.js --",
-      "stylelint --fix --config ../../../common/config/.stylelintrc"
+      "stylelint --fix --config ../../../.stylelintrc"
     ]
   }
 }

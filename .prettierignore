@@ -2,3 +2,4 @@ node_modules/*
 **/CHANGELOG.md
 **/CHANGELOG.json
 **/imjs_extensions/**
+common/**
