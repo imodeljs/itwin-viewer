@@ -129,6 +129,7 @@ describe("Viewer", () => {
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         backend={backendConfig}
+        productId={"0000"}
       />
     );
 
@@ -138,8 +139,7 @@ describe("Viewer", () => {
 
     expect(Initializer.initialize).toHaveBeenCalledWith(
       { authorizationClient: {} },
-      undefined,
-      backendConfig
+      { appInsightsKey: undefined, backend: backendConfig, productId: "0000" }
     );
   });
 });

@@ -45,11 +45,14 @@ export class ItwinViewer {
     }
     this.elementId = options.elementId;
     this.initialized = false;
-    const authClient = getAuthClient(options.authOptions);
+    const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
       { authorizationClient: authClient },
-      options.appInsightsKey,
-      options.backendOptions
+      {
+        appInsightsKey: options.appInsightsKey,
+        backend: options.backend,
+        productId: options.productId,
+      }
     ).catch((error) => {
       throw error;
     });

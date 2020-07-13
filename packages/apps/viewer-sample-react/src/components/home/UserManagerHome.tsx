@@ -20,6 +20,11 @@ export const UserManagerHome = () => {
       url: "http://localhost:3000",
     },
   ];
+  /**
+   * This value is for the iTwin Viewer and will be the default if the productId prop is not provided.
+   * This is merely an example on how to use the prop to override with your application's GPRID.
+   */
+  const productId = "3098";
 
   const toggleLogin = async () => {
     if (!loggedIn) {
@@ -42,6 +47,7 @@ export const UserManagerHome = () => {
           projectId={process.env.REACT_APP_OIDC_CLIENT_PROJECT_ID as string}
           iModelId={process.env.REACT_APP_OIDC_CLIENT_IMODEL_ID as string}
           extensions={extensions}
+          productId={productId}
         />
       )}
     </div>

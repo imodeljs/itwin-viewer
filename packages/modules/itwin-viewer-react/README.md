@@ -79,7 +79,7 @@ const iModelId = "myIModelId";
 
 const viewer = new iTwinViewer({
   elementId: "viewerRoot",
-  authOptions: {
+  authConfig: {
     getUserManagerFunction: getUserManager,
   },
 });

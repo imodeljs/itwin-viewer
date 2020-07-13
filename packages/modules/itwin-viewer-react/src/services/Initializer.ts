@@ -16,7 +16,7 @@ import { AppNotificationManager, UiFramework } from "@bentley/ui-framework";
 import { AppUi } from "../components/app-ui/AppUi";
 import { initRpc } from "../config/rpc";
 import store from "../store";
-import { IModelBackendOptions } from "../types";
+import { IModelBackendOptions, iTwinViewerInitializerParams } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
 
 // initialize required iModel.js services
@@ -113,8 +113,7 @@ class Initializer {
   /** initialize required iModel.js services */
   public static async initialize(
     iModelAppOptions?: IModelAppOptions,
-    appInsightsKey?: string,
-    backendOptions?: IModelBackendOptions
+    viewerOptions?: iTwinViewerInitializerParams
   ): Promise<void> {
     // IModelApp is already initialized.
     // Potentially a second viewer
@@ -130,7 +129,8 @@ class Initializer {
         iModelAppOptions.notifications = new AppNotificationManager();
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
-        iModelAppOptions.applicationId = "3098";
+        iModelAppOptions.applicationId =
+          (viewerOptions && viewerOptions.productId) || "3098";
 
         // if ITWIN_VIEWER_HOME is defined, the viewer is likely being served from another origin
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
@@ -141,8 +141,8 @@ class Initializer {
           });
         }
 
-        this.setupEnv(backendOptions);
-        ai.initialize(appInsightsKey);
+        this.setupEnv(viewerOptions && viewerOptions.backend);
+        ai.initialize(viewerOptions && viewerOptions.appInsightsKey);
         await IModelApp.startup(iModelAppOptions);
 
         // initialize localization for the app
@@ -165,7 +165,9 @@ class Initializer {
         AppUi.initialize();
 
         // initialize RPC communication
-        await Initializer._initializeRpc(backendOptions);
+        await Initializer._initializeRpc(
+          viewerOptions && viewerOptions.backend
+        );
 
         trackEvent("iTwinViewer.Viewer.Initialized");
         console.log("iModel.js initialized");
