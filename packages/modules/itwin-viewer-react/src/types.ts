@@ -69,12 +69,12 @@ export interface ItwinViewerParams extends ItwinViewerCommonParams {
   elementId: string;
 }
 
-export interface ItwinViewerCommonParams extends iTwinViewerInitializerParams {
+export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   /** authorization configuration */
   authConfig: AuthorizationOptions;
 }
 
-export interface iTwinViewerInitializerParams {
+export interface ItwinViewerInitializerParams {
   /** optional Azure Application Insights key for telemetry */
   appInsightsKey?: string;
   /** options to override the default backend (design-review) */

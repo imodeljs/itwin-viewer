@@ -16,7 +16,7 @@ import { AppNotificationManager, UiFramework } from "@bentley/ui-framework";
 import { AppUi } from "../components/app-ui/AppUi";
 import { initRpc } from "../config/rpc";
 import store from "../store";
-import { IModelBackendOptions, iTwinViewerInitializerParams } from "../types";
+import { IModelBackendOptions, ItwinViewerInitializerParams } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
 
 // initialize required iModel.js services
@@ -113,7 +113,7 @@ class Initializer {
   /** initialize required iModel.js services */
   public static async initialize(
     iModelAppOptions?: IModelAppOptions,
-    viewerOptions?: iTwinViewerInitializerParams
+    viewerOptions?: ItwinViewerInitializerParams
   ): Promise<void> {
     // IModelApp is already initialized.
     // Potentially a second viewer
