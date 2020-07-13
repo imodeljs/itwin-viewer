@@ -112,7 +112,10 @@ export const Viewer = ({
         if (!extensionInstance.loaded) {
           IModelApp.extensionAdmin
             .loadExtension(extensionInstance.name, extensionInstance.version)
-            .then(() => (extensionInstance.loaded = true));
+            .then(() => (extensionInstance.loaded = true))
+            .catch((error) => {
+              throw error;
+            });
         }
       });
       setExtensionsLoaded(true);
