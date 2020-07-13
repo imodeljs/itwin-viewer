@@ -8,7 +8,7 @@ import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
-import { ErrorBoundary } from "@bentley/itwin-error-handling";
+import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React from "react";
 import ReactDOM from "react-dom";
 

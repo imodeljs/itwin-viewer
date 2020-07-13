@@ -6,7 +6,7 @@ import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
 import { IModelConnection, StandardViewId } from "@bentley/imodeljs-frontend";
-import { useErrorManager } from "@bentley/itwin-error-handling";
+import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import { SyncUiEventDispatcher, UiFramework } from "@bentley/ui-framework";
 import { withAITracking } from "@microsoft/applicationinsights-react-js";
 import React, { useEffect, useState } from "react";

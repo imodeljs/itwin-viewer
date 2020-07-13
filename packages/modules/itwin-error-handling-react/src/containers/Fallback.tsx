@@ -1,7 +1,7 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { i18n } from "i18next";
 import React, { useEffect } from "react";
@@ -54,7 +54,7 @@ export const Fallback: <T>(props: FallbackProps<T>) => JSX.Element = ({
   useEffect(() => {
     if ((trackEvent && !eventTitle) || (!trackEvent && eventTitle)) {
       console.warn(
-        "itwin-error-handling Fallback: Both trackEvent and eventTitle must be provided for tracking to occur, remove both if no tracking is wanted."
+        "itwin-error-handling-react Fallback: Both trackEvent and eventTitle must be provided for tracking to occur, remove both if no tracking is wanted."
       );
     }
   }, [trackEvent, eventTitle]);

@@ -30,7 +30,7 @@ dependencies:
   '@bentley/webgl-compatibility': 2.2.1
   '@microsoft/applicationinsights-react-js': 2.3.1
   '@microsoft/applicationinsights-web': 2.3.1
-  '@rush-temp/itwin-error-handling': 'file:projects/itwin-error-handling.tgz_9a8fe3a268b890ea3b7873a57b637653'
+  '@rush-temp/itwin-error-handling-react': 'file:projects/itwin-error-handling-react.tgz_9a8fe3a268b890ea3b7873a57b637653'
   '@rush-temp/itwin-viewer-react': 'file:projects/itwin-viewer-react.tgz'
   '@rush-temp/viewer-sample-react': 'file:projects/viewer-sample-react.tgz_84ba67315851bac77efe9999822dcd20'
   '@svgr/cli': 5.4.0
@@ -17933,7 +17933,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==
-  'file:projects/itwin-error-handling.tgz_9a8fe3a268b890ea3b7873a57b637653':
+  'file:projects/itwin-error-handling-react.tgz_9a8fe3a268b890ea3b7873a57b637653':
     dependencies:
       '@babel/plugin-proposal-class-properties': 7.10.4
       '@babel/plugin-transform-runtime': 7.10.4
@@ -17971,16 +17971,16 @@ packages:
       ts-jest: 26.1.1_jest@26.1.0+typescript@3.9.6
       typescript: 3.9.6
     dev: false
-    id: 'file:projects/itwin-error-handling.tgz'
-    name: '@rush-temp/itwin-error-handling'
+    id: 'file:projects/itwin-error-handling-react.tgz'
+    name: '@rush-temp/itwin-error-handling-react'
     peerDependencies:
       '@bentley/bentleyjs-core': '*'
       '@bentley/geometry-core': '*'
       '@bentley/imodeljs-i18n': '*'
       '@bentley/ui-abstract': '*'
     resolution:
-      integrity: sha512-Hhamk0crsVvtat5kDtj6XrvW84W5qSquUWzdd8fDavsEQkBlSa2rZS5Da6L9CTnFsBh1Qcqm77hF/ZISnch0XA==
-      tarball: 'file:projects/itwin-error-handling.tgz'
+      integrity: sha512-T7L5rJ7+HyZ+5XpXn177+X4H2ZRPowPCyNqlTchJNYZ6UxK/veRg3E+PNrI9rrSHTjmVcr/rfysBNeMXIr3YOw==
+      tarball: 'file:projects/itwin-error-handling-react.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-react.tgz':
     dependencies:
@@ -18037,7 +18037,7 @@ packages:
     dev: false
     name: '@rush-temp/itwin-viewer-react'
     resolution:
-      integrity: sha512-BusU6UM65civEnvhWaMd4MmDbmthFMzrhELL0Y6enqUtC4m7aBtZedhR2qeK2IgAmcGmBl4TGdF8kUxivu8Yxw==
+      integrity: sha512-MfAZHStcBGcKLAtlwurpwLCk9rEeHhO2qY4JRVkUO++woHMvnmK/o770+mQnblckrQZd4bTpfajiEqvwLtCcFA==
       tarball: 'file:projects/itwin-viewer-react.tgz'
     version: 0.0.0
   'file:projects/viewer-sample-react.tgz_84ba67315851bac77efe9999822dcd20':
@@ -18127,7 +18127,7 @@ specifiers:
   '@bentley/webgl-compatibility': ^2.2.1
   '@microsoft/applicationinsights-react-js': 2.3.1
   '@microsoft/applicationinsights-web': 2.3.1
-  '@rush-temp/itwin-error-handling': 'file:./projects/itwin-error-handling.tgz'
+  '@rush-temp/itwin-error-handling-react': 'file:./projects/itwin-error-handling-react.tgz'
   '@rush-temp/itwin-viewer-react': 'file:./projects/itwin-viewer-react.tgz'
   '@rush-temp/viewer-sample-react': 'file:./projects/viewer-sample-react.tgz'
   '@svgr/cli': ^5.3.1
