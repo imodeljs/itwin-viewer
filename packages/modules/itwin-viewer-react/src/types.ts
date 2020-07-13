@@ -64,13 +64,21 @@ export interface IModelBackendOptions {
 /**
  * iTwin Viewer parameter list
  */
-export interface ItwinViewerParams {
+export interface ItwinViewerParams extends ItwinViewerCommonParams {
   /** id of the html element where the viewer should be rendered */
   elementId: string;
+}
+
+export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   /** authorization configuration */
-  authOptions: AuthorizationOptions;
+  authConfig: AuthorizationOptions;
+}
+
+export interface ItwinViewerInitializerParams {
   /** optional Azure Application Insights key for telemetry */
   appInsightsKey?: string;
   /** options to override the default backend (design-review) */
-  backendOptions?: IModelBackendOptions;
+  backend?: IModelBackendOptions;
+  /** GPRID for the consuming application. Will default to the iTwin Viewer GPRID */
+  productId?: string;
 }

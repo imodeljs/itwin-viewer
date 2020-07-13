@@ -49,7 +49,7 @@ describe("iTwinViewer", () => {
   it("throws and error when an either an oidc client or user manager is not provided", () => {
     let errorMessage;
     try {
-      new ItwinViewer({ elementId: "viewerRoot", authOptions: {} });
+      new ItwinViewer({ elementId: "viewerRoot", authConfig: {} });
     } catch (error) {
       errorMessage = error.message;
     }
@@ -61,7 +61,7 @@ describe("iTwinViewer", () => {
   it("initializes iModel.js with the passed in oidc client", () => {
     new ItwinViewer({
       elementId: "viewerRoot",
-      authOptions: {
+      authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
     });
@@ -69,8 +69,7 @@ describe("iTwinViewer", () => {
       {
         authorizationClient: MockAuthorizationClient.oidcClient,
       },
-      undefined,
-      undefined
+      { appInsightsKey: undefined, backend: undefined, productId: undefined }
     );
   });
 
@@ -78,7 +77,7 @@ describe("iTwinViewer", () => {
     const oidcClient = new MockOidcClient();
     new ItwinViewer({
       elementId: "viewerRoot",
-      authOptions: {
+      authConfig: {
         getUserManagerFunction: oidcClient.getUserManager,
       },
     });
@@ -95,7 +94,7 @@ describe("iTwinViewer", () => {
 
     const viewer = new ItwinViewer({
       elementId,
-      authOptions: {
+      authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
     });
@@ -122,18 +121,21 @@ describe("iTwinViewer", () => {
 
     new ItwinViewer({
       elementId: "viewerRoot",
-      authOptions: {
+      authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
-      backendOptions: backendConfig,
+      backend: backendConfig,
     });
 
     expect(Initializer.initialize).toHaveBeenCalledWith(
       {
         authorizationClient: MockAuthorizationClient.oidcClient,
       },
-      undefined,
-      backendConfig
+      {
+        appInsightsKey: undefined,
+        backend: backendConfig,
+        productId: undefined,
+      }
     );
   });
 });

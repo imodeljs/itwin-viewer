@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { AuthorizationOptions } from "../";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
-import { IModelBackendOptions } from "../types";
+import { IModelBackendOptions, ItwinViewerCommonParams } from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
 export interface ViewerExtension {
@@ -20,13 +20,10 @@ export interface ViewerExtension {
   version?: string;
 }
 
-export interface ViewerProps {
-  authConfig: AuthorizationOptions;
+export interface ViewerProps extends ItwinViewerCommonParams {
   projectId: string;
   iModelId: string;
   extensions?: ViewerExtension[];
-  appInsightsKey?: string;
-  backend?: IModelBackendOptions;
 }
 
 interface ExtensionUrl {
@@ -47,6 +44,7 @@ export const Viewer = ({
   projectId,
   appInsightsKey,
   backend,
+  productId,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -129,8 +127,7 @@ export const Viewer = ({
       const authClient = getAuthClient(authConfig);
       Initializer.initialize(
         { authorizationClient: authClient },
-        appInsightsKey,
-        backend
+        { appInsightsKey, backend, productId }
       )
         .then(() => {
           Initializer.initialized
