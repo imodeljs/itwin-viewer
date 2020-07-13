@@ -32,6 +32,7 @@ dependencies:
   '@microsoft/applicationinsights-web': 2.3.1
   '@rush-temp/itwin-error-handling-react': 'file:projects/itwin-error-handling-react.tgz_9a8fe3a268b890ea3b7873a57b637653'
   '@rush-temp/itwin-viewer-react': 'file:projects/itwin-viewer-react.tgz'
+  '@rush-temp/itwin-viewer-scripts': 'file:projects/itwin-viewer-scripts.tgz_typescript@3.9.6'
   '@rush-temp/viewer-sample-react': 'file:projects/viewer-sample-react.tgz_84ba67315851bac77efe9999822dcd20'
   '@svgr/cli': 5.4.0
   '@svgr/webpack': 4.3.3
@@ -6875,10 +6876,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha1-NPw2cs0kOT6LtH5wyqApOBH08sU=
-  /compare-versions/3.6.0:
-    dev: false
-    resolution:
-      integrity: sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==
   /component-emitter/1.3.0:
     dev: false
     resolution:
@@ -9300,14 +9297,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-PpOwAdQ/YlXQ2vj8a3h8IipDuYRi3wceVQQGYWxNINccq40Anw7BlsEXCMbt1Zt+OLA6Fq9suIpIWD0OsnISlw==
-  /find-versions/3.2.0:
-    dependencies:
-      semver-regex: 2.0.0
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-P8WRou2S+oe222TOCHitLy8zj+SIsVJh52VP4lvXkaFVnOFFdoWv1H1Jjvel1aI6NCFOAaeAVm8qrI0odiLcww==
   /flat-cache/2.0.1:
     dependencies:
       flatted: 2.0.2
@@ -13892,11 +13881,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-brSA+/yq+b08Hsr4c8fsEW2CRzk1BmfN3SAK/5VCHQ9bdoZJ4qa/+AfR0xHjlbbZUyPkUHs1b8x1RqdyZdkVqQ==
-  /opencollective-postinstall/2.0.3:
-    dev: false
-    hasBin: true
-    resolution:
-      integrity: sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
   /opn/5.5.0:
     dependencies:
       is-wsl: 1.1.0
@@ -17228,12 +17212,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-S7uEN8jTfksM8aaP1ybsbWRdbTY=
-  /semver-regex/2.0.0:
-    dev: false
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-mUdIBBvdn0PLOeP3TEkMH7HHeUP3GjsXCwKarjv/kGmUFOYg1VqEemKhoQpWMu6X2I8kHeuVdGibLGkVK+/5Qw==
   /semver/5.3.0:
     dev: false
     hasBin: true
@@ -19614,10 +19592,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-2e8H3Od7mQK4o6j6SzHD4/fm6Ho=
-  /which-pm-runs/1.0.0:
-    dev: false
-    resolution:
-      integrity: sha1-Zws6+8VS4LVd9rd4DKdGFfI60cs=
   /which/1.3.1:
     dependencies:
       isexe: 2.0.0
@@ -20151,7 +20125,7 @@ packages:
       '@bentley/imodeljs-i18n': '*'
       '@bentley/ui-abstract': '*'
     resolution:
-      integrity: sha512-2VJxM5MZszidSJxVINHw2jGoV6EWtyHLJwgu4c3DgCY4RW74RJanNcor9UnMTlGl2sAYYOj5uV8AIzIx7gcWSA==
+      integrity: sha512-xcOgnGbUKM6S01zONfqWI0HTw2keOGc8g+MnSwAK8/mbMaB6Kgu1UZzg2EnOj0tsNH2U6DiwtBolrhX/YkbyVw==
       tarball: 'file:projects/itwin-error-handling-react.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-react.tgz':
@@ -20226,8 +20200,37 @@ packages:
     dev: false
     name: '@rush-temp/itwin-viewer-react'
     resolution:
-      integrity: sha512-o31TRx2RbgRPa7gpSLFQHku5O3n+kiAwEo9RvIp/dzBDqmTUPnyr0Eu5MqLTgMTYBAuo/W6oMf0fivC0h12Hcw==
+      integrity: sha512-KRCHkxCF4LxkHSsbfARcP8dy+mjWSB6g7a0y7FWFLUYCEPbGSEe0i2i7vhskCxtRo2HE20KyoQz8iPztvcAZ8A==
       tarball: 'file:projects/itwin-viewer-react.tgz'
+    version: 0.0.0
+  'file:projects/itwin-viewer-scripts.tgz_typescript@3.9.6':
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 3.6.0_1c51ade106368f8db1c65fa08c9a96ed
+      '@typescript-eslint/parser': 3.6.0_eslint@7.4.0+typescript@3.9.6
+      eslint: 7.4.0
+      eslint-config-airbnb: 0.0.4
+      eslint-config-prettier: 6.11.0_eslint@7.4.0
+      eslint-plugin-import: 2.22.0_eslint@7.4.0
+      eslint-plugin-jsx-a11y: 6.3.1_eslint@7.4.0
+      eslint-plugin-prettier: 3.1.4_eslint@7.4.0+prettier@2.0.5
+      eslint-plugin-react: 7.20.3_eslint@7.4.0
+      eslint-plugin-react-hooks: 4.0.7_eslint@7.4.0
+      eslint-plugin-simple-import-sort: 5.0.3_eslint@7.4.0
+      lint-staged: 10.2.11
+      prettier: 2.0.5
+      stylelint: 13.6.1
+      stylelint-config-prettier: 8.0.2_stylelint@13.6.1
+      stylelint-config-sass-guidelines: 7.0.0_stylelint@13.6.1
+      stylelint-prettier: 1.1.2_prettier@2.0.5+stylelint@13.6.1
+      stylelint-scss: 3.18.0_stylelint@13.6.1
+    dev: false
+    id: 'file:projects/itwin-viewer-scripts.tgz'
+    name: '@rush-temp/itwin-viewer-scripts'
+    peerDependencies:
+      typescript: '*'
+    resolution:
+      integrity: sha512-B+UbF4AVYzDHqtPj82j8Luy2sKdfK8txpLHPwBP2aVv2LL8YR29EjjB8/tl2LZVn3LB9prZU968uCgbysAMr+A==
+      tarball: 'file:projects/itwin-viewer-scripts.tgz'
     version: 0.0.0
   'file:projects/viewer-sample-react.tgz_84ba67315851bac77efe9999822dcd20':
     dependencies:
@@ -20298,7 +20301,7 @@ packages:
       react-redux: '*'
       redux: '*'
     resolution:
-      integrity: sha512-/KJFFeeIu2lTzkpaWE/GgZArjW3wsmKDWM0b0Xa2lhUEw8pQ+Q+T5yCXQ/XqtLwmkr5lsvGwAwBLiV8jn6mrqA==
+      integrity: sha512-PMshex1RGtnY/9z4vXc7W8bYzROw7Eh9Rc3TSkGZOpgA+a9i4P1Wzq/d9Didgdc9A2zLRtoIgnh/P8g4ODIgPg==
       tarball: 'file:projects/viewer-sample-react.tgz'
     version: 0.0.0
 registry: ''
@@ -20336,6 +20339,7 @@ specifiers:
   '@microsoft/applicationinsights-web': 2.3.1
   '@rush-temp/itwin-error-handling-react': 'file:./projects/itwin-error-handling-react.tgz'
   '@rush-temp/itwin-viewer-react': 'file:./projects/itwin-viewer-react.tgz'
+  '@rush-temp/itwin-viewer-scripts': 'file:./projects/itwin-viewer-scripts.tgz'
   '@rush-temp/viewer-sample-react': 'file:./projects/viewer-sample-react.tgz'
   '@svgr/cli': ^5.3.1
   '@svgr/webpack': 4.3.3

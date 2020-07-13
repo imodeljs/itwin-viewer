@@ -10,6 +10,11 @@
   },
   "projects": [
     {
+      "packageName": "@bentley/itwin-viewer-scripts",
+      "projectFolder": "common/scripts",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@bentley/itwin-viewer-react",
       "projectFolder": "packages/modules/itwin-viewer-react",
       "versionPolicyName": "independentModule",
