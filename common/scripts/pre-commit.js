@@ -21,6 +21,7 @@ async function preCommit() {
   });
 
   if (!success) {
+    console.log("fail");
     process.exit();
   }
 }
