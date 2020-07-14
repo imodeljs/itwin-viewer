@@ -21,7 +21,7 @@ async function preCommit() {
   });
 
   if (!success) {
-    throw new Error("pre-commit failed");
+    return -1;
   }
 }
 
