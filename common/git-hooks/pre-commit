@@ -8,11 +8,9 @@ PATH=$PATH:/usr/local/bin:/usr/local/sbin
 echo --------------------------------------------
 echo Starting Git hook: pre-commit
 
-echo Invoking node common/scripts/pre-commit.js
-node common/scripts/pre-commit.js
+echo Invoking node common/scripts/node_modules/lint-staged/lib/index.js 
+node common/scripts/node_modules/lint-staged/lib/index.js
 
-echo "Return value"
-echo $?
 if [ $? -ne 0 ]; then
   # the lint-staged script above will print out appropriate errors
   exit 1
