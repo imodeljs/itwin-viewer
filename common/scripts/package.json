@@ -39,5 +39,9 @@
       "node ../config/scripts/copyright-linter.js --",
       "stylelint --fix --config ../../.stylelintrc"
     ]
+  },
+  "scripts": {
+    "build": "",
+    "test": ""
   }
 }

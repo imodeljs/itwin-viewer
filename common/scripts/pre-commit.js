@@ -14,7 +14,7 @@ async function preCommit() {
       ],
       "*.{scss,css}": [
         "node ./common/scripts/copyright-linter.js --",
-        "stylelint --fix --config ./.stylelintrc",
+        "node ./common/scripts/node_modules/stylelint --fix --config ./.stylelintrc",
       ],
     },
   });
