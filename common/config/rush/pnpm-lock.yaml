@@ -60,6 +60,8 @@ dependencies:
   eslint: 7.4.0
   eslint-config-airbnb: 0.0.4
   eslint-config-prettier: 6.11.0_eslint@7.4.0
+  eslint-config-react-app: 5.2.1_483c6058d723df40365958d89d5093f9
+  eslint-plugin-flowtype: 5.2.0_eslint@7.4.0
   eslint-plugin-import: 2.22.0_eslint@7.4.0
   eslint-plugin-jsx-a11y: 6.3.1_eslint@7.4.0
   eslint-plugin-prettier: 3.1.4_eslint@7.4.0+prettier@2.0.5
@@ -8281,6 +8283,30 @@ packages:
       eslint: '>=3.14.1'
     resolution:
       integrity: sha512-oB8cpLWSAjOVFEJhhyMZh6NOEOtBVziaqdDQ86+qhDHFbZXoRTM7pNSvFRfW/W/L/LrQ38C99J5CGuRBBzBsdA==
+  /eslint-config-react-app/5.2.1_483c6058d723df40365958d89d5093f9:
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 3.6.0_1c51ade106368f8db1c65fa08c9a96ed
+      '@typescript-eslint/parser': 3.6.0_eslint@7.4.0+typescript@3.9.6
+      confusing-browser-globals: 1.0.9
+      eslint: 7.4.0
+      eslint-plugin-flowtype: 5.2.0_eslint@7.4.0
+      eslint-plugin-import: 2.22.0_eslint@7.4.0
+      eslint-plugin-jsx-a11y: 6.3.1_eslint@7.4.0
+      eslint-plugin-react: 7.20.3_eslint@7.4.0
+      eslint-plugin-react-hooks: 4.0.7_eslint@7.4.0
+    dev: false
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': 2.x
+      '@typescript-eslint/parser': 2.x
+      babel-eslint: 10.x
+      eslint: 6.x
+      eslint-plugin-flowtype: 3.x || 4.x
+      eslint-plugin-import: 2.x
+      eslint-plugin-jsx-a11y: 6.x
+      eslint-plugin-react: 7.x
+      eslint-plugin-react-hooks: 1.x || 2.x
+    resolution:
+      integrity: sha512-pGIZ8t0mFLcV+6ZirRgYK6RVqUIKRIi9MmgzUEmrIknsn3AdO0I32asO86dJgloHq+9ZPl8UIg8mYrvgP5u2wQ==
   /eslint-config-react-app/5.2.1_f8f91f27f800428497667fb337aaf85d:
     dependencies:
       '@typescript-eslint/eslint-plugin': 2.34.0_3787943315ebc5ea524d5c102dc9e452
@@ -8350,6 +8376,18 @@ packages:
       eslint: '>=6.1.0'
     resolution:
       integrity: sha512-W5hLjpFfZyZsXfo5anlu7HM970JBDqbEshAJUkeczP6BFCIfJXuiIBQXyberLRtOStT0OGPF8efeTbxlHk4LpQ==
+  /eslint-plugin-flowtype/5.2.0_eslint@7.4.0:
+    dependencies:
+      eslint: 7.4.0
+      lodash: 4.17.19
+      string-natural-compare: 3.0.1
+    dev: false
+    engines:
+      node: ^10.12.0 || >=12.0.0
+    peerDependencies:
+      eslint: ^7.1.0
+    resolution:
+      integrity: sha512-z7ULdTxuhlRJcEe1MVljePXricuPOrsWfScRXFhNzVD5dmTHWjIF57AxD0e7AbEoLSbjSsaA5S+hCg43WvpXJQ==
   /eslint-plugin-import/2.20.1_eslint@6.8.0:
     dependencies:
       array-includes: 3.1.1
@@ -17842,6 +17880,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-PKyXUd0LK0ePjSOnWn34V2uD6acUWev9uy0Ft05k0E8xRW+SKcA0F7eMr7h5xlzfn+4O3N+55rduYyet3Jk+jw==
+  /string-natural-compare/3.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-n3sPwynL1nwKi3WJ6AIsClwBMa0zTi54fn2oLU6ndfTSIO05xaznjSf15PcBZU6FNWbmN5Q6cxT4V5hGvB4taw==
   /string-width/1.0.2:
     dependencies:
       code-point-at: 1.1.0
@@ -20210,6 +20252,8 @@ packages:
       eslint: 7.4.0
       eslint-config-airbnb: 0.0.4
       eslint-config-prettier: 6.11.0_eslint@7.4.0
+      eslint-config-react-app: 5.2.1_483c6058d723df40365958d89d5093f9
+      eslint-plugin-flowtype: 5.2.0_eslint@7.4.0
       eslint-plugin-import: 2.22.0_eslint@7.4.0
       eslint-plugin-jsx-a11y: 6.3.1_eslint@7.4.0
       eslint-plugin-prettier: 3.1.4_eslint@7.4.0+prettier@2.0.5
@@ -20229,7 +20273,7 @@ packages:
     peerDependencies:
       typescript: '*'
     resolution:
-      integrity: sha512-B+UbF4AVYzDHqtPj82j8Luy2sKdfK8txpLHPwBP2aVv2LL8YR29EjjB8/tl2LZVn3LB9prZU968uCgbysAMr+A==
+      integrity: sha512-viJsel0wl7Cu3EyboZskxhfa83s7PTM5b0vhnwCfIFBrFJ60/UeCjejCE+ho7Kswp1UVnNNbz0hMxJ8o/PD0vA==
       tarball: 'file:projects/itwin-viewer-scripts.tgz'
     version: 0.0.0
   'file:projects/viewer-sample-react.tgz_84ba67315851bac77efe9999822dcd20':
@@ -20367,6 +20411,8 @@ specifiers:
   eslint: ^7.4.0
   eslint-config-airbnb: ^0.0.4
   eslint-config-prettier: ^6.11.0
+  eslint-config-react-app: ^5.2.1
+  eslint-plugin-flowtype: ^5.2.0
   eslint-plugin-import: ^2.22.0
   eslint-plugin-jsx-a11y: ^6.3.1
   eslint-plugin-prettier: ^3.1.4

@@ -1,8 +1,13 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
 import React, { useEffect, useState } from "react";
+
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
 import { ItwinViewerCommonParams } from "../types";
