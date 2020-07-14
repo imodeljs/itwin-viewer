@@ -32,8 +32,7 @@
     "test": "",
     "securityscan": "tslint --config tslint-securityscan.json --force -o securityscan.log -p tsconfig.json \"src/*.ts*\"",
     "clean:build": "rimraf lib build",
-    "rebuild": "npm run clean:build && npm run build",
-    "precommit": "lint-staged --verbose"
+    "rebuild": "npm run clean:build && npm run build"
   },
   "files": [
     "lib/**/*"
@@ -74,25 +73,7 @@
     "react-test-renderer": "16.13.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
-    "typescript": "^3.7.2",
-    "@typescript-eslint/eslint-plugin": "^3.6.0",
-    "@typescript-eslint/parser": "^3.6.0",
-    "eslint": "^7.4.0",
-    "eslint-config-airbnb": "^0.0.4",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.7",
-    "eslint-plugin-simple-import-sort": "^5.0.3",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
-    "stylelint": "^13.6.1",
-    "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-sass-guidelines": "^7.0.0",
-    "stylelint-prettier": "^1.1.2",
-    "stylelint-scss": "^3.18.0"
+    "typescript": "^3.7.2"
   },
   "peerDependencies": {
     "@bentley/ui-core": "^2.2.1",
@@ -127,21 +108,6 @@
     ],
     "collectCoverageFrom": [
       "<rootDir>/src/**"
-    ]
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "node ../../../common/scripts/copyright-linter.js --",
-      "node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js --config ../../../common/config/.eslintrc.ts.autofix.json --ignore-path ../../../common/config/.eslintignore --fix",
-      "prettier --write --config ../../../.prettierrc --ignore-path ../../../.prettierignore",
-      "node --max_old_space_size=4096 ./node_modules/eslint/bin/eslint.js --config ../../../common/config/.eslintrc.ts.json --ignore-path ../../../common/config/.eslintignore --color"
-    ],
-    "*.{md,json}": [
-      "prettier --write --config ../../../.prettierrc --ignore-path ../../../.prettierignore"
-    ],
-    "*.{scss,css}": [
-      "node ../../../common/config/scripts/copyright-linter.js --",
-      "stylelint --fix --config ../../../.stylelintrc"
     ]
   }
 }
