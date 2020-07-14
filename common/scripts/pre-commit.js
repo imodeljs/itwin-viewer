@@ -1,6 +1,6 @@
 const lintStaged = require("lint-staged");
 
-module.exports = async function(){
+async function preCommit(){
   const ret = await lintStaged({debug: true, config: {
     "*.{ts,tsx}": [
       "node ./common/scripts/copyright-linter.js --",
@@ -20,4 +20,6 @@ module.exports = async function(){
 console.log("ret");
 console.log(ret);
 }
+
+preCommit();
 
