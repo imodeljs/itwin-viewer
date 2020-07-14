@@ -1,7 +1,3 @@
-/*---------------------------------------------------------------------------------------------
- * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
- * See LICENSE.md in the project root for license terms and full copyright notice.
- *--------------------------------------------------------------------------------------------*/
 import {
   ExternalServerExtensionLoader,
   IModelApp,
@@ -126,17 +122,13 @@ export const Viewer = ({
       Initializer.initialize(
         { authorizationClient: authClient },
         { appInsightsKey, backend, productId }
-      )
-        .then(() => {
-          Initializer.initialized
-            .then(() => setIModelJsInitialized(true))
-            .catch((error) => {
-              throw error;
-            });
-        })
-        .catch((error) => {
-          throw error;
-        });
+      ).then(() => {
+        Initializer.initialized
+          .then(() => setIModelJsInitialized(true))
+          .catch((error) => {
+            throw error;
+          });
+      });
     }
   }, [authConfig]);
 
