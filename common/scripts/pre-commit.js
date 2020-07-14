@@ -1,6 +1,7 @@
 const lintStaged = require("lint-staged");
 
-const ret = await lintStaged({debug: true, config: {
+module.exports = async function(){
+  const ret = await lintStaged({debug: true, config: {
     "*.{ts,tsx}": [
       "node ./common/scripts/copyright-linter.js --",
       "node --max_old_space_size=4096 ./common/scripts/node_modules/eslint/bin/eslint.js --config ./common/scripts/.eslintrc.ts.autofix.json --ignore-path ./.eslintignore --fix",
@@ -18,4 +19,5 @@ const ret = await lintStaged({debug: true, config: {
 
 console.log("ret");
 console.log(ret);
+}
 
