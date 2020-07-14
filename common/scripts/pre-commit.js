@@ -21,7 +21,7 @@ async function preCommit() {
   });
 
   if (!success) {
-    return -1;
+    exit - 1;
   }
 }
 
