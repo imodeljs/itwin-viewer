@@ -9,11 +9,11 @@ echo --------------------------------------------
 echo Starting Git hook: pre-commit
 
 echo Invoking node common/scripts/pre-commit.js
-RET=node common/scripts/pre-commit.js
+node common/scripts/pre-commit.js
 
 echo "Return value"
-echo RET
-if [ RET -ne 0 ]; then
+echo $?
+if [ $? -ne 0 ]; then
   # the lint-staged script above will print out appropriate errors
   exit 1
 fi
