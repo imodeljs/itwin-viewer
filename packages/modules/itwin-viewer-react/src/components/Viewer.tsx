@@ -3,11 +3,9 @@ import {
   IModelApp,
 } from "@bentley/imodeljs-frontend";
 import React, { useEffect, useState } from "react";
-
-import { AuthorizationOptions } from "../";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
-import { IModelBackendOptions, ItwinViewerCommonParams } from "../types";
+import { ItwinViewerCommonParams } from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
 export interface ViewerExtension {
@@ -124,13 +122,17 @@ export const Viewer = ({
       Initializer.initialize(
         { authorizationClient: authClient },
         { appInsightsKey, backend, productId }
-      ).then(() => {
-        Initializer.initialized
-          .then(() => setIModelJsInitialized(true))
-          .catch((error) => {
-            throw error;
-          });
-      });
+      )
+        .then(() => {
+          Initializer.initialized
+            .then(() => setIModelJsInitialized(true))
+            .catch((error) => {
+              throw error;
+            });
+        })
+        .catch((error) => {
+          throw error;
+        });
     }
   }, [authConfig]);
 
