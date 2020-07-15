@@ -34,8 +34,7 @@
     "test-watch": "jest --watch",
     "securityscan": "tslint --config tslint-securityscan.json --force -o securityscan.log -p tsconfig.json \"src/*.ts*\"",
     "clean:build": "rimraf lib build",
-    "rebuild": "npm run clean:build && npm run build",
-    "precommit": "lint-staged --verbose"
+    "rebuild": "npm run clean:build && npm run build"
   },
   "files": [
     "lib/**/*"
@@ -89,7 +88,6 @@
     "copyfiles": "^2.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
-    "prettier": "1.19.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "ts-jest": "^26.1.1",
@@ -145,8 +143,5 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**"
     ]
-  },
-  "resolutions": {
-    "minimist": "^1.2.5"
   }
 }
