@@ -17,6 +17,7 @@ async function preCommit() {
         "node ./common/scripts/node_modules/stylelint --fix --config ./.stylelintrc",
       ],
     },
+    verbose: true,
   });
 
   if (!success) {
