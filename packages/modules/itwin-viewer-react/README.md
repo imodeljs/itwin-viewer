@@ -20,8 +20,13 @@ npm install @bentley/itwin-viewer-react
 
 ```javascript
 import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
-import React, { useState } from "react";
-// function that returns an instance of an oidc-client UserManager that is configured to authorize an iModel.js backend connection via the Bentley IMS authority
+import React, { useState, useEffect } from "react";
+/**
+ * The following is a function that returns an instance of an oidc-client UserManager that is configured to authorize an iModel.js backend connection via the Bentley IMS authority
+ * See https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/components/home/UserManagerHome.tsx and https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/services/auth/OidcClient.ts for an example
+ * Alternatively, you can pass an iModel.js AuthorizationClient to the oidcClient property of the authConfig prop
+ * See https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/components/home/AuthClientHome.tsx and https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/services/auth/AuthorizationClient.ts for an example
+ */
 import { getUserManager } from "./MyOidcClient";
 
 export const UserManagerHome = () => {
