@@ -4,8 +4,6 @@
 name: iTwin Viewer monorepo CI
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
