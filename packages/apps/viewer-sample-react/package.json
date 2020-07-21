@@ -1,6 +1,6 @@
 {
   "name": "@bentley/viewer-sample-react",
-  "version": "1.0.0",
+  "version": "0.9.9",
   "private": true,
   "dependencies": {
     "@bentley/bentleyjs-core": "^2.2.1",
@@ -15,7 +15,7 @@
     "@bentley/imodeljs-markup": "^2.2.1",
     "@bentley/imodeljs-quantity": "^2.2.1",
     "@bentley/itwin-client": "^2.2.1",
-    "@bentley/itwin-viewer-react": "1.0.0",
+    "@bentley/itwin-viewer-react": "0.9.9",
     "@bentley/orbitgt-core": "^2.2.1",
     "@bentley/presentation-common": "^2.2.1",
     "@bentley/presentation-frontend": "^2.2.1",
