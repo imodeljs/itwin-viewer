@@ -33,4 +33,4 @@ jobs:
         node common/scripts/install-run-rush.js rebuild
              
         echo 'Publishing...'
-        node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish --npm-auth-token $NPM_TOKEN
+        node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish --npm-auth-token ${{secrets.NPMJS_PUBLISH_TOKEN}}
