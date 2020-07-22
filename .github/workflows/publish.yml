@@ -26,10 +26,6 @@ jobs:
         NPM_TOKEN: ${{secrets.NPMJS_PUBLISH_TOKEN}}
     - run: |
         set -e
-        echo 'secret'
-        echo ${{secrets.NPMJS_PUBLISH_TOKEN}}
-        echo 'env'
-        echo $NPM_TOKEN
         echo 'Installing...'
         node common/scripts/install-run-rush.js install
         
