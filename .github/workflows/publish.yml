@@ -34,5 +34,5 @@ jobs:
              
         echo 'Publishing...'
         node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish 
-    - env:
+      env:
         NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
