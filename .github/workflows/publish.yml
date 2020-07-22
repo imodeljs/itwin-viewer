@@ -24,8 +24,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: |
         set -e
-        echo "token"
-        echo $NODE_AUTH_TOKEN
         echo 'Installing...'
         node common/scripts/install-run-rush.js install
         
@@ -33,6 +31,6 @@ jobs:
         node common/scripts/install-run-rush.js rebuild
              
         echo 'Publishing...'
-        node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish 
+        node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish --npm-auth-token $NPM_TOKEN
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPMJS_PUBLISH_TOKEN }}
