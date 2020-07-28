@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-viewer-react",
+      "comment": "upgrade iModel.js",
+      "type": "major"
+    }
+  ],
+  "packageName": "@bentley/itwin-viewer-react",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}

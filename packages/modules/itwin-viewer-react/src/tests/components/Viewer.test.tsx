@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import "@testing-library/jest-dom/extend-expect";
 
 import { IModelApp } from "@bentley/imodeljs-frontend";
@@ -54,6 +55,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     PrimitiveTool: jest.fn(),
     NotificationManager: jest.fn(),
     ExternalServerExtensionLoader: jest.fn(),
+    Tool: jest.fn(),
   };
 });
 
