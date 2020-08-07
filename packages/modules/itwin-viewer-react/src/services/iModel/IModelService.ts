@@ -4,7 +4,36 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Id64String, OpenMode } from "@bentley/bentleyjs-core";
-import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
+import { IModelHubClient, VersionQuery } from "@bentley/imodelhub-client";
+import { IModelVersion } from "@bentley/imodeljs-common";
+import {
+  IModelApp,
+  RemoteBriefcaseConnection,
+} from "@bentley/imodeljs-frontend";
+import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
+
+/** determine the proper version of the iModel to open
+ * 1. If named versions exist, get the named version that contains the latest changeset
+ * 2. If no named version exists, return the latest changeset
+ */
+const getVersion = async (iModelId: string): Promise<IModelVersion> => {
+  const token = await IModelApp.authorizationClient?.getAccessToken();
+  if (token) {
+    const requestContext = new AuthorizedClientRequestContext(token);
+    const hubClient = new IModelHubClient();
+    const namedVersions = await hubClient.versions.get(
+      requestContext,
+      iModelId,
+      new VersionQuery().top(1)
+    );
+    // if there is a named version (version with the latest changeset "should" be at the top), return the version as of its changeset
+    // otherwise return the version as of the latest changeset
+    return namedVersions.length === 1 && namedVersions[0].changeSetId
+      ? IModelVersion.asOfChangeSet(namedVersions[0].changeSetId)
+      : IModelVersion.latest();
+  }
+  return IModelVersion.latest();
+};
 
 /** parse the comma-delimited config value that is a list of accepted schema:classnames or return a default */
 const getAcceptedViewClasses = (): string[] => {
@@ -20,11 +49,14 @@ export const openImodel = async (
   imodelId: string
 ): Promise<RemoteBriefcaseConnection | undefined> => {
   try {
+    // get the version to query
+    const version = await getVersion(imodelId);
     // else create a new connection
     const connection = await RemoteBriefcaseConnection.open(
       projectId,
       imodelId,
-      OpenMode.Readonly
+      OpenMode.Readonly,
+      version
     );
     console.log(connection);
     return connection;
