@@ -22,9 +22,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - uses: oleksiyrudenko/gha-git-credentials@v1
-      with:
-        token: '${{ secrets.PUBLISH_PAT }}'
     - run: |
         set -e
         echo 'Installing...'
