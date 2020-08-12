@@ -1,0 +1,17 @@
+{
+  "name": "@bentley/itwin-viewer-react",
+  "entries": [
+    {
+      "version": "1.1.0",
+      "tag": "@bentley/itwin-viewer-react_v1.1.0",
+      "date": "Wed, 12 Aug 2020 19:17:57 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Get latest changeset from a named version, if it exists, by default"
+          }
+        ]
+      }
+    }
+  ]
+}
