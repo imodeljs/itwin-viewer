@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import { ClientRequestContext } from "@bentley/bentleyjs-core";
 import { Config } from "@bentley/bentleyjs-core";
 import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
@@ -11,17 +12,23 @@ import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { Presentation } from "@bentley/presentation-frontend";
 import { UiComponents } from "@bentley/ui-components";
 import { UiCore } from "@bentley/ui-core";
-import { AppNotificationManager, UiFramework } from "@bentley/ui-framework";
+import {
+  AppNotificationManager,
+  FrameworkReducer,
+  StateManager,
+  UiFramework,
+} from "@bentley/ui-framework";
 
 import { AppUi } from "../components/app-ui/AppUi";
 import { initRpc } from "../config/rpc";
-import store from "../store";
 import { IModelBackendOptions, ItwinViewerInitializerParams } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
 
 // initialize required iModel.js services
 class Initializer {
   private static _initialized: Promise<void>;
+  // State manager for extensions to have redux store
+  private static _appStateManager: StateManager | undefined;
 
   /** initialize rpc */
   private static async _initializeRpc(
@@ -97,7 +104,6 @@ class Initializer {
 
   /** add required values to Config.App */
   static setupEnv(options?: IModelBackendOptions) {
-    /* eslint-disable @typescript-eslint/camelcase */
     Config.App.merge({
       imjs_buddi_url: options?.buddiServer
         ? options.buddiServer
@@ -107,7 +113,6 @@ class Initializer {
         ? options.buddiRegion
         : process.env.REACT_APP_BUDDI_REGION ?? 0,
     });
-    /* eslint-enable @typescript-eslint/camelcase */
   }
 
   /** initialize required iModel.js services */
@@ -127,6 +132,11 @@ class Initializer {
 
         // Use the AppNotificationManager subclass from ui-framework to get prompts and messages
         iModelAppOptions.notifications = new AppNotificationManager();
+
+        // Initialize state manager for extensions to have access to extending the redux store
+        this._appStateManager = new StateManager({
+          frameworkState: FrameworkReducer,
+        });
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
         iModelAppOptions.applicationId =
@@ -155,7 +165,8 @@ class Initializer {
         await UiComponents.initialize(IModelApp.i18n);
 
         // initialize UiFramework
-        await UiFramework.initialize(store, IModelApp.i18n, "iModelCore");
+        // Use undefined so that UiFramework uses StateManager
+        await UiFramework.initialize(undefined, IModelApp.i18n);
 
         // initialize Presentation
         await Presentation.initialize({

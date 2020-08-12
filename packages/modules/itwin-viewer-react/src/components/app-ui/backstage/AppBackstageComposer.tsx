@@ -12,11 +12,10 @@ import {
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { AppState } from "../../../store/rootReducer";
 import { AppBackstageItemProvider } from "./AppBackstageItemProvider";
 
-function mapStateToProps(state: AppState) {
-  const frameworkState = state.iModelCore as FrameworkState;
+function mapStateToProps(state: any) {
+  const frameworkState = state.frameworkState as FrameworkState;
 
   if (!frameworkState) {
     return undefined;
