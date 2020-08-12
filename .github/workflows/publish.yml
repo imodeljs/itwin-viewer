@@ -33,8 +33,6 @@ jobs:
         echo 'Publishing...'
         git config user.name "iTwinViewerWorkflow"
         git config user.email "itwinviewer@users.noreply.github.com"
-        git config user.username "kckst8"
-        git config user.password ${{ secrets.PUBLISH_PAT }}
         node common/scripts/install-run-rush.js version --bump --target-branch master
         node common/scripts/install-run-rush.js publish --include-all --set-access-level public --apply --publish --npm-auth-token $NPM_TOKEN --target-branch master
       env:
