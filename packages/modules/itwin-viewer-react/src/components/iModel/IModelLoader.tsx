@@ -2,12 +2,17 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
 import { IModelConnection, StandardViewId } from "@bentley/imodeljs-frontend";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
-import { SyncUiEventDispatcher, UiFramework } from "@bentley/ui-framework";
+import {
+  StateManager,
+  SyncUiEventDispatcher,
+  UiFramework,
+} from "@bentley/ui-framework";
 import { withAITracking } from "@microsoft/applicationinsights-react-js";
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
@@ -19,7 +24,6 @@ import {
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
 import { ai } from "../../services/telemetry/TelemetryService";
-import store from "../../store";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
 
@@ -75,6 +79,8 @@ const IModelLoader = React.memo(({ iModelId, projectId }: ModelLoaderProps) => {
 
         // Tell the SyncUiEventDispatcher about the iModelConnection
         UiFramework.setIModelConnection(imodelConnection);
+        // Set default view state
+        UiFramework.setDefaultViewState(savedViewState);
 
         SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
@@ -101,7 +107,7 @@ const IModelLoader = React.memo(({ iModelId, projectId }: ModelLoaderProps) => {
   } else {
     return viewerProps?.imodel && viewerProps?.frontstageProvider ? (
       <div className="itwin-viewer-container">
-        <Provider store={store}>
+        <Provider store={StateManager.store}>
           <IModelViewer
             iModel={viewerProps.imodel}
             frontstage={viewerProps.frontstageProvider}

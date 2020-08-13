@@ -29,7 +29,6 @@ jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("../../services/iModel/IModelService");
 jest.mock("@bentley/ui-framework");
 jest.mock("@bentley/presentation-frontend");
-jest.mock("../../store/rootReducer");
 
 jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ReactPlugin: jest.fn(),
