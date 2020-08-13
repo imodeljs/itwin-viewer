@@ -27,8 +27,6 @@ import { ai, trackEvent } from "./telemetry/TelemetryService";
 // initialize required iModel.js services
 class Initializer {
   private static _initialized: Promise<void>;
-  // State manager for extensions to have redux store
-  private static _appStateManager: StateManager | undefined;
 
   /** initialize rpc */
   private static async _initializeRpc(
@@ -134,7 +132,8 @@ class Initializer {
         iModelAppOptions.notifications = new AppNotificationManager();
 
         // Initialize state manager for extensions to have access to extending the redux store
-        this._appStateManager = new StateManager({
+        // This will setup a singleton store inside the StoreManager class.
+        const stateManager = new StateManager({
           frameworkState: FrameworkReducer,
         });
 
