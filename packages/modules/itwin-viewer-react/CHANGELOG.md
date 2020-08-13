@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 12 Aug 2020 19:17:57 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Aug 2020 17:43:14 GMT and should not be manually modified.
+
+## 1.1.1
+Thu, 13 Aug 2020 17:43:14 GMT
+
+### Patches
+
+- add note regarding Webpack plugin to README
 
 ## 1.1.0
 Wed, 12 Aug 2020 19:17:57 GMT

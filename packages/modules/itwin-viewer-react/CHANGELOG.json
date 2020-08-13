@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "1.1.1",
+      "tag": "@bentley/itwin-viewer-react_v1.1.1",
+      "date": "Thu, 13 Aug 2020 17:43:14 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add note regarding Webpack plugin to README"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.1.0",
       "tag": "@bentley/itwin-viewer-react_v1.1.0",
       "date": "Wed, 12 Aug 2020 19:17:57 GMT",
