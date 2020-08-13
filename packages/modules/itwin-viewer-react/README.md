@@ -16,6 +16,25 @@ npm install @bentley/itwin-viewer-react
 
 # Usage
 
+## Dependencies
+
+Currently, in order to use the iTwin Viewer with iModel.js extensions, the consuming application would need to be compiled using Webpack with the IModeljsLibraryExportsPlugin that is in the [@bentley/webpack-tools-core](https://www.npmjs.com/package/@bentley/webpack-tools-core) package:
+
+In your webpack.config file:
+
+```javascript
+    plugins: [
+      // NOTE: iModel.js specific plugin to allow exposing iModel.js shared libraries
+      // into the global scope for use within iModel.js Extensions.
+      new IModeljsLibraryExportsPlugin(),
+```
+
+If you are creating a new application and are using React, it is advised to use create-react-app with @bentley/react-scripts, which already include this plugin, as well as some other optimizations:
+
+```
+npx create-react-app my-app --scripts-version @bentley/react-scripts --template typescript
+```
+
 ## React component
 
 ```javascript
