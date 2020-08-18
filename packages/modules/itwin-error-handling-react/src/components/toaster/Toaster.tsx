@@ -1,5 +1,10 @@
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 import * as React from "react";
 import ReactDOM from "react-dom";
+
 import { IToastLink } from "./Toast";
 import ToastMaster, { IToastObject, IToastSettings } from "./ToastMaster";
 
@@ -25,7 +30,7 @@ export default class Toaster {
     this._bindCloseAll = this._bindCloseAll.bind(this);
 
     const container = document.createElement("div");
-    container.setAttribute("bwc-toaster-container", "");
+    container.setAttribute("itwin-toaster-container", "");
     document.body.appendChild(container);
     ReactDOM.render(
       <ToastMaster
