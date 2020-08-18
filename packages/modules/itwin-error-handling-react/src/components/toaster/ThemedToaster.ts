@@ -1,11 +1,11 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import "./Toaster.module.scss";
 
-import BwcToaster from "./Toaster";
+import ItwinToaster from "./Toaster";
 
 // Toaster wraps ToastMaster which includes the real Toast component.
 
@@ -36,10 +36,10 @@ export interface IToastOptions {
   link?: IToastLink;
 }
 class ThemedToaster {
-  private _toaster: BwcToaster;
+  private _toaster: ItwinToaster;
 
   public constructor() {
-    this._toaster = new BwcToaster();
+    this._toaster = new ItwinToaster();
   }
   error(localizedText: string, settings?: IToastOptions) {
     this._toaster.error(localizedText, settings);
