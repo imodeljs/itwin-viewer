@@ -14,9 +14,9 @@
   "scripts": {
     "start": "concurrently npm:watch-build npm:watch-scss npm:watch-images",
     "watch-build": "concurrently \"npm:dev-build -- -w\" \"npm:prod-build -- -w\"",
-    "watch-scss": "nodemon -e scss --watch src --exec \"yarn dev-build-scss\"",
-    "watch-images": "nodemon -e * --watch src/images --exec \"yarn dev-copy-images\"",
-    "build": "yarn run dual-build && yarn run build-scss && yarn run copy-images && yarn run copy-json",
+    "watch-scss": "nodemon -e scss --watch src --exec \"npm run dev-build-scss\"",
+    "watch-images": "nodemon -e * --watch src/images --exec \"npm run dev-copy-images\"",
+    "build": "npm run dual-build && npm run build-scss && npm run copy-images && npm run copy-json",
     "dual-build": "concurrently npm:dev-build npm:prod-build",
     "dev-build": "tsc -p development.tsconfig.json",
     "prod-build": "tsc -b",
@@ -29,7 +29,7 @@
     "copy-json": "concurrently npm:dev-copy-json npm:prod-copy-json ",
     "dev-copy-json": "copyfiles -u1 \"./src/**/*.json\" ./build",
     "prod-copy-json": "copyfiles -u1 \"./src/**/*.json\" ./lib",
-    "prepare": "yarn run build",
+    "prepare": "npm run build",
     "test": "jest",
     "test-watch": "jest --watch",
     "securityscan": "tslint --config tslint-securityscan.json --force -o securityscan.log -p tsconfig.json \"src/*.ts*\"",
@@ -143,5 +143,11 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**"
     ]
-  }
+  },
+  "keywords": [
+    "Bentley",
+    "iModel",
+    "iModelJs",
+    "iTwin"
+  ]
 }
