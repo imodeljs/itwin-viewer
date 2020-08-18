@@ -1,8 +1,9 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
-import "./BwcStyling.scss";
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
+
+import "./ToastStyling.scss";
 
 import * as React from "react";
 import { Transition } from "react-transition-group";
@@ -116,14 +117,14 @@ export class Toast extends React.Component<IToastProps, IToastState> {
       >
         {(state) => (
           <div
-            className={`bwc-toast-all bwc-toast-${state}`}
+            className={`itwin-toast-all itwin-toast-${state}`}
             style={{
               height: this.state.height,
               marginBottom: this.state.isVisible ? "0" : -this.state.height,
             }}
           >
             <div ref={this.onRef} style={{ padding: "0px 16px 16px 16px" }}>
-              <div className={`bwc-toast-${category}`}>
+              <div className={`itwin-toast-${category}`}>
                 <div className="status-icon-container">
                   <div className={"status-icon-background"}>
                     {this.getCategoryIcon()}

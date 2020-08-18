@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-.bwc-toast-wrapper {
+.itwin-toast-wrapper {
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -18,13 +18,13 @@
   z-index: 1070;
 }
 @media screen and (max-width: 400px) {
-  .bwc-toast-wrapper {
+  .itwin-toast-wrapper {
     width: calc(100vw - 36px);
     margin-top: 16px;
   }
 }
 @media screen and (min-width: 401px) {
-  .bwc-toast-wrapper {
+  .itwin-toast-wrapper {
     min-width: 400px;
     max-width: 640px;
     margin-top: 24px;
@@ -54,20 +54,20 @@
   }
 }
 
-.bwc-toast-wrapper .bwc-toast-all {
+.itwin-toast-wrapper .itwin-toast-all {
   transition: all 240ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.bwc-toast-wrapper .bwc-toast-entering,
-.bwc-toast-wrapper .bwc-toast-entered {
+.itwin-toast-wrapper .itwin-toast-entering,
+.itwin-toast-wrapper .itwin-toast-entered {
   animation: openAnimation 240ms cubic-bezier(0.175, 0.885, 0.32, 1.175) both;
 }
 
-.bwc-toast-wrapper .bwc-toast-exiting {
+.itwin-toast-wrapper .itwin-toast-exiting {
   animation: closeAnimation 120ms cubic-bezier(0.4, 0, 1, 1) both;
 }
 
-.bwc-toast-wrapper .bwc-toast-success {
+.itwin-toast-wrapper .itwin-toast-success {
   flex-direction: row;
   display: inline-flex;
   align-items: center;
@@ -83,27 +83,27 @@
     0 7px 40px 0 RGBA(0, 0, 0, 0.12);
 }
 @media screen and (max-width: 400px) {
-  .bwc-toast-wrapper .bwc-toast-success {
+  .itwin-toast-wrapper .itwin-toast-success {
     width: calc(100vw - 36px);
   }
 }
 @media screen and (min-width: 401px) {
-  .bwc-toast-wrapper .bwc-toast-success {
+  .itwin-toast-wrapper .itwin-toast-success {
     min-width: 400px;
     max-width: 640px;
   }
 }
 
-.bwc-toast-wrapper .bwc-toast-success .status-icon-container {
+.itwin-toast-wrapper .itwin-toast-success .status-icon-container {
   order: 1;
   align-self: stretch;
   min-height: 40px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-success
-.status-icon-container
-.status-icon-background {
+.itwin-toast-wrapper
+  .itwin-toast-success
+  .status-icon-container
+  .status-icon-background {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -112,25 +112,25 @@
   width: 48px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-success
-.status-icon-container
-.status-icon-background
-.status-icon {
+.itwin-toast-wrapper
+  .itwin-toast-success
+  .status-icon-container
+  .status-icon-background
+  .status-icon {
   height: 16px;
   width: 16px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-success
-.status-icon-container
-.status-icon-background
-.status-icon
-path {
+.itwin-toast-wrapper
+  .itwin-toast-success
+  .status-icon-container
+  .status-icon-background
+  .status-icon
+  path {
   fill: #fff !important;
 }
 
-.bwc-toast-wrapper .bwc-toast-success .message {
+.itwin-toast-wrapper .itwin-toast-success .message {
   order: 2;
   flex-grow: 1;
   color: #2a2f34;
@@ -145,7 +145,7 @@ path {
   font-style: normal;
 }
 
-.bwc-toast-wrapper .bwc-toast-success .link {
+.itwin-toast-wrapper .itwin-toast-success .link {
   order: 3;
   color: #008be1;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -157,7 +157,7 @@ path {
   cursor: pointer;
 }
 
-.bwc-toast-wrapper .bwc-toast-success .close-icon-container {
+.itwin-toast-wrapper .itwin-toast-success .close-icon-container {
   order: 4;
   align-self: flex-start;
   margin-top: 12px;
@@ -167,14 +167,14 @@ path {
   display: flex;
 }
 
-.bwc-toast-wrapper .bwc-toast-success .close-icon-container .close-icon {
+.itwin-toast-wrapper .itwin-toast-success .close-icon-container .close-icon {
   height: 16px;
   width: 16px;
   cursor: pointer;
   fill: #677480;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational {
+.itwin-toast-wrapper .itwin-toast-informational {
   flex-direction: row;
   display: inline-flex;
   align-items: center;
@@ -190,27 +190,27 @@ path {
     0 7px 40px 0 RGBA(0, 0, 0, 0.12);
 }
 @media screen and (max-width: 400px) {
-  .bwc-toast-wrapper .bwc-toast-informational {
+  .itwin-toast-wrapper .itwin-toast-informational {
     width: calc(100vw - 36px);
   }
 }
 @media screen and (min-width: 401px) {
-  .bwc-toast-wrapper .bwc-toast-informational {
+  .itwin-toast-wrapper .itwin-toast-informational {
     min-width: 400px;
     max-width: 640px;
   }
 }
 
-.bwc-toast-wrapper .bwc-toast-informational .status-icon-container {
+.itwin-toast-wrapper .itwin-toast-informational .status-icon-container {
   order: 1;
   align-self: stretch;
   min-height: 40px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-informational
-.status-icon-container
-.status-icon-background {
+.itwin-toast-wrapper
+  .itwin-toast-informational
+  .status-icon-container
+  .status-icon-background {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -219,25 +219,25 @@ path {
   width: 48px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-informational
-.status-icon-container
-.status-icon-background
-.status-icon {
+.itwin-toast-wrapper
+  .itwin-toast-informational
+  .status-icon-container
+  .status-icon-background
+  .status-icon {
   height: 16px;
   width: 16px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-informational
-.status-icon-container
-.status-icon-background
-.status-icon
-path {
+.itwin-toast-wrapper
+  .itwin-toast-informational
+  .status-icon-container
+  .status-icon-background
+  .status-icon
+  path {
   fill: #fff !important;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational .message {
+.itwin-toast-wrapper .itwin-toast-informational .message {
   order: 2;
   flex-grow: 1;
   color: #2a2f34;
@@ -252,7 +252,7 @@ path {
   font-style: normal;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational .link {
+.itwin-toast-wrapper .itwin-toast-informational .link {
   order: 3;
   color: #008be1;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -264,7 +264,7 @@ path {
   cursor: pointer;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational .close-icon-container {
+.itwin-toast-wrapper .itwin-toast-informational .close-icon-container {
   order: 4;
   align-self: flex-start;
   margin-top: 12px;
@@ -274,14 +274,17 @@ path {
   display: flex;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational .close-icon-container .close-icon {
+.itwin-toast-wrapper
+  .itwin-toast-informational
+  .close-icon-container
+  .close-icon {
   height: 16px;
   width: 16px;
   cursor: pointer;
   fill: #677480;
 }
 
-.bwc-toast-wrapper .bwc-toast-error {
+.itwin-toast-wrapper .itwin-toast-error {
   flex-direction: row;
   display: inline-flex;
   align-items: center;
@@ -297,27 +300,27 @@ path {
     0 7px 40px 0 RGBA(0, 0, 0, 0.12);
 }
 @media screen and (max-width: 400px) {
-  .bwc-toast-wrapper .bwc-toast-error {
+  .itwin-toast-wrapper .itwin-toast-error {
     width: calc(100vw - 36px);
   }
 }
 @media screen and (min-width: 401px) {
-  .bwc-toast-wrapper .bwc-toast-error {
+  .itwin-toast-wrapper .itwin-toast-error {
     min-width: 400px;
     max-width: 640px;
   }
 }
 
-.bwc-toast-wrapper .bwc-toast-error .status-icon-container {
+.itwin-toast-wrapper .itwin-toast-error .status-icon-container {
   order: 1;
   align-self: stretch;
   min-height: 40px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-error
-.status-icon-container
-.status-icon-background {
+.itwin-toast-wrapper
+  .itwin-toast-error
+  .status-icon-container
+  .status-icon-background {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -326,25 +329,25 @@ path {
   width: 48px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-error
-.status-icon-container
-.status-icon-background
-.status-icon {
+.itwin-toast-wrapper
+  .itwin-toast-error
+  .status-icon-container
+  .status-icon-background
+  .status-icon {
   height: 16px;
   width: 16px;
 }
 
-.bwc-toast-wrapper
-.bwc-toast-error
-.status-icon-container
-.status-icon-background
-.status-icon
-path {
+.itwin-toast-wrapper
+  .itwin-toast-error
+  .status-icon-container
+  .status-icon-background
+  .status-icon
+  path {
   fill: #fff !important;
 }
 
-.bwc-toast-wrapper .bwc-toast-error .message {
+.itwin-toast-wrapper .itwin-toast-error .message {
   order: 2;
   flex-grow: 1;
   color: #2a2f34;
@@ -359,7 +362,7 @@ path {
   font-style: normal;
 }
 
-.bwc-toast-wrapper .bwc-toast-error .link {
+.itwin-toast-wrapper .itwin-toast-error .link {
   order: 3;
   color: #008be1;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -371,7 +374,7 @@ path {
   cursor: pointer;
 }
 
-.bwc-toast-wrapper .bwc-toast-error .close-icon-container {
+.itwin-toast-wrapper .itwin-toast-error .close-icon-container {
   order: 4;
   align-self: flex-start;
   margin-top: 12px;
@@ -381,7 +384,7 @@ path {
   display: flex;
 }
 
-.bwc-toast-wrapper .bwc-toast-error .close-icon-container .close-icon {
+.itwin-toast-wrapper .itwin-toast-error .close-icon-container .close-icon {
   height: 16px;
   width: 16px;
   cursor: pointer;

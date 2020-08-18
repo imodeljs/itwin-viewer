@@ -3,24 +3,24 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-@import "./BaseBwcStyling.scss";
+@import "./BaseToastStyling.scss";
 
-.bwc-toast-wrapper .bwc-toast-success {
+.itwin-toast-wrapper .itwin-toast-success {
   margin: 0;
 }
 
-.bwc-toast-wrapper .bwc-toast-error {
+.itwin-toast-wrapper .itwin-toast-error {
   margin: 0;
 }
 
-.bwc-toast-wrapper .bwc-toast-informational {
+.itwin-toast-wrapper .itwin-toast-informational {
   margin: 0;
 }
 
-.bwc-toast-wrapper .link a:link {
+.itwin-toast-wrapper .link a:link {
   color: #008be1;
 }
 
-.bwc-toast-wrapper {
+.itwin-toast-wrapper {
   width: 100%;
 }
