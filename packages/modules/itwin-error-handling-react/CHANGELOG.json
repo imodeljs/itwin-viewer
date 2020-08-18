@@ -1,0 +1,17 @@
+{
+  "name": "@bentley/itwin-error-handling-react",
+  "entries": [
+    {
+      "version": "1.0.1",
+      "tag": "@bentley/itwin-error-handling-react_v1.0.1",
+      "date": "Tue, 18 Aug 2020 16:01:21 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "remove bwc references"
+          }
+        ]
+      }
+    }
+  ]
+}
