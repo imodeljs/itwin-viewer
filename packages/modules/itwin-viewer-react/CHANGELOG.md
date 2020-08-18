@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 13 Aug 2020 18:28:26 GMT and should not be manually modified.
+This log was last generated on Tue, 18 Aug 2020 13:47:01 GMT and should not be manually modified.
+
+## 1.1.3
+Tue, 18 Aug 2020 13:47:01 GMT
+
+### Patches
+
+- add keywords to package.json and remove yarn references
 
 ## 1.1.2
 Thu, 13 Aug 2020 18:28:26 GMT
