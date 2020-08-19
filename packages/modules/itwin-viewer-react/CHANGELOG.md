@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 18 Aug 2020 16:01:21 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Aug 2020 14:57:28 GMT and should not be manually modified.
+
+## 1.2.0
+Wed, 19 Aug 2020 14:57:28 GMT
+
+### Minor changes
+
+- Add a parameter for color theme
 
 ## 1.1.4
 Tue, 18 Aug 2020 16:01:21 GMT

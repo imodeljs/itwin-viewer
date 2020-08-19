@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "1.2.0",
+      "tag": "@bentley/itwin-viewer-react_v1.2.0",
+      "date": "Wed, 19 Aug 2020 14:57:28 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add a parameter for color theme"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.1.4",
       "tag": "@bentley/itwin-viewer-react_v1.1.4",
       "date": "Tue, 18 Aug 2020 16:01:21 GMT",
