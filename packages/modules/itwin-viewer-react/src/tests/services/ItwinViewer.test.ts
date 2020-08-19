@@ -2,6 +2,8 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
+import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -34,6 +36,7 @@ jest.mock("@microsoft/applicationinsights-react-js", () => ({
     className?: string
   ) => component,
 }));
+jest.mock("@bentley/ui-framework");
 
 describe("iTwinViewer", () => {
   beforeAll(() => {
@@ -43,6 +46,7 @@ describe("iTwinViewer", () => {
   });
 
   beforeEach(() => {
+    jest.clearAllMocks();
     MockAuthorizationClient.initialize().catch((error) => console.error(error));
   });
 
@@ -137,5 +141,40 @@ describe("iTwinViewer", () => {
         productId: undefined,
       }
     );
+  });
+
+  it("sets the theme to the provided theme", async () => {
+    const mockProjectId = "mockProjectId";
+    const mockiModelId = "mockImodelId";
+    const elementId = "viewerRoot";
+
+    const viewer = new ItwinViewer({
+      elementId: elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      theme: ColorTheme.Dark,
+    });
+
+    await viewer.load(mockProjectId, mockiModelId);
+
+    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
+  });
+
+  it("defaults to the light theme when no theme is provided", async () => {
+    const mockProjectId = "mockProjectId";
+    const mockiModelId = "mockImodelId";
+    const elementId = "viewerRoot";
+
+    const viewer = new ItwinViewer({
+      elementId: elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    await viewer.load(mockProjectId, mockiModelId);
+
+    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Light);
   });
 });

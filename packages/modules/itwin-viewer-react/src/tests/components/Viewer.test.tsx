@@ -6,6 +6,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { IModelApp } from "@bentley/imodeljs-frontend";
+import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
@@ -142,5 +143,36 @@ describe("Viewer", () => {
       { authorizationClient: {} },
       { appInsightsKey: undefined, backend: backendConfig, productId: "0000" }
     );
+  });
+
+  it("sets the theme to the provided theme", async () => {
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        productId={"0000"}
+        theme={ColorTheme.Dark}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
+  });
+
+  it("defaults to the light theme when no theme is provided", async () => {
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        productId={"0000"}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Light);
   });
 });

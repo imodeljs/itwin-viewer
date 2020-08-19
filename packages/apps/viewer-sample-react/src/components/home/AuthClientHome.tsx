@@ -10,6 +10,7 @@ import {
   IModelBackendOptions,
   Viewer,
 } from "@bentley/itwin-viewer-react";
+import { ColorTheme } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 
@@ -77,6 +78,7 @@ export const AuthClientHome = () => {
           iModelId={process.env.REACT_APP_AUTH_CLIENT_IMODEL_ID as string}
           appInsightsKey={process.env.REACT_APP_APPLICATION_INSIGHTS_KEY}
           backend={backend}
+          theme={ColorTheme.Dark}
         />
       )}
     </div>
