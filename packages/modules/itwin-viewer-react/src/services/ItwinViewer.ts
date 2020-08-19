@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
 import {
   Extension,
@@ -9,6 +10,7 @@ import {
   IModelApp,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
+import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -36,7 +38,7 @@ export const getAuthClient = (
 
 export class ItwinViewer {
   elementId: string;
-  initialized: boolean;
+  theme: ColorTheme | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {
@@ -44,7 +46,7 @@ export class ItwinViewer {
       throw new Error("Please supply a root elementId as the first parameter"); //TODO localize
     }
     this.elementId = options.elementId;
-    this.initialized = false;
+    this.theme = options.theme;
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
       { authorizationClient: authClient },
@@ -67,6 +69,14 @@ export class ItwinViewer {
     trackEvent("iTwinViewer.Viewer.Load");
     // ensure iModel.js initialization completes
     await Initializer.initialized;
+    // set the theme
+    if (this.theme) {
+      // use the provided theme
+      UiFramework.setColorTheme(this.theme);
+    } else {
+      // default to light
+      UiFramework.setColorTheme(ColorTheme.Light);
+    }
     // render the viewer for the given iModel on the given element
     ReactDOM.render(
       React.createElement(

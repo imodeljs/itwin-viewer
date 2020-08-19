@@ -2,10 +2,12 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
+import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
 import Initializer from "../services/Initializer";
@@ -44,6 +46,7 @@ export const Viewer = ({
   appInsightsKey,
   backend,
   productId,
+  theme,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -140,6 +143,18 @@ export const Viewer = ({
         });
     }
   }, [authConfig]);
+
+  useEffect(() => {
+    if (iModelJsInitialized) {
+      if (theme) {
+        // use the provided theme
+        UiFramework.setColorTheme(theme);
+      } else {
+        // default to light
+        UiFramework.setColorTheme(ColorTheme.Light);
+      }
+    }
+  }, [theme, iModelJsInitialized]);
 
   return iModelJsInitialized && extensionsLoaded ? (
     <IModelLoader projectId={projectId} iModelId={iModelId} />

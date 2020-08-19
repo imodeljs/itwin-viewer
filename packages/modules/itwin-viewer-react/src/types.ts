@@ -2,8 +2,10 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
 import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
+import { ColorTheme } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
 /**
@@ -72,6 +74,8 @@ export interface ItwinViewerParams extends ItwinViewerCommonParams {
 export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   /** authorization configuration */
   authConfig: AuthorizationOptions;
+  /** color theme */
+  theme?: ColorTheme;
 }
 
 export interface ItwinViewerInitializerParams {
