@@ -25,6 +25,7 @@ export interface ViewerProps extends ItwinViewerCommonParams {
   projectId: string;
   iModelId: string;
   extensions?: ViewerExtension[];
+  changeSetId?: string;
 }
 
 interface ExtensionUrl {
@@ -47,6 +48,7 @@ export const Viewer = ({
   backend,
   productId,
   theme,
+  changeSetId,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -154,6 +156,10 @@ export const Viewer = ({
   }, [theme, iModelJsInitialized]);
 
   return iModelJsInitialized && extensionsLoaded ? (
-    <IModelLoader projectId={projectId} iModelId={iModelId} />
+    <IModelLoader
+      projectId={projectId}
+      iModelId={iModelId}
+      changeSetId={changeSetId}
+    />
   ) : null;
 };

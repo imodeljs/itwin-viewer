@@ -106,7 +106,7 @@ describe("iTwinViewer", () => {
     expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
       projectId: mockProjectId,
       iModelId: mockiModelId,
-      namedVersionId: undefined,
+      changeSetId: undefined,
     });
     expect(ReactDOM.render).toHaveBeenCalledWith(
       expect.anything(),
@@ -159,5 +159,27 @@ describe("iTwinViewer", () => {
     await viewer.load(mockProjectId, mockiModelId);
 
     expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
+  });
+
+  it("queries the iModel with the provided changeSetId", async () => {
+    const mockProjectId = "mockProjectId";
+    const mockiModelId = "mockImodelId";
+    const elementId = "viewerRoot";
+    const changeSetId = "123";
+
+    const viewer = new ItwinViewer({
+      elementId: elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    await viewer.load(mockProjectId, mockiModelId, changeSetId);
+
+    expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
+      projectId: mockProjectId,
+      iModelId: mockiModelId,
+      changeSetId: changeSetId,
+    });
   });
 });

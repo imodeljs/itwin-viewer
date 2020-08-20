@@ -61,11 +61,7 @@ export class ItwinViewer {
   }
 
   /** load a model in the viewer once iTwinViewerApp is ready */
-  load = async (
-    projectId: string,
-    iModelId: string,
-    namedVersionId?: string
-  ) => {
+  load = async (projectId: string, iModelId: string, changeSetId?: string) => {
     trackEvent("iTwinViewer.Viewer.Load");
     // ensure iModel.js initialization completes
     await Initializer.initialized;
@@ -82,7 +78,7 @@ export class ItwinViewer {
         React.createElement(IModelLoader, {
           projectId: projectId,
           iModelId: iModelId,
-          namedVersionId: namedVersionId,
+          changeSetId: changeSetId,
         })
       ),
       document.getElementById(this.elementId)

@@ -35,89 +35,95 @@ interface ViewerProps {
 export interface ModelLoaderProps {
   projectId: string;
   iModelId: string;
-  namedVersionId?: string;
+  changeSetId?: string;
 }
 
-const IModelLoader = React.memo(({ iModelId, projectId }: ModelLoaderProps) => {
-  const [error, setError] = useState<Error>();
-  const [viewerProps, setViewerProps] = useState<ViewerProps>();
+const IModelLoader = React.memo(
+  ({ iModelId, projectId, changeSetId }: ModelLoaderProps) => {
+    const [error, setError] = useState<Error>();
+    const [viewerProps, setViewerProps] = useState<ViewerProps>();
 
-  // trigger error boundary when fatal error is thrown
-  const errorManager = useErrorManager({});
-  useEffect(() => {
-    setError(errorManager.fatalError);
-  }, [errorManager.fatalError]);
+    // trigger error boundary when fatal error is thrown
+    const errorManager = useErrorManager({});
+    useEffect(() => {
+      setError(errorManager.fatalError);
+    }, [errorManager.fatalError]);
 
-  useEffect(() => {
-    const getModelConnection = async () => {
-      if (!projectId || !iModelId) {
-        throw new Error("No projectId or iModelId provided!");
-      }
-      // create a new imodelConnection for the passed project and imodel ids
-      const imodelConnection = await openImodel(projectId, iModelId);
-      if (imodelConnection) {
-        // TODO revist this logic for the viewer
-        // pass the default viewids to the frontstage.
-        // currently we pass the first 2 spatial views to support split screen
-        // this logic will likely change when we have proper use cases
-        const viewIds = await getDefaultViewIds(imodelConnection);
-        // attempt to construct a default viewState
-        const savedViewState = await ViewCreator.createDefaultView(
-          imodelConnection,
-          undefined,
-          viewIds.length > 0 ? viewIds[0] : undefined,
-          {
-            displayEnvironment: false,
-            standardViewRotation: StandardViewId.Top,
-          }
-        );
-
-        // Should not be undefined
-        if (!savedViewState) {
-          throw new Error("No default view state for the imodel!");
+    useEffect(() => {
+      const getModelConnection = async () => {
+        if (!projectId || !iModelId) {
+          throw new Error("No projectId or iModelId provided!");
         }
+        // create a new imodelConnection for the passed project and imodel ids
+        const imodelConnection = await openImodel(
+          projectId,
+          iModelId,
+          changeSetId
+        );
+        if (imodelConnection) {
+          // TODO revist this logic for the viewer
+          // pass the default viewids to the frontstage.
+          // currently we pass the first 2 spatial views to support split screen
+          // this logic will likely change when we have proper use cases
+          const viewIds = await getDefaultViewIds(imodelConnection);
+          // attempt to construct a default viewState
+          const savedViewState = await ViewCreator.createDefaultView(
+            imodelConnection,
+            undefined,
+            viewIds.length > 0 ? viewIds[0] : undefined,
+            {
+              displayEnvironment: false,
+              standardViewRotation: StandardViewId.Top,
+            }
+          );
 
-        // Tell the SyncUiEventDispatcher about the iModelConnection
-        UiFramework.setIModelConnection(imodelConnection);
-        // Set default view state
-        UiFramework.setDefaultViewState(savedViewState);
+          // Should not be undefined
+          if (!savedViewState) {
+            throw new Error("No default view state for the imodel!");
+          }
 
-        SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
+          // Tell the SyncUiEventDispatcher about the iModelConnection
+          UiFramework.setIModelConnection(imodelConnection);
+          // Set default view state
+          UiFramework.setDefaultViewState(savedViewState);
 
-        // We create a FrontStage that contains the views that we want.
-        // Passed as a prop but must adhere to the signature of the review and approval MainFrontstage class
-        const frontstageProvider = new DefaultFrontstage([savedViewState]);
+          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
-        await SelectionScopeClient.initializeSelectionScope();
-        SelectionScopeClient.setupSelectionScopeHandler();
+          // We create a FrontStage that contains the views that we want.
+          // Passed as a prop but must adhere to the signature of the review and approval MainFrontstage class
+          const frontstageProvider = new DefaultFrontstage([savedViewState]);
 
-        setViewerProps({
-          imodel: imodelConnection,
-          frontstageProvider: frontstageProvider,
-        });
-      }
-    };
-    getModelConnection().catch((error) => {
-      errorManager.throwFatalError(error);
-    });
-  }, [projectId, iModelId]);
+          await SelectionScopeClient.initializeSelectionScope();
+          SelectionScopeClient.setupSelectionScopeHandler();
 
-  if (error) {
-    throw error;
-  } else {
-    return viewerProps?.imodel && viewerProps?.frontstageProvider ? (
-      <div className="itwin-viewer-container">
-        <Provider store={StateManager.store}>
-          <IModelViewer
-            iModel={viewerProps.imodel}
-            frontstage={viewerProps.frontstageProvider}
-          />
-        </Provider>
-      </div>
-    ) : (
-      <IModelBusy />
-    );
+          setViewerProps({
+            imodel: imodelConnection,
+            frontstageProvider: frontstageProvider,
+          });
+        }
+      };
+      getModelConnection().catch((error) => {
+        errorManager.throwFatalError(error);
+      });
+    }, [projectId, iModelId]);
+
+    if (error) {
+      throw error;
+    } else {
+      return viewerProps?.imodel && viewerProps?.frontstageProvider ? (
+        <div className="itwin-viewer-container">
+          <Provider store={StateManager.store}>
+            <IModelViewer
+              iModel={viewerProps.imodel}
+              frontstage={viewerProps.frontstageProvider}
+            />
+          </Provider>
+        </div>
+      ) : (
+        <IModelBusy />
+      );
+    }
   }
-});
+);
 
 export default withAITracking(ai.reactPlugin, IModelLoader, "IModelLoader");
