@@ -7,7 +7,7 @@ import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
-import { ColorTheme, UiFramework } from "@bentley/ui-framework";
+import { UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
 import Initializer from "../services/Initializer";
@@ -149,9 +149,6 @@ export const Viewer = ({
       if (theme) {
         // use the provided theme
         UiFramework.setColorTheme(theme);
-      } else {
-        // default to light
-        UiFramework.setColorTheme(ColorTheme.Light);
       }
     }
   }, [theme, iModelJsInitialized]);

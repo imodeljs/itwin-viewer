@@ -160,19 +160,4 @@ describe("Viewer", () => {
 
     expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
-
-  it("defaults to the light theme when no theme is provided", async () => {
-    const { getByTestId } = render(
-      <Viewer
-        projectId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        productId={"0000"}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Light);
-  });
 });

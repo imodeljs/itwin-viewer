@@ -38,7 +38,7 @@ export const getAuthClient = (
 
 export class ItwinViewer {
   elementId: string;
-  theme: ColorTheme | undefined;
+  theme: ColorTheme | string | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {
@@ -73,9 +73,6 @@ export class ItwinViewer {
     if (this.theme) {
       // use the provided theme
       UiFramework.setColorTheme(this.theme);
-    } else {
-      // default to light
-      UiFramework.setColorTheme(ColorTheme.Light);
     }
     // render the viewer for the given iModel on the given element
     ReactDOM.render(

@@ -160,21 +160,4 @@ describe("iTwinViewer", () => {
 
     expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
-
-  it("defaults to the light theme when no theme is provided", async () => {
-    const mockProjectId = "mockProjectId";
-    const mockiModelId = "mockImodelId";
-    const elementId = "viewerRoot";
-
-    const viewer = new ItwinViewer({
-      elementId: elementId,
-      authConfig: {
-        oidcClient: MockAuthorizationClient.oidcClient,
-      },
-    });
-
-    await viewer.load(mockProjectId, mockiModelId);
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Light);
-  });
 });
