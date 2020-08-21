@@ -24,5 +24,8 @@
   .imodelbusy__contents {
     display: inline-block;
     width: 400px;
+    .ls-message-top {
+      color: $buic-foreground-body !important; // TODO remove this once this is properly styled in ui-core
+    }
   }
 }

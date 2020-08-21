@@ -11,6 +11,7 @@ import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
 import { Viewer } from "../../";
+import * as IModelService from "../../services/iModel/IModelService";
 import Initializer from "../../services/Initializer";
 import {
   IModelBackend,
@@ -161,18 +162,23 @@ describe("Viewer", () => {
     expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
 
-  it("defaults to the light theme when no theme is provided", async () => {
+  it("queries the iModel with the provided changeSetId", async () => {
     const { getByTestId } = render(
       <Viewer
         projectId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         productId={"0000"}
+        changeSetId={"123"}
       />
     );
 
     await waitFor(() => getByTestId("loader-wrapper"));
 
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Light);
+    expect(IModelService.openImodel).toHaveBeenCalledWith(
+      mockProjectId,
+      mockIModelId,
+      "123"
+    );
   });
 });

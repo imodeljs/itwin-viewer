@@ -75,7 +75,7 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   /** authorization configuration */
   authConfig: AuthorizationOptions;
   /** color theme */
-  theme?: ColorTheme;
+  theme?: ColorTheme | string;
 }
 
 export interface ItwinViewerInitializerParams {

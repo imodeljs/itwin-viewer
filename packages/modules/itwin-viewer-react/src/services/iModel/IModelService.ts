@@ -16,7 +16,13 @@ import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
  * 1. If named versions exist, get the named version that contains the latest changeset
  * 2. If no named version exists, return the latest changeset
  */
-const getVersion = async (iModelId: string): Promise<IModelVersion> => {
+const getVersion = async (
+  iModelId: string,
+  changeSetId?: string
+): Promise<IModelVersion> => {
+  if (changeSetId) {
+    return IModelVersion.asOfChangeSet(changeSetId);
+  }
   const token = await IModelApp.authorizationClient?.getAccessToken();
   if (token) {
     const requestContext = new AuthorizedClientRequestContext(token);
@@ -46,11 +52,12 @@ const getAcceptedViewClasses = (): string[] => {
 /** open and return an IModelConnection from a project's wsgId and an imodel's wsgId */
 export const openImodel = async (
   projectId: string,
-  imodelId: string
+  imodelId: string,
+  changeSetId?: string
 ): Promise<RemoteBriefcaseConnection | undefined> => {
   try {
     // get the version to query
-    const version = await getVersion(imodelId);
+    const version = await getVersion(imodelId, changeSetId);
     // else create a new connection
     const connection = await RemoteBriefcaseConnection.open(
       projectId,
