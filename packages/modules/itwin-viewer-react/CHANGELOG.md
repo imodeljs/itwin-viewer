@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 19 Aug 2020 14:57:28 GMT and should not be manually modified.
+This log was last generated on Fri, 21 Aug 2020 13:33:12 GMT and should not be manually modified.
+
+## 1.3.0
+Fri, 21 Aug 2020 13:33:12 GMT
+
+### Minor changes
+
+- Remove default theme and add support for querying models by changeSetId
 
 ## 1.2.0
 Wed, 19 Aug 2020 14:57:28 GMT
