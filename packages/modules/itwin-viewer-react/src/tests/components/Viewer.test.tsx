@@ -96,6 +96,8 @@ describe("Viewer", () => {
       {
         name: "Extension3",
         url: "http://localhost:3001",
+        version: "2",
+        args: ["one", "two"],
       },
     ];
 
@@ -115,6 +117,9 @@ describe("Viewer", () => {
     ).toHaveBeenCalledTimes(2);
 
     expect(IModelApp.extensionAdmin.loadExtension).toHaveBeenCalledTimes(3);
+    expect(
+      IModelApp.extensionAdmin.loadExtension
+    ).toHaveBeenCalledWith("Extension3", "2", ["one", "two"]);
   });
 
   it("initializes the viewer with the provided backend configuration", async () => {

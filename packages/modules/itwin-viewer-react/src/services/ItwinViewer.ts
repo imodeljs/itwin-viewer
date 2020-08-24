@@ -91,13 +91,14 @@ export class ItwinViewer {
   addExtension = (
     extensionName: string,
     version?: string,
-    url?: string
+    url?: string,
+    args?: string[]
   ): Promise<Extension | undefined> => {
     if (url) {
       IModelApp.extensionAdmin.addExtensionLoaderFront(
         new ExternalServerExtensionLoader(url)
       );
     }
-    return IModelApp.extensionAdmin.loadExtension(extensionName, version);
+    return IModelApp.extensionAdmin.loadExtension(extensionName, version, args);
   };
 }

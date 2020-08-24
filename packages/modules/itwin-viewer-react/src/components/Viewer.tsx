@@ -19,6 +19,7 @@ export interface ViewerExtension {
   name: string;
   url?: string;
   version?: string;
+  args?: string[];
 }
 
 export interface ViewerProps extends ItwinViewerCommonParams {
@@ -37,6 +38,7 @@ interface ExtensionInstance {
   name: string;
   loaded: boolean;
   version?: string;
+  args?: string[];
 }
 
 export const Viewer = ({
@@ -85,6 +87,7 @@ export const Viewer = ({
           name: extension.name,
           loaded: false,
           version: extension.version,
+          args: extension.args,
         });
         instancesUpdated = true;
       }
@@ -115,7 +118,11 @@ export const Viewer = ({
       extensionInstances?.forEach((extensionInstance) => {
         if (!extensionInstance.loaded) {
           IModelApp.extensionAdmin
-            .loadExtension(extensionInstance.name, extensionInstance.version)
+            .loadExtension(
+              extensionInstance.name,
+              extensionInstance.version,
+              extensionInstance.args
+            )
             .then(() => (extensionInstance.loaded = true))
             .catch((error) => {
               throw error;
