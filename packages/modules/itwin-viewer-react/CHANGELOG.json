@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "1.4.1",
+      "tag": "@bentley/itwin-viewer-react_v1.4.1",
+      "date": "Tue, 25 Aug 2020 18:10:23 GMT",
+      "comments": {
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@bentley/itwin-error-handling-react\" from `1.0.1` to `1.0.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.4.0",
       "tag": "@bentley/itwin-viewer-react_v1.4.0",
       "date": "Tue, 25 Aug 2020 11:54:15 GMT",

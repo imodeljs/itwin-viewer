@@ -1,6 +1,11 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 25 Aug 2020 11:54:15 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Aug 2020 18:10:23 GMT and should not be manually modified.
+
+## 1.4.1
+Tue, 25 Aug 2020 18:10:23 GMT
+
+*Version update only*
 
 ## 1.4.0
 Tue, 25 Aug 2020 11:54:15 GMT
