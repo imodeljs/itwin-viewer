@@ -3,6 +3,10 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import {
+  ExternalServerExtensionLoader,
+  IModelApp,
+} from "@bentley/imodeljs-frontend";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -37,6 +41,23 @@ jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ) => component,
 }));
 jest.mock("@bentley/ui-framework");
+jest.mock("@bentley/imodeljs-frontend", () => {
+  return {
+    IModelApp: {
+      startup: jest.fn(),
+      extensionAdmin: {
+        addExtensionLoaderFront: jest.fn(),
+        loadExtension: jest.fn().mockResolvedValue(true),
+      },
+    },
+    SnapMode: {},
+    ActivityMessageDetails: jest.fn(),
+    PrimitiveTool: jest.fn(),
+    NotificationManager: jest.fn(),
+    ExternalServerExtensionLoader: jest.fn(),
+    Tool: jest.fn(),
+  };
+});
 
 describe("iTwinViewer", () => {
   beforeAll(() => {
@@ -181,5 +202,33 @@ describe("iTwinViewer", () => {
       iModelId: mockiModelId,
       changeSetId: changeSetId,
     });
+  });
+
+  it("loads the extension with the passed in version and args", async () => {
+    const elementId = "viewerRoot";
+
+    const viewer = new ItwinViewer({
+      elementId: elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    await viewer.addExtension(
+      "SampleExtension",
+      "2",
+      "http://extensionhome.com",
+      ["one", "two"]
+    );
+
+    expect(
+      IModelApp.extensionAdmin.addExtensionLoaderFront
+    ).toHaveBeenCalledWith(
+      new ExternalServerExtensionLoader("http://extensionhome.com")
+    );
+
+    expect(
+      IModelApp.extensionAdmin.loadExtension
+    ).toHaveBeenCalledWith("SampleExtension", "2", ["one", "two"]);
   });
 });
