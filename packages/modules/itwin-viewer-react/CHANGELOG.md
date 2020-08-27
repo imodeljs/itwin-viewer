@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 27 Aug 2020 14:13:34 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Aug 2020 17:57:28 GMT and should not be manually modified.
+
+## 1.5.1
+Thu, 27 Aug 2020 17:57:28 GMT
+
+### Patches
+
+- Fix corner item logic
 
 ## 1.5.0
 Thu, 27 Aug 2020 14:13:34 GMT
