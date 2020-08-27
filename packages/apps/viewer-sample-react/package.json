@@ -15,7 +15,7 @@
     "@bentley/imodeljs-markup": "^2.3.3",
     "@bentley/imodeljs-quantity": "^2.3.3",
     "@bentley/itwin-client": "^2.3.3",
-    "@bentley/itwin-viewer-react": "1.4.1",
+    "@bentley/itwin-viewer-react": "1.5.0",
     "@bentley/orbitgt-core": "^2.3.3",
     "@bentley/presentation-common": "^2.3.3",
     "@bentley/presentation-frontend": "^2.3.3",
