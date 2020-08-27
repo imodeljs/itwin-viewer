@@ -51,6 +51,7 @@ export const Viewer = ({
   productId,
   theme,
   changeSetId,
+  defaultUiConfig,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -167,6 +168,7 @@ export const Viewer = ({
       projectId={projectId}
       iModelId={iModelId}
       changeSetId={changeSetId}
+      uiConfig={defaultUiConfig}
     />
   ) : null;
 };

@@ -76,6 +76,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   authConfig: AuthorizationOptions;
   /** color theme */
   theme?: ColorTheme | string;
+  /** Default UI configuration */
+  defaultUiConfig?: ItwinViewerUi;
 }
 
 export interface ItwinViewerInitializerParams {
@@ -85,4 +87,41 @@ export interface ItwinViewerInitializerParams {
   backend?: IModelBackendOptions;
   /** GPRID for the consuming application. Will default to the iTwin Viewer GPRID */
   productId?: string;
+}
+
+/**
+ * Configure options for the top left corner item
+ */
+export interface CornerItem {
+  hideDefault?: boolean;
+  item?: React.ReactNode;
+}
+
+/**
+ * Configure options for the content manipulation section
+ */
+export interface ContentManipulationTools {
+  cornerItem?: CornerItem;
+  hideDefaultHorizontalItems?: boolean;
+  hideDefaultVerticalItems?: boolean;
+}
+
+/**
+ * Configure options for the navigation section
+ */
+export interface ViewNavigationTools {
+  hideDefaultHorizontalItems?: boolean;
+  hideDefaultVerticalItems?: boolean;
+}
+
+/**
+ * Configure options for the default UI
+ */
+export interface ItwinViewerUi {
+  contentManipulationTools?: ContentManipulationTools;
+  navigationTools?: ViewNavigationTools;
+  hideToolSettings?: boolean;
+  hideTreeView?: boolean;
+  hidePropertyGrid?: boolean;
+  hideDefaultStatusBar?: boolean;
 }
