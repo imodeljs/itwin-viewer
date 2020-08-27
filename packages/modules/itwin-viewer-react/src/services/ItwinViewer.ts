@@ -17,7 +17,7 @@ import ReactDOM from "react-dom";
 import { AuthorizationOptions } from "../";
 import IModelLoader from "../components/iModel/IModelLoader";
 import AuthorizationClient from "../services/auth/AuthorizationClient";
-import { ItwinViewerParams } from "../types";
+import { ItwinViewerParams, ItwinViewerUi } from "../types";
 import Initializer from "./Initializer";
 import { trackEvent } from "./telemetry/TelemetryService";
 
@@ -39,6 +39,7 @@ export const getAuthClient = (
 export class ItwinViewer {
   elementId: string;
   theme: ColorTheme | string | undefined;
+  uiConfig: ItwinViewerUi | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {
@@ -47,6 +48,8 @@ export class ItwinViewer {
     }
     this.elementId = options.elementId;
     this.theme = options.theme;
+    this.uiConfig = options.defaultUiConfig;
+
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
       { authorizationClient: authClient },
@@ -79,6 +82,7 @@ export class ItwinViewer {
           projectId: projectId,
           iModelId: iModelId,
           changeSetId: changeSetId,
+          uiConfig: this.uiConfig,
         })
       ),
       document.getElementById(this.elementId)

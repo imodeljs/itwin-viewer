@@ -6,8 +6,6 @@
 import { Id64 } from "@bentley/bentleyjs-core";
 import { ViewState } from "@bentley/imodeljs-frontend";
 import {
-  BasicNavigationWidget,
-  BasicToolWidget,
   ContentGroup,
   ContentLayoutDef,
   ContentViewManager,
@@ -26,9 +24,10 @@ import {
 } from "@bentley/ui-framework";
 import * as React from "react";
 
+import { ItwinViewerUi } from "../../../types";
 import { PropertyGridWidget } from "../../property";
 import { AppStatusBarWidget } from "../statusbars/AppStatusBar";
-import { TreeWidget } from "../widgets/TreeWidget";
+import { BasicNavigationWidget, BasicToolWidget, TreeWidget } from "../widgets";
 
 /**
  * Default Frontstage for the iTwinViewer
@@ -49,8 +48,12 @@ export class DefaultFrontstage extends FrontstageProvider {
   // Content group for all layouts
   private _contentGroup: ContentGroup;
 
-  constructor(public viewStates: ViewState[]) {
+  private _uiConfig?: ItwinViewerUi;
+
+  constructor(public viewStates: ViewState[], uiConfig?: ItwinViewerUi) {
     super();
+
+    this._uiConfig = uiConfig;
 
     this._contentLayoutDef = new ContentLayoutDef({
       id: DefaultFrontstage.MAIN_CONTENT_ID,
@@ -85,29 +88,40 @@ export class DefaultFrontstage extends FrontstageProvider {
               <Widget
                 key={DefaultFrontstage.DEFAULT_TOOL_WIDGET_KEY}
                 isFreeform={true}
-                element={<BasicToolWidget />}
+                element={
+                  <BasicToolWidget
+                    config={this._uiConfig?.contentManipulationTools}
+                  />
+                }
               />,
             ]}
           />
         }
         toolSettings={
           <Zone
-            widgets={[
-              <Widget
-                key={DefaultFrontstage.DEFAULT_TOOL_SETTINGS_KEY}
-                isToolSettings={true}
-              />,
-            ]}
+            widgets={
+              !this._uiConfig?.hideToolSettings
+                ? [
+                    <Widget
+                      key={DefaultFrontstage.DEFAULT_TOOL_SETTINGS_KEY}
+                      isToolSettings={true}
+                    />,
+                  ]
+                : []
+            }
           />
         }
         viewNavigationTools={
           <Zone
             widgets={[
-              /** Use standard NavigationWidget delivered in ui-framework */
               <Widget
                 key={DefaultFrontstage.DEFAULT_NAVIGATION_WIDGET_KEY}
                 isFreeform={true}
-                element={<BasicNavigationWidget />}
+                element={
+                  <BasicNavigationWidget
+                    config={this._uiConfig?.navigationTools}
+                  />
+                }
               />,
             ]}
           />
@@ -116,52 +130,64 @@ export class DefaultFrontstage extends FrontstageProvider {
           <Zone
             defaultState={ZoneState.Minimized}
             allowsMerging={true}
-            widgets={[
-              <Widget
-                key={DefaultFrontstage.DEFAULT_TREE_WIDGET_KEY}
-                control={TreeWidget}
-                fillZone={true}
-                iconSpec="icon-tree"
-                labelKey="iTwinViewer:components.tree"
-                applicationData={{
-                  iModelConnection: UiFramework.getIModelConnection(),
-                }}
-              />,
-            ]}
+            widgets={
+              !this._uiConfig?.hideTreeView
+                ? [
+                    <Widget
+                      key={DefaultFrontstage.DEFAULT_TREE_WIDGET_KEY}
+                      control={TreeWidget}
+                      fillZone={true}
+                      iconSpec="icon-tree"
+                      labelKey="iTwinViewer:components.tree"
+                      applicationData={{
+                        iModelConnection: UiFramework.getIModelConnection(),
+                      }}
+                    />,
+                  ]
+                : []
+            }
           />
         }
         bottomRight={
           <Zone
             allowsMerging={true}
             mergeWithZone={ZoneLocation.CenterRight}
-            widgets={[
-              <Widget
-                key={DefaultFrontstage.DEFAULT_PROPERTIES_WIDGET_KEY}
-                control={PropertyGridWidget}
-                defaultState={WidgetState.Hidden}
-                fillZone={true}
-                iconSpec="icon-properties-list"
-                labelKey="iTwinViewer:components.properties"
-                applicationData={{
-                  iModelConnection: UiFramework.getIModelConnection(),
-                  rulesetId: "Default",
-                  projectId: UiFramework.getIModelConnection()?.contextId,
-                }}
-                syncEventIds={[SyncUiEventId.SelectionSetChanged]}
-                stateFunc={_determineWidgetStateForSelectionSet}
-              />,
-            ]}
+            widgets={
+              !this._uiConfig?.hidePropertyGrid
+                ? [
+                    <Widget
+                      key={DefaultFrontstage.DEFAULT_PROPERTIES_WIDGET_KEY}
+                      control={PropertyGridWidget}
+                      defaultState={WidgetState.Hidden}
+                      fillZone={true}
+                      iconSpec="icon-properties-list"
+                      labelKey="iTwinViewer:components.properties"
+                      applicationData={{
+                        iModelConnection: UiFramework.getIModelConnection(),
+                        rulesetId: "Default",
+                        projectId: UiFramework.getIModelConnection()?.contextId,
+                      }}
+                      syncEventIds={[SyncUiEventId.SelectionSetChanged]}
+                      stateFunc={_determineWidgetStateForSelectionSet}
+                    />,
+                  ]
+                : []
+            }
           />
         }
         statusBar={
           <Zone
-            widgets={[
-              <Widget
-                key={DefaultFrontstage.DEFAULT_STATUS_BAR_WIDGET_KEY}
-                isStatusBar={true}
-                control={AppStatusBarWidget}
-              />,
-            ]}
+            widgets={
+              !this._uiConfig?.hideDefaultStatusBar
+                ? [
+                    <Widget
+                      key={DefaultFrontstage.DEFAULT_STATUS_BAR_WIDGET_KEY}
+                      isStatusBar={true}
+                      control={AppStatusBarWidget}
+                    />,
+                  ]
+                : []
+            }
           />
         }
         rightPanel={<StagePanel allowedZones={[6, 9]} />}

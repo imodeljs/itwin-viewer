@@ -79,6 +79,23 @@ export const AuthClientHome = () => {
           appInsightsKey={process.env.REACT_APP_APPLICATION_INSIGHTS_KEY}
           backend={backend}
           theme={ColorTheme.Dark}
+          defaultUiConfig={{
+            contentManipulationTools: {
+              hideDefaultHorizontalItems: true,
+              hideDefaultVerticalItems: true,
+              cornerItem: {
+                hideDefault: true,
+              },
+            },
+            hideDefaultStatusBar: true,
+            hidePropertyGrid: true,
+            hideTreeView: true,
+            hideToolSettings: true,
+            navigationTools: {
+              hideDefaultHorizontalItems: true,
+              hideDefaultVerticalItems: true,
+            },
+          }}
         />
       )}
     </div>

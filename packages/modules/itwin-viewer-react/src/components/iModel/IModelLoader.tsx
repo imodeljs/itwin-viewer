@@ -24,6 +24,7 @@ import {
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
 import { ai } from "../../services/telemetry/TelemetryService";
+import { ItwinViewerUi } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
 
@@ -36,10 +37,11 @@ export interface ModelLoaderProps {
   projectId: string;
   iModelId: string;
   changeSetId?: string;
+  uiConfig?: ItwinViewerUi;
 }
 
 const IModelLoader = React.memo(
-  ({ iModelId, projectId, changeSetId }: ModelLoaderProps) => {
+  ({ iModelId, projectId, changeSetId, uiConfig }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [viewerProps, setViewerProps] = useState<ViewerProps>();
 
@@ -91,7 +93,10 @@ const IModelLoader = React.memo(
 
           // We create a FrontStage that contains the views that we want.
           // Passed as a prop but must adhere to the signature of the review and approval MainFrontstage class
-          const frontstageProvider = new DefaultFrontstage([savedViewState]);
+          const frontstageProvider = new DefaultFrontstage(
+            [savedViewState],
+            uiConfig
+          );
 
           await SelectionScopeClient.initializeSelectionScope();
           SelectionScopeClient.setupSelectionScopeHandler();
