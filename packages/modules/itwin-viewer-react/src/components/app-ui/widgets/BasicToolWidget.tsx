@@ -124,8 +124,9 @@ export function BasicToolWidget({ config }: BasicToolWidgetProps) {
     <ToolWidgetComposer
       className={className}
       cornerItem={
-        config?.cornerItem?.item ??
-        config?.cornerItem?.hideDefault ? undefined : (
+        config?.cornerItem?.item ? (
+          config?.cornerItem?.item
+        ) : config?.cornerItem?.hideDefault ? undefined : (
           <BackstageAppButton />
         )
       }
