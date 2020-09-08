@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-error-handling-react",
   "entries": [
     {
+      "version": "2.0.0",
+      "tag": "@bentley/itwin-error-handling-react_v2.0.0",
+      "date": "Tue, 08 Sep 2020 18:28:22 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Upgrade minimum iModel.js version"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.2",
       "tag": "@bentley/itwin-error-handling-react_v1.0.2",
       "date": "Tue, 25 Aug 2020 18:10:23 GMT",

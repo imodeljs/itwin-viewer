@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 27 Aug 2020 17:57:28 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Sep 2020 18:28:22 GMT and should not be manually modified.
+
+## 2.0.0
+Tue, 08 Sep 2020 18:28:22 GMT
+
+### Breaking changes
+
+- Upgrade minimum iModel.js version
 
 ## 1.5.1
 Thu, 27 Aug 2020 17:57:28 GMT
