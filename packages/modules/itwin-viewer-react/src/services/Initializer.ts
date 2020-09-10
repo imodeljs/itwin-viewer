@@ -145,10 +145,13 @@ class Initializer {
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
         if (viewerHome) {
           console.log(`resources served from: ${viewerHome}`);
-          iModelAppOptions.i18n = new I18N("iModelJs", {
-            urlTemplate: `${viewerHome}/locales/{{lng}}/{{ns}}.json`,
-          });
         }
+
+        iModelAppOptions.i18n = new I18N("iModelJs", {
+          urlTemplate: viewerHome
+            ? `${viewerHome}/locales/{{lng}}/{{ns}}.json`
+            : undefined,
+        });
 
         this.setupEnv(viewerOptions && viewerOptions.backend);
         ai.initialize(viewerOptions && viewerOptions.appInsightsKey);
