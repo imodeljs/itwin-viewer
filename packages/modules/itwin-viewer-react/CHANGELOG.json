@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "2.0.1",
+      "tag": "@bentley/itwin-viewer-react_v2.0.1",
+      "date": "Fri, 11 Sep 2020 12:13:08 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "always instantiate i18n"
+          }
+        ]
+      }
+    },
+    {
       "version": "2.0.0",
       "tag": "@bentley/itwin-viewer-react_v2.0.0",
       "date": "Tue, 08 Sep 2020 18:28:22 GMT",
