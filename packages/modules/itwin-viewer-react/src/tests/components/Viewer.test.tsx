@@ -13,6 +13,7 @@ import React from "react";
 import { Viewer } from "../../";
 import * as IModelService from "../../services/iModel/IModelService";
 import Initializer from "../../services/Initializer";
+import { ai } from "../../services/telemetry/TelemetryService";
 import {
   IModelBackend,
   IModelBackendHost,
@@ -20,13 +21,6 @@ import {
 } from "../../types";
 import MockOidcClient from "../mocks/MockOidcClient";
 
-jest.mock("../../services/Initializer", () => ({
-  __esModule: true,
-  default: {
-    initialize: jest.fn().mockResolvedValue(true),
-    initialized: Promise.resolve(),
-  },
-}));
 jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("../../services/iModel/IModelService");
 jest.mock("@bentley/ui-framework");
@@ -50,6 +44,15 @@ jest.mock("@bentley/imodeljs-frontend", () => {
         addExtensionLoaderFront: jest.fn(),
         loadExtension: jest.fn().mockResolvedValue(true),
       },
+      telemetry: {
+        addClient: jest.fn(),
+      },
+      i18n: {
+        registerNamespace: jest.fn().mockReturnValue({
+          readFinished: jest.fn().mockResolvedValue(true),
+        }),
+        languageList: jest.fn().mockReturnValue(["en-US"]),
+      },
     },
     SnapMode: {},
     ActivityMessageDetails: jest.fn(),
@@ -57,8 +60,13 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     NotificationManager: jest.fn(),
     ExternalServerExtensionLoader: jest.fn(),
     Tool: jest.fn(),
+    RemoteBriefcaseConnection: {
+      open: jest.fn(),
+    },
   };
 });
+
+jest.mock("../../services/telemetry/TelemetryService");
 
 const mockProjectId = "123";
 const mockIModelId = "456";
@@ -123,6 +131,8 @@ describe("Viewer", () => {
   });
 
   it("initializes the viewer with the provided backend configuration", async () => {
+    jest.spyOn(Initializer, "initialize");
+
     const backendConfig: IModelBackendOptions = {
       hostedBackend: {
         title: IModelBackend.GeneralPurpose,
@@ -147,7 +157,12 @@ describe("Viewer", () => {
 
     expect(Initializer.initialize).toHaveBeenCalledWith(
       { authorizationClient: {} },
-      { appInsightsKey: undefined, backend: backendConfig, productId: "0000" }
+      {
+        appInsightsKey: undefined,
+        backend: backendConfig,
+        imjsAppInsightsKey: undefined,
+        productId: "0000",
+      }
     );
   });
 
@@ -185,5 +200,69 @@ describe("Viewer", () => {
       mockIModelId,
       "123"
     );
+  });
+
+  it("instantiates an instance of the Telemetry Service when an app insights key is provided", async () => {
+    const appInsightsKey = "123";
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        appInsightsKey={appInsightsKey}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(ai.initialize).toHaveBeenCalledWith(appInsightsKey);
+  });
+
+  it("does not instantiate an instance of the Telemetry Service when an app insights key is not provided", async () => {
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(ai.initialize).not.toHaveBeenCalled();
+  });
+
+  it("adds the iModel.js telemetry client when the imjs key is provided", async () => {
+    const appInsightsKey = "123";
+    const imjsAppInsightsKey = "456";
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        appInsightsKey={appInsightsKey}
+        imjsAppInsightsKey={imjsAppInsightsKey}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not add the iModel.js telemetry client when the imjs key is not provided", async () => {
+    const appInsightsKey = "123";
+    const { getByTestId } = render(
+      <Viewer
+        projectId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        appInsightsKey={appInsightsKey}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(1);
   });
 });

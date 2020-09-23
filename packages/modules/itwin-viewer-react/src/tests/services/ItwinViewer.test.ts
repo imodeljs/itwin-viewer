@@ -15,6 +15,7 @@ import IModelLoader from "../../components/iModel/IModelLoader";
 import AuthorizationClient from "../../services/auth/AuthorizationClient";
 import Initializer from "../../services/Initializer";
 import { ItwinViewer } from "../../services/ItwinViewer";
+import { ai } from "../../services/telemetry/TelemetryService";
 import {
   IModelBackend,
   IModelBackendHost,
@@ -23,13 +24,6 @@ import {
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
 
-jest.mock("../../services/Initializer", () => ({
-  __esModule: true,
-  default: {
-    initialize: jest.fn().mockResolvedValue(true),
-    initialized: Promise.resolve(),
-  },
-}));
 jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ReactPlugin: jest.fn(),
@@ -41,13 +35,23 @@ jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ) => component,
 }));
 jest.mock("@bentley/ui-framework");
+jest.mock("@bentley/presentation-frontend");
 jest.mock("@bentley/imodeljs-frontend", () => {
   return {
     IModelApp: {
-      startup: jest.fn(),
+      startup: jest.fn().mockResolvedValue(true),
       extensionAdmin: {
         addExtensionLoaderFront: jest.fn(),
         loadExtension: jest.fn().mockResolvedValue(true),
+      },
+      telemetry: {
+        addClient: jest.fn(),
+      },
+      i18n: {
+        registerNamespace: jest.fn().mockReturnValue({
+          readFinished: jest.fn().mockResolvedValue(true),
+        }),
+        languageList: jest.fn().mockReturnValue(["en-US"]),
       },
     },
     SnapMode: {},
@@ -58,6 +62,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     Tool: jest.fn(),
   };
 });
+jest.mock("../../services/telemetry/TelemetryService");
 
 describe("iTwinViewer", () => {
   beforeAll(() => {
@@ -83,13 +88,15 @@ describe("iTwinViewer", () => {
     ); //TODO localize
   });
 
-  it("initializes iModel.js with the passed in oidc client", () => {
+  it("initializes iModel.js with the passed in oidc client", async () => {
+    jest.spyOn(Initializer, "initialize");
     new ItwinViewer({
       elementId: "viewerRoot",
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
     });
+    await Initializer.initialized;
     expect(Initializer.initialize).toHaveBeenCalledWith(
       {
         authorizationClient: MockAuthorizationClient.oidcClient,
@@ -230,5 +237,71 @@ describe("iTwinViewer", () => {
     expect(
       IModelApp.extensionAdmin.loadExtension
     ).toHaveBeenCalledWith("SampleExtension", "2", ["one", "two"]);
+  });
+
+  it("instantiates an instance of the Telemetry Service when an app insights key is provided", async () => {
+    const appInsightsKey = "123";
+    const elementId = "viewerRoot";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      appInsightsKey,
+    });
+
+    await Initializer.initialized;
+
+    expect(ai.initialize).toHaveBeenCalledWith(appInsightsKey);
+  });
+
+  it("does not instantiate an instance of the Telemetry Service when an app insights key is not provided", async () => {
+    const elementId = "viewerRoot";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    await Initializer.initialized;
+
+    expect(ai.initialize).not.toHaveBeenCalledWith();
+  });
+
+  it("adds the iModel.js telemetry client when the imjs key is provided", async () => {
+    const elementId = "viewerRoot";
+    const appInsightsKey = "123";
+    const imjsAppInsightsKey = "456";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      appInsightsKey,
+      imjsAppInsightsKey,
+    });
+    await Initializer.initialized;
+
+    expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not add the iModel.js telemetry client when the imjs key is not provided", async () => {
+    const elementId = "viewerRoot";
+    const appInsightsKey = "123";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      appInsightsKey,
+    });
+    await Initializer.initialized;
+
+    expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(1);
   });
 });

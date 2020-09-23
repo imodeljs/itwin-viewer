@@ -127,10 +127,10 @@ class Initializer {
 
     this._initialized = new Promise(async (resolve, reject) => {
       try {
-        iModelAppOptions = iModelAppOptions ?? {};
+        const appOptions = iModelAppOptions ? { ...iModelAppOptions } : {};
 
         // Use the AppNotificationManager subclass from ui-framework to get prompts and messages
-        iModelAppOptions.notifications = new AppNotificationManager();
+        appOptions.notifications = new AppNotificationManager();
 
         // Initialize state manager for extensions to have access to extending the redux store
         // This will setup a singleton store inside the StoreManager class.
@@ -139,7 +139,7 @@ class Initializer {
         });
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
-        iModelAppOptions.applicationId = viewerOptions?.productId || "3098";
+        appOptions.applicationId = viewerOptions?.productId || "3098";
 
         // if ITWIN_VIEWER_HOME is defined, the viewer is likely being served from another origin
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
@@ -147,7 +147,7 @@ class Initializer {
           console.log(`resources served from: ${viewerHome}`);
         }
 
-        iModelAppOptions.i18n = new I18N("iModelJs", {
+        appOptions.i18n = new I18N("iModelJs", {
           urlTemplate: viewerHome
             ? `${viewerHome}/locales/{{lng}}/{{ns}}.json`
             : undefined,
@@ -155,7 +155,7 @@ class Initializer {
 
         this.setupEnv(viewerOptions?.backend);
 
-        await IModelApp.startup(iModelAppOptions);
+        await IModelApp.startup(appOptions);
 
         // Add iModelJS ApplicationInsights telemetry client if a key is provided
         if (viewerOptions?.imjsAppInsightsKey) {
