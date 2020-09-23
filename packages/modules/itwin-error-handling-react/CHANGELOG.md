@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-error-handling-react
 
-This log was last generated on Tue, 08 Sep 2020 18:28:22 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Sep 2020 20:36:01 GMT and should not be manually modified.
+
+## 3.0.0
+Wed, 23 Sep 2020 20:36:01 GMT
+
+### Breaking changes
+
+- Upgrade minimum iModel.js version to 2.6.4
 
 ## 2.0.0
 Tue, 08 Sep 2020 18:28:22 GMT

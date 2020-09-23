@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 11 Sep 2020 12:13:08 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Sep 2020 20:36:01 GMT and should not be manually modified.
+
+## 3.0.0
+Wed, 23 Sep 2020 20:36:01 GMT
+
+### Breaking changes
+
+- Upgrade minimum iModel.js version to 2.6.4 and fix issues with telemetry
 
 ## 2.0.1
 Fri, 11 Sep 2020 12:13:08 GMT
