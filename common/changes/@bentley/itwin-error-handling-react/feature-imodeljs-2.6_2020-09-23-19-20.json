@@ -2,7 +2,7 @@
   "changes": [
     {
       "packageName": "@bentley/itwin-error-handling-react",
-      "comment": "Upgrade minimum iModel.js version to 2.6.3",
+      "comment": "Upgrade minimum iModel.js version to 2.6.4",
       "type": "major"
     }
   ],
