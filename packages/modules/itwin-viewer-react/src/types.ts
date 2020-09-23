@@ -83,6 +83,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
 export interface ItwinViewerInitializerParams {
   /** optional Azure Application Insights key for telemetry */
   appInsightsKey?: string;
+  /** optional iModel.js Application Insights key for telemetry within iModel.js */
+  imjsAppInsightsKey?: string;
   /** options to override the default backend (design-review) */
   backend?: IModelBackendOptions;
   /** GPRID for the consuming application. Will default to the iTwin Viewer GPRID */

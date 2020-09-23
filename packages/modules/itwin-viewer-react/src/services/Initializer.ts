@@ -5,6 +5,7 @@
 
 import { ClientRequestContext } from "@bentley/bentleyjs-core";
 import { Config } from "@bentley/bentleyjs-core";
+import { FrontendApplicationInsightsClient } from "@bentley/frontend-application-insights-client";
 import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
 import { IModelApp, IModelAppOptions } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
@@ -138,8 +139,7 @@ class Initializer {
         });
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
-        iModelAppOptions.applicationId =
-          (viewerOptions && viewerOptions.productId) || "3098";
+        iModelAppOptions.applicationId = viewerOptions?.productId || "3098";
 
         // if ITWIN_VIEWER_HOME is defined, the viewer is likely being served from another origin
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
@@ -153,9 +153,23 @@ class Initializer {
             : undefined,
         });
 
-        this.setupEnv(viewerOptions && viewerOptions.backend);
-        ai.initialize(viewerOptions && viewerOptions.appInsightsKey);
+        this.setupEnv(viewerOptions?.backend);
+
         await IModelApp.startup(iModelAppOptions);
+
+        // Add iModelJS ApplicationInsights telemetry client if a key is provided
+        if (viewerOptions?.imjsAppInsightsKey) {
+          const imjsApplicationInsightsClient = new FrontendApplicationInsightsClient(
+            viewerOptions.imjsAppInsightsKey
+          );
+          IModelApp.telemetry.addClient(imjsApplicationInsightsClient);
+        }
+
+        // Add the app's telemetry client if a key was provided
+        if (viewerOptions?.appInsightsKey) {
+          ai.initialize(viewerOptions?.appInsightsKey);
+          IModelApp.telemetry.addClient(ai);
+        }
 
         // initialize localization for the app
         await IModelApp.i18n.registerNamespace("iTwinViewer").readFinished;
@@ -178,11 +192,11 @@ class Initializer {
         AppUi.initialize();
 
         // initialize RPC communication
-        await Initializer._initializeRpc(
-          viewerOptions && viewerOptions.backend
-        );
+        await Initializer._initializeRpc(viewerOptions?.backend);
 
-        trackEvent("iTwinViewer.Viewer.Initialized");
+        if (viewerOptions?.appInsightsKey) {
+          trackEvent("iTwinViewer.Viewer.Initialized");
+        }
         console.log("iModel.js initialized");
 
         resolve();

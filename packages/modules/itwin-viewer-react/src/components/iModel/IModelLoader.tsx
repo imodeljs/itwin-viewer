@@ -38,9 +38,10 @@ export interface ModelLoaderProps {
   iModelId: string;
   changeSetId?: string;
   uiConfig?: ItwinViewerUi;
+  appInsightsKey?: string;
 }
 
-const IModelLoader = React.memo(
+const Loader = React.memo(
   ({ iModelId, projectId, changeSetId, uiConfig }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [viewerProps, setViewerProps] = useState<ViewerProps>();
@@ -131,4 +132,14 @@ const IModelLoader = React.memo(
   }
 );
 
-export default withAITracking(ai.reactPlugin, IModelLoader, "IModelLoader");
+const TrackedLoader = withAITracking(ai.reactPlugin, Loader, "IModelLoader");
+
+const IModelLoader = (props: ModelLoaderProps) => {
+  if (props.appInsightsKey) {
+    return <TrackedLoader {...props} />;
+  } else {
+    return <Loader {...props} />;
+  }
+};
+
+export default IModelLoader;

@@ -40,6 +40,7 @@ export class ItwinViewer {
   elementId: string;
   theme: ColorTheme | string | undefined;
   uiConfig: ItwinViewerUi | undefined;
+  appInsightsKey: string | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {
@@ -49,6 +50,7 @@ export class ItwinViewer {
     this.elementId = options.elementId;
     this.theme = options.theme;
     this.uiConfig = options.defaultUiConfig;
+    this.appInsightsKey = options.appInsightsKey;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -57,6 +59,7 @@ export class ItwinViewer {
         appInsightsKey: options.appInsightsKey,
         backend: options.backend,
         productId: options.productId,
+        imjsAppInsightsKey: options.imjsAppInsightsKey,
       }
     ).catch((error) => {
       throw error;
@@ -65,7 +68,9 @@ export class ItwinViewer {
 
   /** load a model in the viewer once iTwinViewerApp is ready */
   load = async (projectId: string, iModelId: string, changeSetId?: string) => {
-    trackEvent("iTwinViewer.Viewer.Load");
+    if (this.appInsightsKey) {
+      trackEvent("iTwinViewer.Viewer.Load");
+    }
     // ensure iModel.js initialization completes
     await Initializer.initialized;
     // set the theme
@@ -73,6 +78,7 @@ export class ItwinViewer {
       // use the provided theme
       UiFramework.setColorTheme(this.theme);
     }
+
     // render the viewer for the given iModel on the given element
     ReactDOM.render(
       React.createElement(
@@ -83,6 +89,7 @@ export class ItwinViewer {
           iModelId: iModelId,
           changeSetId: changeSetId,
           uiConfig: this.uiConfig,
+          appInsightsKey: this.appInsightsKey,
         })
       ),
       document.getElementById(this.elementId)

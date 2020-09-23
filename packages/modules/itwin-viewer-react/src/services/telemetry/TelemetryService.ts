@@ -2,11 +2,14 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import { IModelApp } from "@bentley/imodeljs-frontend";
+import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
+import { TelemetryClient, TelemetryEvent } from "@bentley/telemetry-client";
 import { ReactPlugin } from "@microsoft/applicationinsights-react-js";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
 
-class TelemetryService {
+class TelemetryService implements TelemetryClient {
   private _reactPlugin: ReactPlugin;
   private _appInsights?: ApplicationInsights;
 
@@ -39,6 +42,22 @@ class TelemetryService {
   constructor() {
     this._reactPlugin = new ReactPlugin();
   }
+
+  /**
+   * iModelJS Telemetry Client implementation
+   */
+  public postTelemetry = async (
+    requestContext: AuthorizedClientRequestContext,
+    telemetryEvent: TelemetryEvent
+  ): Promise<void> => {
+    const properties = telemetryEvent.getProperties();
+
+    delete properties.eventName; // No need to duplicate this property when sending
+    this._appInsights?.trackEvent({
+      name: telemetryEvent.eventName,
+      properties,
+    });
+  };
 
   private _telemetryInitializer = () => {
     if (

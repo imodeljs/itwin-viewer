@@ -52,6 +52,7 @@ export const Viewer = ({
   theme,
   changeSetId,
   defaultUiConfig,
+  imjsAppInsightsKey,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -139,7 +140,7 @@ export const Viewer = ({
       const authClient = getAuthClient(authConfig);
       Initializer.initialize(
         { authorizationClient: authClient },
-        { appInsightsKey, backend, productId }
+        { appInsightsKey, backend, productId, imjsAppInsightsKey }
       )
         .then(() => {
           Initializer.initialized
@@ -169,6 +170,7 @@ export const Viewer = ({
       iModelId={iModelId}
       changeSetId={changeSetId}
       uiConfig={defaultUiConfig}
+      appInsightsKey={appInsightsKey}
     />
   ) : null;
 };
