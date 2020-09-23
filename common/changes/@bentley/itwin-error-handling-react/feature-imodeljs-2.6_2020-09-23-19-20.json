@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-error-handling-react",
+      "comment": "Upgrade minimum iModel.js version to 2.6.3",
+      "type": "major"
+    }
+  ],
+  "packageName": "@bentley/itwin-error-handling-react",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}
