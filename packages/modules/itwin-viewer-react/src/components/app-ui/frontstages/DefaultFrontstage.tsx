@@ -192,6 +192,7 @@ export class DefaultFrontstage extends FrontstageProvider {
         }
         rightPanel={<StagePanel allowedZones={[6, 9]} />}
         bottomPanel={<StagePanel allowedZones={[7, 8, 9]} />}
+        leftPanel={<StagePanel allowedZones={[1, 4, 7]} />}
       />
     );
   }
