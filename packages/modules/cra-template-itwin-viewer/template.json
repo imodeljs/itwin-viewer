@@ -50,6 +50,17 @@
       "start": "react-scripts --max_old_space_size=4096 start",
       "build": "react-scripts --max_old_space_size=4096 build",
       "test": "react-scripts --max_old_space_size=4096 test"
-    }
+    },
+    "browserslist": [
+      "electron 8.0.0",
+      "last 4 chrome version",
+      "last 4 firefox version",
+      "last 4 safari version",
+      "last 4 ios version",
+      "last 4 ChromeAndroid version",
+      "last 4 edge version",
+      "not dead",
+      "not <0.2%"
+    ]
   }
 }
