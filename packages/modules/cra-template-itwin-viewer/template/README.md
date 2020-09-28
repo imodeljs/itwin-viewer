@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment Variables
+
+Prior to running the app, add a valid projectId and iModelId for your user in the .env file:
+
+```
+# ---- Test ids ----
+REACT_APP_TEST_PROJECT_ID = ""
+REACT_APP_TEST_IMODEL_ID = ""
+```
+
+You can also replace the OIDC client data in this file with your own if you'd prefer.
+
 ## Available Scripts
 
 In the project directory, you can run:
