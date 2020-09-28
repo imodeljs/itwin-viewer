@@ -1,0 +1,17 @@
+{
+  "name": "@bentley/cra-template-itwin-viewer",
+  "entries": [
+    {
+      "version": "1.0.0",
+      "tag": "@bentley/cra-template-itwin-viewer_v1.0.0",
+      "date": "Mon, 28 Sep 2020 16:35:27 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Add CRA template for the iTwin Viewer"
+          }
+        ]
+      }
+    }
+  ]
+}
