@@ -25,5 +25,9 @@
     "template",
     "template.json"
   ],
-  "main": "template.json"
+  "main": "template.json",
+  "scripts": {
+    "build": "",
+    "test": ""
+  }
 }
