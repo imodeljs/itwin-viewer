@@ -2,6 +2,10 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Id64 } from "@bentley/bentleyjs-core";
 import { ViewState } from "@bentley/imodeljs-frontend";
@@ -191,6 +195,7 @@ export class DefaultFrontstage extends FrontstageProvider {
           />
         }
         rightPanel={<StagePanel allowedZones={[6, 9]} />}
+        bottomPanel={<StagePanel allowedZones={[7, 8, 9]} />}
       />
     );
   }
