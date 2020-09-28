@@ -3,7 +3,9 @@ const fs = require("fs");
 //get all arguments after the positional argument indicator, "--"
 const filePaths = process.argv.reduce((acc, cur) => {
   if (acc) {
-    acc.push(cur);
+    if (!cur.includes("cra-template-itwin-viewer")) {
+      acc.push(cur);
+    }
     return acc;
   } else if (cur === "--") {
     return [];

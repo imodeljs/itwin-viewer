@@ -30,6 +30,12 @@
       "packageName": "@bentley/viewer-sample-react",
       "projectFolder": "packages/apps/viewer-sample-react",
       "shouldPublish": false
+    },
+    {
+      "packageName": "@bentley/cra-template-itwin-viewer",
+      "projectFolder": "packages/modules/cra-template-itwin-viewer",
+      "versionPolicyName": "independentModule",
+      "shouldPublish": true
     }
   ]
 }

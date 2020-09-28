@@ -1,0 +1,33 @@
+{
+  "name": "@bentley/cra-template-itwin-viewer",
+  "version": "0.0.1",
+  "keywords": [
+    "react",
+    "create-react-app",
+    "template",
+    "typescript",
+    "iModel",
+    "iModelJs",
+    "iTwin",
+    "iTwin Viewer"
+  ],
+  "description": "The iTwin Viewer template for Create React App.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imodeljs/itwin-viewer.git",
+    "directory": "packages/modules/cra-template-itwin-viewer"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imodeljs/itwin-viewer/issues"
+  },
+  "files": [
+    "template",
+    "template.json"
+  ],
+  "main": "template.json",
+  "scripts": {
+    "build": "",
+    "test": ""
+  }
+}
