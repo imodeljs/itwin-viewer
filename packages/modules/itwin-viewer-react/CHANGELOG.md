@@ -1,6 +1,14 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 23 Sep 2020 20:36:01 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Sep 2020 13:28:31 GMT and should not be manually modified.
+
+## 3.0.1
+Tue, 29 Sep 2020 13:28:31 GMT
+
+### Patches
+
+- Added bottom panel to defaultFrontstage
+- Also added left panel to defaultFrontstage
 
 ## 3.0.0
 Wed, 23 Sep 2020 20:36:01 GMT

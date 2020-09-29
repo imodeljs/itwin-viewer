@@ -2,6 +2,21 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "3.0.1",
+      "tag": "@bentley/itwin-viewer-react_v3.0.1",
+      "date": "Tue, 29 Sep 2020 13:28:31 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Added bottom panel to defaultFrontstage"
+          },
+          {
+            "comment": "Also added left panel to defaultFrontstage"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.0",
       "tag": "@bentley/itwin-viewer-react_v3.0.0",
       "date": "Wed, 23 Sep 2020 20:36:01 GMT",
