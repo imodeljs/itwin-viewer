@@ -85,6 +85,25 @@ export const UserManagerHome = () => {
 };
 ```
 
+### Props
+
+#### Required
+
+- `projectId` - GUID for the project that contains the model that you wish to view
+- `iModelId` - GUID for the iModel that you wish to view
+- `authConfig` - an instance of an iModel.js FrontendAuthorizationClient or a function that returns an oidc-client UserManager
+
+#### Optional
+
+- `changeSetId` - changeset id to view
+- `extensions` - array of extensions to load in the viewer
+- `backend` - backend connection info (defaults to the General Purpose backend)
+- `theme` - override the default theme
+- `defaultUIConfig` - hide or override default tooling and widgets
+- `productId` - application's GPRID
+- `appInsightsKey` - Application Insights key for telemetry
+- `imjsAppInsightsKey` - Application Insights key for iModel.js telemetry
+
 ## Typescript API
 
 ```html
