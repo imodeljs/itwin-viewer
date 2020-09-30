@@ -85,7 +85,7 @@ export interface ItwinViewerInitializerParams {
   appInsightsKey?: string;
   /** optional iModel.js Application Insights key for telemetry within iModel.js */
   imjsAppInsightsKey?: string;
-  /** options to override the default backend (design-review) */
+  /** options to override the default backend (general-purpose-imodeljs-backend) */
   backend?: IModelBackendOptions;
   /** GPRID for the consuming application. Will default to the iTwin Viewer GPRID */
   productId?: string;
