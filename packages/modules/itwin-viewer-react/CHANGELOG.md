@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 29 Sep 2020 13:28:31 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Sep 2020 19:47:56 GMT and should not be manually modified.
+
+## 3.0.2
+Wed, 30 Sep 2020 19:47:56 GMT
+
+### Patches
+
+- Add props to README
 
 ## 3.0.1
 Tue, 29 Sep 2020 13:28:31 GMT

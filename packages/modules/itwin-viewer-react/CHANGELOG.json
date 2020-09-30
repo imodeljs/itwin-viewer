@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "3.0.2",
+      "tag": "@bentley/itwin-viewer-react_v3.0.2",
+      "date": "Wed, 30 Sep 2020 19:47:56 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add props to README"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.1",
       "tag": "@bentley/itwin-viewer-react_v3.0.1",
       "date": "Tue, 29 Sep 2020 13:28:31 GMT",
