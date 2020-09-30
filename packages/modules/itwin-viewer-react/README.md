@@ -91,7 +91,7 @@ export const UserManagerHome = () => {
 
 - `projectId` - GUID for the project that contains the model that you wish to view
 - `iModelId` - GUID for the iModel that you wish to view
-- `authConfig` - an instance of an iModel.js FrontendAuthorizationClient or a function that returns an oidc-client UserManager
+- `authConfig` - an instance of an iModel.js [FrontendAuthorizationClient](https://www.imodeljs.org/reference/frontend-authorization-client/authorization/frontendauthorizationclient/) or a function that returns an oidc-client UserManager
 
 #### Optional
 
