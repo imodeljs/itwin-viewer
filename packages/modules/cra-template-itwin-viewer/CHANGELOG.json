@@ -2,6 +2,18 @@
   "name": "@bentley/cra-template-itwin-viewer",
   "entries": [
     {
+      "version": "1.0.1",
+      "tag": "@bentley/cra-template-itwin-viewer_v1.0.1",
+      "date": "Mon, 05 Oct 2020 19:05:40 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rename projectId to contextId"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.0",
       "tag": "@bentley/cra-template-itwin-viewer_v1.0.0",
       "date": "Mon, 28 Sep 2020 16:35:27 GMT",

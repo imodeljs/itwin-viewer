@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 30 Sep 2020 19:47:56 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Oct 2020 19:05:40 GMT and should not be manually modified.
+
+## 4.0.0
+Mon, 05 Oct 2020 19:05:40 GMT
+
+### Breaking changes
+
+- Rename projectId to contextId
 
 ## 3.0.2
 Wed, 30 Sep 2020 19:47:56 GMT

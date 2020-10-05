@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "4.0.0",
+      "tag": "@bentley/itwin-viewer-react_v4.0.0",
+      "date": "Mon, 05 Oct 2020 19:05:40 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Rename projectId to contextId"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.2",
       "tag": "@bentley/itwin-viewer-react_v3.0.2",
       "date": "Wed, 30 Sep 2020 19:47:56 GMT",
