@@ -77,10 +77,10 @@ describe("Viewer", () => {
     jest.clearAllMocks();
   });
 
-  it("loads the model loader for the specified projectId and iModelId", async () => {
+  it("loads the model loader for the specified contextId and iModelId", async () => {
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
       />
@@ -111,7 +111,7 @@ describe("Viewer", () => {
 
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         extensions={extensions}
@@ -143,7 +143,7 @@ describe("Viewer", () => {
 
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         backend={backendConfig}
@@ -169,7 +169,7 @@ describe("Viewer", () => {
   it("sets the theme to the provided theme", async () => {
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         productId={"0000"}
@@ -185,7 +185,7 @@ describe("Viewer", () => {
   it("queries the iModel with the provided changeSetId", async () => {
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         productId={"0000"}
@@ -206,7 +206,7 @@ describe("Viewer", () => {
     const appInsightsKey = "123";
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         appInsightsKey={appInsightsKey}
@@ -221,7 +221,7 @@ describe("Viewer", () => {
   it("does not instantiate an instance of the Telemetry Service when an app insights key is not provided", async () => {
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
       />
@@ -237,7 +237,7 @@ describe("Viewer", () => {
     const imjsAppInsightsKey = "456";
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         appInsightsKey={appInsightsKey}
@@ -254,7 +254,7 @@ describe("Viewer", () => {
     const appInsightsKey = "123";
     const { getByTestId } = render(
       <Viewer
-        projectId={mockProjectId}
+        contextId={mockProjectId}
         iModelId={mockIModelId}
         authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
         appInsightsKey={appInsightsKey}

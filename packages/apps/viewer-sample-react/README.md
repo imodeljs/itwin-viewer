@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Configuration
 
-Prior to running or building the application, you should update the environment variables in the .env file as needed. This should include adding a valid projectId and iModelId as well as updating the authorization client and backend configuration as needed.
+Prior to running or building the application, you should update the environment variables in the .env file as needed. This should include adding a valid contextId and iModelId as well as updating the authorization client and backend configuration as needed.
 
 ## Available Scripts
 

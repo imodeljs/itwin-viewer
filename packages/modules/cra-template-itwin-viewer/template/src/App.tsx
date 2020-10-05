@@ -32,14 +32,14 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!process.env.REACT_APP_TEST_PROJECT_ID) {
+    if (!process.env.REACT_APP_TEST_CONTEXT_ID) {
       throw new Error(
-        "Please add a valid project Id in the .env file and restart the application"
+        "Please add a valid context ID in the .env file and restart the application"
       );
     }
     if (!process.env.REACT_APP_TEST_IMODEL_ID) {
       throw new Error(
-        "Please add a valid iModel Id in the .env file and restart the application"
+        "Please add a valid iModel ID in the .env file and restart the application"
       );
     }
   }, []);
@@ -73,7 +73,7 @@ const App: React.FC = () => {
       ) : (
         isAuthorized && (
           <Viewer
-            projectId={process.env.REACT_APP_TEST_PROJECT_ID ?? ""}
+            contextId={process.env.REACT_APP_TEST_CONTEXT_ID ?? ""}
             iModelId={process.env.REACT_APP_TEST_IMODEL_ID ?? ""}
             authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
           />

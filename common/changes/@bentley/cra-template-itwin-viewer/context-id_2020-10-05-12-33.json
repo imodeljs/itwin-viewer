@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/cra-template-itwin-viewer",
+      "comment": "Rename projectId to contextId",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@bentley/cra-template-itwin-viewer",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}

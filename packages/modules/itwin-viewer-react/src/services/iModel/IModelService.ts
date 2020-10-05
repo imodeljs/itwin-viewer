@@ -51,7 +51,7 @@ const getAcceptedViewClasses = (): string[] => {
 
 /** open and return an IModelConnection from a project's wsgId and an imodel's wsgId */
 export const openImodel = async (
-  projectId: string,
+  contextId: string,
   imodelId: string,
   changeSetId?: string
 ): Promise<RemoteBriefcaseConnection | undefined> => {
@@ -60,7 +60,7 @@ export const openImodel = async (
     const version = await getVersion(imodelId, changeSetId);
     // else create a new connection
     const connection = await RemoteBriefcaseConnection.open(
-      projectId,
+      contextId,
       imodelId,
       OpenMode.Readonly,
       version
@@ -69,7 +69,7 @@ export const openImodel = async (
     return connection;
   } catch (error) {
     console.error(
-      `Error opening the iModel: ${imodelId} in Project: ${projectId}`,
+      `Error opening the iModel: ${imodelId} in Project: ${contextId}`,
       error
     );
     throw error;

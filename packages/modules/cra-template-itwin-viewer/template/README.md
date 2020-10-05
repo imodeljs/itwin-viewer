@@ -4,11 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Environment Variables
 
-Prior to running the app, add a valid projectId and iModelId for your user in the .env file:
+Prior to running the app, add a valid contextId and iModelId for your user in the .env file:
 
 ```
 # ---- Test ids ----
-REACT_APP_TEST_PROJECT_ID = ""
+REACT_APP_TEST_CONTEXT_ID = ""
 REACT_APP_TEST_IMODEL_ID = ""
 ```
 

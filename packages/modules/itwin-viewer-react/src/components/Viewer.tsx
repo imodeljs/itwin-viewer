@@ -23,7 +23,7 @@ export interface ViewerExtension {
 }
 
 export interface ViewerProps extends ItwinViewerCommonParams {
-  projectId: string;
+  contextId: string;
   iModelId: string;
   extensions?: ViewerExtension[];
   changeSetId?: string;
@@ -45,7 +45,7 @@ export const Viewer = ({
   authConfig,
   extensions,
   iModelId,
-  projectId,
+  contextId,
   appInsightsKey,
   backend,
   productId,
@@ -166,7 +166,7 @@ export const Viewer = ({
 
   return iModelJsInitialized && extensionsLoaded ? (
     <IModelLoader
-      projectId={projectId}
+      contextId={contextId}
       iModelId={iModelId}
       changeSetId={changeSetId}
       uiConfig={defaultUiConfig}

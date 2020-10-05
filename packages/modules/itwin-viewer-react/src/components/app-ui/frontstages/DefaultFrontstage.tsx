@@ -165,7 +165,7 @@ export class DefaultFrontstage extends FrontstageProvider {
                       applicationData={{
                         iModelConnection: UiFramework.getIModelConnection(),
                         rulesetId: "Default",
-                        projectId: UiFramework.getIModelConnection()?.contextId,
+                        contextId: UiFramework.getIModelConnection()?.contextId,
                       }}
                       syncEventIds={[SyncUiEventId.SelectionSetChanged]}
                       stateFunc={_determineWidgetStateForSelectionSet}

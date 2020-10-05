@@ -84,17 +84,17 @@ interface PropertyGridProps {
   imodel: IModelConnection;
   i18nNamespace: string;
   rootClassName: string;
-  projectId?: string;
+  contextId?: string;
   debugLog?: (...args: any[]) => void;
   featureTracking?: PropertyGridFeatureTracking;
   rulesetId?: string;
 }
 
-const getRequestContext = async (projectId: string | undefined) => {
+const getRequestContext = async (contextId: string | undefined) => {
   const token = await IModelApp.authorizationClient!.getAccessToken();
 
   const requestContext =
-    token && projectId ? new AuthorizedClientRequestContext(token) : undefined;
+    token && contextId ? new AuthorizedClientRequestContext(token) : undefined;
 
   return requestContext;
 };
@@ -103,7 +103,7 @@ export const ViewerPropertyGrid = connect(undefined)(
   (props: PropertyGridProps) => {
     const {
       imodel,
-      projectId,
+      contextId,
       debugLog,
       featureTracking,
       rulesetId,
@@ -141,15 +141,15 @@ export const ViewerPropertyGrid = connect(undefined)(
             // Get shared favorites & add to data
             let newSharedFavs: string[] = [];
 
-            const requestContext = await getRequestContext(projectId);
+            const requestContext = await getRequestContext(contextId);
 
-            if (requestContext && projectId) {
+            if (requestContext && contextId) {
               const result = await IModelApp.settings.getSharedSetting(
                 requestContext,
                 sharedNamespace,
                 sharedName,
                 false,
-                projectId,
+                contextId,
                 imodel.iModelId
               );
               if (result.setting?.slice) {
@@ -191,7 +191,7 @@ export const ViewerPropertyGrid = connect(undefined)(
                     if (propertyField) {
                       await Presentation.favoriteProperties.add(
                         propertyField,
-                        projectId
+                        contextId
                       );
                     }
                   }
@@ -223,24 +223,24 @@ export const ViewerPropertyGrid = connect(undefined)(
 
       // returns the unsubscribe function which will be called before running this effect again
       return dataProvider?.onDataChanged.addListener(onDataChangedHandler);
-    }, [dataProvider, debugLog, sharedFavorites, imodel.iModelId, projectId]);
+    }, [dataProvider, debugLog, sharedFavorites, imodel.iModelId, contextId]);
 
     const onAddFavorite = async (propertyField: Field) => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      Presentation.favoriteProperties.add(propertyField, projectId);
+      Presentation.favoriteProperties.add(propertyField, contextId);
       setContextMenu(undefined);
     };
 
     const onRemoveFavorite = async (propertyField: Field) => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      Presentation.favoriteProperties.remove(propertyField, projectId);
+      Presentation.favoriteProperties.remove(propertyField, contextId);
       setContextMenu(undefined);
     };
 
     const onShareFavorite = async (propName: string) => {
-      const requestContext = await getRequestContext(projectId);
+      const requestContext = await getRequestContext(contextId);
 
-      if (!requestContext || !projectId || !sharedFavorites) {
+      if (!requestContext || !contextId || !sharedFavorites) {
         setContextMenu(undefined);
         return;
       }
@@ -251,7 +251,7 @@ export const ViewerPropertyGrid = connect(undefined)(
         sharedNamespace,
         sharedName,
         false,
-        projectId,
+        contextId,
         imodel.iModelId
       );
       if (result.status !== SettingsStatus.Success) {
@@ -264,7 +264,7 @@ export const ViewerPropertyGrid = connect(undefined)(
         sharedNamespace,
         sharedName,
         false,
-        projectId,
+        contextId,
         imodel.iModelId
       );
       if (result2.status !== SettingsStatus.Success) {
@@ -276,9 +276,9 @@ export const ViewerPropertyGrid = connect(undefined)(
     };
 
     const onUnshareFavorite = async (propName: string) => {
-      const requestContext = await getRequestContext(projectId);
+      const requestContext = await getRequestContext(contextId);
 
-      if (!requestContext || !projectId || !sharedFavorites) {
+      if (!requestContext || !contextId || !sharedFavorites) {
         setContextMenu(undefined);
         return;
       }
@@ -292,7 +292,7 @@ export const ViewerPropertyGrid = connect(undefined)(
         sharedNamespace,
         sharedName,
         false,
-        projectId,
+        contextId,
         imodel.iModelId
       );
       if (result.status !== SettingsStatus.Success) {
@@ -354,7 +354,7 @@ export const ViewerPropertyGrid = connect(undefined)(
             title: translate("context-menu.unshare-favorite.description"),
             label: translate("context-menu.unshare-favorite.label"),
           });
-        } else if (Presentation.favoriteProperties.has(field, projectId)) {
+        } else if (Presentation.favoriteProperties.has(field, contextId)) {
           items.push({
             key: "share-favorite",
             onSelect: () => onShareFavorite(args.propertyRecord.property.name),
@@ -464,7 +464,7 @@ export class PropertyGridWidget extends WidgetControl {
       this.reactElement = (
         <ViewerPropertyGrid
           imodel={options.iModelConnection}
-          projectId={options.projectId}
+          contextId={options.contextId}
           rootClassName={"property-grid"}
           i18nNamespace={"iTwinViewer"}
         />

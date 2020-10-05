@@ -34,7 +34,7 @@ interface ViewerProps {
 }
 
 export interface ModelLoaderProps {
-  projectId: string;
+  contextId: string;
   iModelId: string;
   changeSetId?: string;
   uiConfig?: ItwinViewerUi;
@@ -42,7 +42,7 @@ export interface ModelLoaderProps {
 }
 
 const Loader = React.memo(
-  ({ iModelId, projectId, changeSetId, uiConfig }: ModelLoaderProps) => {
+  ({ iModelId, contextId, changeSetId, uiConfig }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [viewerProps, setViewerProps] = useState<ViewerProps>();
 
@@ -54,12 +54,12 @@ const Loader = React.memo(
 
     useEffect(() => {
       const getModelConnection = async () => {
-        if (!projectId || !iModelId) {
-          throw new Error("No projectId or iModelId provided!");
+        if (!contextId || !iModelId) {
+          throw new Error("No contextId or iModelId provided!");
         }
         // create a new imodelConnection for the passed project and imodel ids
         const imodelConnection = await openImodel(
-          projectId,
+          contextId,
           iModelId,
           changeSetId
         );
@@ -111,7 +111,7 @@ const Loader = React.memo(
       getModelConnection().catch((error) => {
         errorManager.throwFatalError(error);
       });
-    }, [projectId, iModelId]);
+    }, [contextId, iModelId]);
 
     if (error) {
       throw error;
