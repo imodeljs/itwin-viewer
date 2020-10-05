@@ -2,6 +2,18 @@
   "name": "@bentley/cra-template-itwin-viewer",
   "entries": [
     {
+      "version": "1.0.2",
+      "tag": "@bentley/cra-template-itwin-viewer_v1.0.2",
+      "date": "Mon, 05 Oct 2020 20:32:25 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade the min itwin-viewer-react version"
+          }
+        ]
+      }
+    },
+    {
       "version": "1.0.1",
       "tag": "@bentley/cra-template-itwin-viewer_v1.0.1",
       "date": "Mon, 05 Oct 2020 19:05:40 GMT",
