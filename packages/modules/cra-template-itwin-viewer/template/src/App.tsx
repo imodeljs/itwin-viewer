@@ -73,7 +73,7 @@ const App: React.FC = () => {
       ) : (
         isAuthorized && (
           <Viewer
-            projectId={process.env.REACT_APP_TEST_CONTEXT_ID ?? ""}
+            contextId={process.env.REACT_APP_TEST_CONTEXT_ID ?? ""}
             iModelId={process.env.REACT_APP_TEST_IMODEL_ID ?? ""}
             authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
           />

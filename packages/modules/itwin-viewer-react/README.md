@@ -50,7 +50,7 @@ import { getUserManager } from "./MyOidcClient";
 
 export const UserManagerHome = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const projectId = "myConnectProjectId";
+  const contextId = "myConnectProjectId";
   const iModelId = "myIModelId";
 
   // list of extensions with their name and url where they are being served
@@ -75,7 +75,7 @@ export const UserManagerHome = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ getUserManagerFunction: getUserManager }}
-          projectId={projectId}
+          contextId={contextId}
           iModelId={iModelId}
           extensions={extensions}
         />
@@ -89,7 +89,7 @@ export const UserManagerHome = () => {
 
 #### Required
 
-- `projectId` - GUID for the project that contains the model that you wish to view
+- `contextId` - GUID for the context (project, asset, etc.) that contains the model that you wish to view
 - `iModelId` - GUID for the iModel that you wish to view
 - `authConfig` - an instance of an iModel.js [FrontendAuthorizationClient](https://www.imodeljs.org/reference/frontend-authorization-client/authorization/frontendauthorizationclient/) or a function that returns an oidc-client UserManager
 
@@ -117,7 +117,7 @@ import { ItwinViewer } from "@bentley/itwin-viewer-react";
 // function that returns an instance of an oidc-client UserManager that is configured to authorize an iModel.js backend connection via the Bentley IMS authority
 import { getUserManager } from "./MyOidcClient";
 
-const projectId = "myConnectProjectId";
+const contextId = "myConnectProjectId";
 const iModelId = "myIModelId";
 
 const viewer = new iTwinViewer({
@@ -129,7 +129,7 @@ const viewer = new iTwinViewer({
 
 if (viewer) {
   viewer.addExtension("dialogItemsSample");
-  viewer.load(projectId, iModelId);
+  viewer.load(contextId, iModelId);
 }
 ```
 

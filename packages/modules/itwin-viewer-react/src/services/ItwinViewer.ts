@@ -67,7 +67,7 @@ export class ItwinViewer {
   }
 
   /** load a model in the viewer once iTwinViewerApp is ready */
-  load = async (projectId: string, iModelId: string, changeSetId?: string) => {
+  load = async (contextId: string, iModelId: string, changeSetId?: string) => {
     if (this.appInsightsKey) {
       trackEvent("iTwinViewer.Viewer.Load");
     }
@@ -85,7 +85,7 @@ export class ItwinViewer {
         ErrorBoundary,
         {},
         React.createElement(IModelLoader, {
-          projectId: projectId,
+          contextId: contextId,
           iModelId: iModelId,
           changeSetId: changeSetId,
           uiConfig: this.uiConfig,

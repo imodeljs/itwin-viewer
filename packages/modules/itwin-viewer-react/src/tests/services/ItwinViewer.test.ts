@@ -116,7 +116,7 @@ describe("iTwinViewer", () => {
     expect(AuthorizationClient).toHaveBeenCalledWith(oidcClient.getUserManager);
   });
 
-  it("renders the viewer for the proper projectId and iModelId on the element whose id is passed to the constructor", async () => {
+  it("renders the viewer for the proper contextId and iModelId on the element whose id is passed to the constructor", async () => {
     const mockProjectId = "mockProjectId";
     const mockiModelId = "mockImodelId";
     const elementId = "viewerRoot";
@@ -132,7 +132,7 @@ describe("iTwinViewer", () => {
     });
     await viewer.load(mockProjectId, mockiModelId);
     expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
-      projectId: mockProjectId,
+      contextId: mockProjectId,
       iModelId: mockiModelId,
       changeSetId: undefined,
     });
@@ -205,7 +205,7 @@ describe("iTwinViewer", () => {
     await viewer.load(mockProjectId, mockiModelId, changeSetId);
 
     expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
-      projectId: mockProjectId,
+      contextId: mockProjectId,
       iModelId: mockiModelId,
       changeSetId: changeSetId,
     });

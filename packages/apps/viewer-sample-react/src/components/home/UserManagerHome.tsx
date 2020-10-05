@@ -44,7 +44,7 @@ export const UserManagerHome = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-          projectId={process.env.REACT_APP_OIDC_CLIENT_PROJECT_ID as string}
+          contextId={process.env.REACT_APP_OIDC_CLIENT_CONTEXT_ID as string}
           iModelId={process.env.REACT_APP_OIDC_CLIENT_IMODEL_ID as string}
           extensions={extensions}
           productId={productId}

@@ -74,7 +74,7 @@ export const AuthClientHome = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
-          projectId={process.env.REACT_APP_AUTH_CLIENT_PROJECT_ID as string}
+          contextId={process.env.REACT_APP_AUTH_CLIENT_CONTEXT_ID as string}
           iModelId={process.env.REACT_APP_AUTH_CLIENT_IMODEL_ID as string}
           appInsightsKey={process.env.REACT_APP_APPLICATION_INSIGHTS_KEY}
           backend={backend}
