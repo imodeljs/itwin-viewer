@@ -1,6 +1,13 @@
 # Change Log - @bentley/cra-template-itwin-viewer
 
-This log was last generated on Mon, 05 Oct 2020 20:32:25 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Oct 2020 17:45:35 GMT and should not be manually modified.
+
+## 1.0.3
+Tue, 06 Oct 2020 17:45:35 GMT
+
+### Patches
+
+- Properly override viewer container height
 
 ## 1.0.2
 Mon, 05 Oct 2020 20:32:25 GMT
