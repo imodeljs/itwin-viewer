@@ -54,6 +54,7 @@ export const Viewer = ({
   changeSetId,
   defaultUiConfig,
   imjsAppInsightsKey,
+  onIModelConnected,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -173,6 +174,7 @@ export const Viewer = ({
         changeSetId={changeSetId}
         uiConfig={defaultUiConfig}
         appInsightsKey={appInsightsKey}
+        onIModelConnected={onIModelConnected}
       />
     </ErrorBoundary>
   ) : null;

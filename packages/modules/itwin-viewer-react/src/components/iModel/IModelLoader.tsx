@@ -6,7 +6,11 @@
 import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
-import { IModelConnection, StandardViewId } from "@bentley/imodeljs-frontend";
+import {
+  IModelConnection,
+  RemoteBriefcaseConnection,
+  StandardViewId,
+} from "@bentley/imodeljs-frontend";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import {
   StateManager,
@@ -39,10 +43,17 @@ export interface ModelLoaderProps {
   changeSetId?: string;
   uiConfig?: ItwinViewerUi;
   appInsightsKey?: string;
+  onIModelConnected?: (iModel: RemoteBriefcaseConnection) => void;
 }
 
 const Loader = React.memo(
-  ({ iModelId, contextId, changeSetId, uiConfig }: ModelLoaderProps) => {
+  ({
+    iModelId,
+    contextId,
+    changeSetId,
+    uiConfig,
+    onIModelConnected,
+  }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [viewerProps, setViewerProps] = useState<ViewerProps>();
 
@@ -64,6 +75,9 @@ const Loader = React.memo(
           changeSetId
         );
         if (imodelConnection) {
+          if (onIModelConnected) {
+            onIModelConnected(imodelConnection);
+          }
           // TODO revist this logic for the viewer
           // pass the default viewids to the frontstage.
           // currently we pass the first 2 spatial views to support split screen

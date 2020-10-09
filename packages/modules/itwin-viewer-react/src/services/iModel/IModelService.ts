@@ -65,7 +65,6 @@ export const openImodel = async (
       OpenMode.Readonly,
       version
     );
-    console.log(connection);
     return connection;
   } catch (error) {
     console.error(

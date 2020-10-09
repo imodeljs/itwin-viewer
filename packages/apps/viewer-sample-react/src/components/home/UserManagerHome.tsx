@@ -1,8 +1,8 @@
+import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
 /*---------------------------------------------------------------------------------------------
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
-
 import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
@@ -38,6 +38,11 @@ export const UserManagerHome = () => {
     }
   };
 
+  const iModelConnected = (iModel: RemoteBriefcaseConnection) => {
+    console.log("iModel Connected!");
+    console.log(iModel);
+  };
+
   return (
     <div className={styles.home}>
       <Header handleLoginToggle={toggleLogin} loggedIn={loggedIn} />
@@ -48,6 +53,7 @@ export const UserManagerHome = () => {
           iModelId={process.env.REACT_APP_OIDC_CLIENT_IMODEL_ID as string}
           extensions={extensions}
           productId={productId}
+          onIModelConnected={iModelConnected}
         />
       )}
     </div>

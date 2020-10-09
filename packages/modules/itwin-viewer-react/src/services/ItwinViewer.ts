@@ -8,6 +8,7 @@ import {
   Extension,
   ExternalServerExtensionLoader,
   IModelApp,
+  RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
@@ -15,7 +16,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { AuthorizationOptions } from "../";
-import IModelLoader from "../components/iModel/IModelLoader";
+import IModelLoader, {
+  ModelLoaderProps,
+} from "../components/iModel/IModelLoader";
 import AuthorizationClient from "../services/auth/AuthorizationClient";
 import { ItwinViewerParams, ItwinViewerUi } from "../types";
 import Initializer from "./Initializer";
@@ -41,6 +44,7 @@ export class ItwinViewer {
   theme: ColorTheme | string | undefined;
   uiConfig: ItwinViewerUi | undefined;
   appInsightsKey: string | undefined;
+  onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {
@@ -51,6 +55,7 @@ export class ItwinViewer {
     this.theme = options.theme;
     this.uiConfig = options.defaultUiConfig;
     this.appInsightsKey = options.appInsightsKey;
+    this.onIModelConnected = options.onIModelConnected;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -90,7 +95,8 @@ export class ItwinViewer {
           changeSetId: changeSetId,
           uiConfig: this.uiConfig,
           appInsightsKey: this.appInsightsKey,
-        })
+          onIModelConnected: this.onIModelConnected,
+        } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)
     );
