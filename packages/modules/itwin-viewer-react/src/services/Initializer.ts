@@ -104,13 +104,12 @@ class Initializer {
   /** add required values to Config.App */
   static setupEnv(options?: IModelBackendOptions) {
     Config.App.merge({
-      imjs_buddi_url: options?.buddiServer
-        ? options.buddiServer
-        : process.env.REACT_APP_BUDDI_SERVER ??
-          "https://buddi.bentley.com/WebService",
-      imjs_buddi_resolve_url_using_region: options?.buddiRegion
-        ? options.buddiRegion
-        : process.env.REACT_APP_BUDDI_REGION ?? 0,
+      imjs_buddi_url:
+        options?.buddiServer !== undefined
+          ? options.buddiServer
+          : "https://buddi.bentley.com/WebService",
+      imjs_buddi_resolve_url_using_region:
+        options?.buddiRegion !== undefined ? options.buddiRegion : 0,
     });
   }
 

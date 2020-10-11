@@ -7,6 +7,7 @@ import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
+import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import { UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
@@ -165,12 +166,14 @@ export const Viewer = ({
   }, [theme, iModelJsInitialized]);
 
   return iModelJsInitialized && extensionsLoaded ? (
-    <IModelLoader
-      contextId={contextId}
-      iModelId={iModelId}
-      changeSetId={changeSetId}
-      uiConfig={defaultUiConfig}
-      appInsightsKey={appInsightsKey}
-    />
+    <ErrorBoundary>
+      <IModelLoader
+        contextId={contextId}
+        iModelId={iModelId}
+        changeSetId={changeSetId}
+        uiConfig={defaultUiConfig}
+        appInsightsKey={appInsightsKey}
+      />
+    </ErrorBoundary>
   ) : null;
 };
