@@ -103,6 +103,7 @@ export const UserManagerHome = () => {
 - `productId` - application's GPRID
 - `appInsightsKey` - Application Insights key for telemetry
 - `imjsAppInsightsKey` - Application Insights key for iModel.js telemetry
+- `onIModelConnected` - Callback function that executes after the iModel connection is successful and contains the iModel connection as a parameter
 
 ## Typescript API
 
