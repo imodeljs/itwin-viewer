@@ -5,6 +5,7 @@
 
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
 import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
+import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
 import { ColorTheme } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
@@ -78,6 +79,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   theme?: ColorTheme | string;
   /** Default UI configuration */
   defaultUiConfig?: ItwinViewerUi;
+  /** Optional callback function when iModel is connected */
+  onIModelConnected?: (iModel: RemoteBriefcaseConnection) => void;
 }
 
 export interface ItwinViewerInitializerParams {
