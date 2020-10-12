@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "4.1.0",
+      "tag": "@bentley/itwin-viewer-react_v4.1.0",
+      "date": "Mon, 12 Oct 2020 18:02:11 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add callback function when the iModel connection is established"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.0.1",
       "tag": "@bentley/itwin-viewer-react_v4.0.1",
       "date": "Mon, 12 Oct 2020 00:25:40 GMT",

@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 12 Oct 2020 00:25:40 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Oct 2020 18:02:11 GMT and should not be manually modified.
+
+## 4.1.0
+Mon, 12 Oct 2020 18:02:11 GMT
+
+### Minor changes
+
+- Add callback function when the iModel connection is established
 
 ## 4.0.1
 Mon, 12 Oct 2020 00:25:40 GMT
