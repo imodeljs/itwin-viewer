@@ -1,8 +1,9 @@
-import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
 /*---------------------------------------------------------------------------------------------
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
+import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
 import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
