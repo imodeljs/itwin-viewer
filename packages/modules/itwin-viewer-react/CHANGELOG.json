@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "4.0.1",
+      "tag": "@bentley/itwin-viewer-react_v4.0.1",
+      "date": "Mon, 12 Oct 2020 00:25:40 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix BUDDI prop check and add ErrorBoundary to the Viewer component"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.0.0",
       "tag": "@bentley/itwin-viewer-react_v4.0.0",
       "date": "Mon, 05 Oct 2020 19:05:40 GMT",

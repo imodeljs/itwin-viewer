@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 05 Oct 2020 19:05:40 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Oct 2020 00:25:40 GMT and should not be manually modified.
+
+## 4.0.1
+Mon, 12 Oct 2020 00:25:40 GMT
+
+### Patches
+
+- Fix BUDDI prop check and add ErrorBoundary to the Viewer component
 
 ## 4.0.0
 Mon, 05 Oct 2020 19:05:40 GMT
