@@ -104,6 +104,7 @@ export const UserManagerHome = () => {
 - `appInsightsKey` - Application Insights key for telemetry
 - `imjsAppInsightsKey` - Application Insights key for iModel.js telemetry
 - `onIModelConnected` - Callback function that executes after the iModel connection is successful and contains the iModel connection as a parameter
+- `i18nUrlTemplate` - Override the default url template where i18n resource files are queried
 
 ## Typescript API
 
