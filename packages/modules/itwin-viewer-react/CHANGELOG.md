@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 12 Oct 2020 18:02:11 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Oct 2020 17:54:10 GMT and should not be manually modified.
+
+## 4.2.0
+Tue, 13 Oct 2020 17:54:10 GMT
+
+### Minor changes
+
+- Add the ability to customize the iModel.js i18n url template
 
 ## 4.1.0
 Mon, 12 Oct 2020 18:02:11 GMT

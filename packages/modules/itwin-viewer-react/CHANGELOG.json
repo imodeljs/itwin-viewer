@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "4.2.0",
+      "tag": "@bentley/itwin-viewer-react_v4.2.0",
+      "date": "Tue, 13 Oct 2020 17:54:10 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to customize the iModel.js i18n url template"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.1.0",
       "tag": "@bentley/itwin-viewer-react_v4.1.0",
       "date": "Mon, 12 Oct 2020 18:02:11 GMT",
