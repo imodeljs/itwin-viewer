@@ -7,6 +7,7 @@ import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
+import { I18N } from "@bentley/imodeljs-i18n";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -24,6 +25,7 @@ import {
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
 
+jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ReactPlugin: jest.fn(),
@@ -303,5 +305,24 @@ describe("iTwinViewer", () => {
     await Initializer.initialized;
 
     expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(1);
+  });
+
+  it("overrides the i18n url template", async () => {
+    const elementId = "viewerRoot";
+    const i18nUrlTemplate = "host/route";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      i18nUrlTemplate,
+    });
+
+    await Initializer.initialized;
+
+    expect(I18N).toHaveBeenCalledWith("iModelJs", {
+      urlTemplate: i18nUrlTemplate,
+    });
   });
 });

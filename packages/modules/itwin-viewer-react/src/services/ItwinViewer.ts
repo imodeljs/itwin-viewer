@@ -65,6 +65,7 @@ export class ItwinViewer {
         backend: options.backend,
         productId: options.productId,
         imjsAppInsightsKey: options.imjsAppInsightsKey,
+        i18nUrlTemplate: options.i18nUrlTemplate,
       }
     ).catch((error) => {
       throw error;

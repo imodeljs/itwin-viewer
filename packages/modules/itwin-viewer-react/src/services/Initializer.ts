@@ -147,9 +147,9 @@ class Initializer {
         }
 
         appOptions.i18n = new I18N("iModelJs", {
-          urlTemplate: viewerHome
-            ? `${viewerHome}/locales/{{lng}}/{{ns}}.json`
-            : undefined,
+          urlTemplate: viewerOptions?.i18nUrlTemplate
+            ? viewerOptions.i18nUrlTemplate
+            : viewerHome && `${viewerHome}/locales/{{lng}}/{{ns}}.json`,
         });
 
         this.setupEnv(viewerOptions?.backend);
