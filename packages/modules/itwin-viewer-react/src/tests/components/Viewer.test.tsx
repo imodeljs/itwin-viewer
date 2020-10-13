@@ -6,6 +6,7 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import { IModelApp } from "@bentley/imodeljs-frontend";
+import { I18N } from "@bentley/imodeljs-i18n";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
@@ -21,6 +22,7 @@ import {
 } from "../../types";
 import MockOidcClient from "../mocks/MockOidcClient";
 
+jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("../../services/iModel/IModelService");
 jest.mock("@bentley/ui-framework");
@@ -264,5 +266,24 @@ describe("Viewer", () => {
     await waitFor(() => getByTestId("loader-wrapper"));
 
     expect(IModelApp.telemetry.addClient).toHaveBeenCalledTimes(1);
+  });
+
+  it("overrides the i18n url template", async () => {
+    const i18nUrlTemplate = "host/route";
+
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        i18nUrlTemplate={i18nUrlTemplate}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(I18N).toHaveBeenCalledWith("iModelJs", {
+      urlTemplate: i18nUrlTemplate,
+    });
   });
 });

@@ -55,6 +55,7 @@ export const Viewer = ({
   defaultUiConfig,
   imjsAppInsightsKey,
   onIModelConnected,
+  i18nUrlTemplate,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -142,7 +143,13 @@ export const Viewer = ({
       const authClient = getAuthClient(authConfig);
       Initializer.initialize(
         { authorizationClient: authClient },
-        { appInsightsKey, backend, productId, imjsAppInsightsKey }
+        {
+          appInsightsKey,
+          backend,
+          productId,
+          imjsAppInsightsKey,
+          i18nUrlTemplate,
+        }
       )
         .then(() => {
           Initializer.initialized

@@ -92,6 +92,8 @@ export interface ItwinViewerInitializerParams {
   backend?: IModelBackendOptions;
   /** GPRID for the consuming application. Will default to the iTwin Viewer GPRID */
   productId?: string;
+  /** urlTemplate for querying i18n json files */
+  i18nUrlTemplate?: string;
 }
 
 /**
