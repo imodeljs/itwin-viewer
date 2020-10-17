@@ -14,7 +14,6 @@ import { UserManager } from "oidc-client";
  */
 export enum IModelBackend {
   GeneralPurpose = "general-purpose-imodeljs-backend",
-  DesignReview = "navigator-backend",
 }
 
 /**
@@ -30,7 +29,7 @@ export enum IModelBackendHost {
  */
 export interface HostedBackendConfig {
   /* title for rpc config */
-  title: IModelBackend;
+  title: IModelBackend | string;
   /* SF/K8S */
   hostType: IModelBackendHost;
   /* in the form "vx.x" */

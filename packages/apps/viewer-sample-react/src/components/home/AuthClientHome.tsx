@@ -4,12 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { IModelApp } from "@bentley/imodeljs-frontend";
-import {
-  IModelBackend,
-  IModelBackendHost,
-  IModelBackendOptions,
-  Viewer,
-} from "@bentley/itwin-viewer-react";
+import { Viewer } from "@bentley/itwin-viewer-react";
 import { ColorTheme } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
@@ -23,14 +18,6 @@ export const AuthClientHome = () => {
     AuthorizationClient.oidcClient && AuthorizationClient.oidcClient.hasSignedIn
   );
   const location = useLocation();
-
-  const backend: IModelBackendOptions = {
-    hostedBackend: {
-      title: IModelBackend.DesignReview,
-      version: "v3.0",
-      hostType: IModelBackendHost.ServiceFabric,
-    },
-  };
 
   useEffect(() => {
     if (!AuthorizationClient.oidcClient) {
@@ -77,7 +64,6 @@ export const AuthClientHome = () => {
           contextId={process.env.REACT_APP_AUTH_CLIENT_CONTEXT_ID as string}
           iModelId={process.env.REACT_APP_AUTH_CLIENT_IMODEL_ID as string}
           appInsightsKey={process.env.REACT_APP_APPLICATION_INSIGHTS_KEY}
-          backend={backend}
           theme={ColorTheme.Dark}
           defaultUiConfig={{
             contentManipulationTools: {
