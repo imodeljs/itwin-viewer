@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import {
   AuthorizedFrontendRequestContext,
   IModelApp,
@@ -16,7 +17,7 @@ import {
 
 export class SelectionScopeClient {
   public static readonly defaultScope = "top-assembly";
-  public static readonly namespace = "designreview-SelectionScope";
+  public static readonly namespace = "ItwinViewer-SelectionScope";
   public static readonly settingName = "SelectionScope";
 
   public static setupSelectionScopeHandler() {
