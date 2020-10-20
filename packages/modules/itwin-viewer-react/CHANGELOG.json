@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "4.2.1",
+      "tag": "@bentley/itwin-viewer-react_v4.2.1",
+      "date": "Tue, 20 Oct 2020 12:57:12 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove designreview from list of backends we support by default. rename selectionscope namespace\""
+          }
+        ]
+      }
+    },
+    {
       "version": "4.2.0",
       "tag": "@bentley/itwin-viewer-react_v4.2.0",
       "date": "Tue, 13 Oct 2020 17:54:10 GMT",

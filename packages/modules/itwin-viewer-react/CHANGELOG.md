@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 13 Oct 2020 17:54:10 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Oct 2020 12:57:12 GMT and should not be manually modified.
+
+## 4.2.1
+Tue, 20 Oct 2020 12:57:12 GMT
+
+### Patches
+
+- Remove designreview from list of backends we support by default. rename selectionscope namespace"
 
 ## 4.2.0
 Tue, 13 Oct 2020 17:54:10 GMT
