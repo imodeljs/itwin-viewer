@@ -3,11 +3,12 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Id64String, OpenMode } from "@bentley/bentleyjs-core";
+import { Id64, Id64String, OpenMode } from "@bentley/bentleyjs-core";
 import { IModelHubClient, VersionQuery } from "@bentley/imodelhub-client";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import {
   IModelApp,
+  IModelConnection,
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
@@ -43,9 +44,12 @@ const getVersion = async (
 
 /** parse the comma-delimited config value that is a list of accepted schema:classnames or return a default */
 const getAcceptedViewClasses = (): string[] => {
-  const acceptedClasses = [];
-  // TODO is this accurate for the viewer? Need to be configurable
-  acceptedClasses.push("BisCore:SpatialViewDefinition");
+  // TODO configurable?
+  const acceptedClasses = [
+    "BisCore:SpatialViewDefinition",
+    "BisCore:DrawingViewDefinition",
+    "BisCore:OrthographicViewDefinition",
+  ];
   return acceptedClasses;
 };
 
@@ -78,8 +82,14 @@ export const openImodel = async (
 /** Return the proper views based on the accepted classes
  */
 export const getDefaultViewIds = async (
-  imodel: RemoteBriefcaseConnection
+  imodel: IModelConnection
 ): Promise<Id64String[]> => {
+  // check for a default view first
+  const defaultViewId = await imodel.views.queryDefaultViewId();
+  if (defaultViewId && Id64.isValidId64(defaultViewId)) {
+    return [defaultViewId];
+  }
+
   const viewSpecs = await imodel.views.queryProps({});
   const acceptedViewClasses = getAcceptedViewClasses();
   const acceptedViewSpecs = viewSpecs.filter(

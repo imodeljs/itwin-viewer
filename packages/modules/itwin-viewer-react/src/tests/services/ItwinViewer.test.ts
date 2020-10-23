@@ -62,14 +62,21 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     NotificationManager: jest.fn(),
     ExternalServerExtensionLoader: jest.fn(),
     Tool: jest.fn(),
+    SnapshotConnection: {
+      openFile: jest.fn(),
+    },
   };
 });
 jest.mock("../../services/telemetry/TelemetryService");
 
+const elementId = "viewerRoot";
+const mockProjectId = "mockProjectId";
+const mockiModelId = "mockImodelId";
+
 describe("iTwinViewer", () => {
   beforeAll(() => {
     const viewerRoot = document.createElement("div");
-    viewerRoot.id = "viewerRoot";
+    viewerRoot.id = elementId;
     document.body.append(viewerRoot);
   });
 
@@ -81,7 +88,7 @@ describe("iTwinViewer", () => {
   it("throws and error when an either an oidc client or user manager is not provided", () => {
     let errorMessage;
     try {
-      new ItwinViewer({ elementId: "viewerRoot", authConfig: {} });
+      new ItwinViewer({ elementId, authConfig: {} });
     } catch (error) {
       errorMessage = error.message;
     }
@@ -93,7 +100,7 @@ describe("iTwinViewer", () => {
   it("initializes iModel.js with the passed in oidc client", async () => {
     jest.spyOn(Initializer, "initialize");
     new ItwinViewer({
-      elementId: "viewerRoot",
+      elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
@@ -110,7 +117,7 @@ describe("iTwinViewer", () => {
   it("creates a new AuthorizationClient using the passed oidc user manager", () => {
     const oidcClient = new MockOidcClient();
     new ItwinViewer({
-      elementId: "viewerRoot",
+      elementId,
       authConfig: {
         getUserManagerFunction: oidcClient.getUserManager,
       },
@@ -119,10 +126,6 @@ describe("iTwinViewer", () => {
   });
 
   it("renders the viewer for the proper contextId and iModelId on the element whose id is passed to the constructor", async () => {
-    const mockProjectId = "mockProjectId";
-    const mockiModelId = "mockImodelId";
-    const elementId = "viewerRoot";
-
     jest.spyOn(React, "createElement");
     jest.spyOn(ReactDOM, "render");
 
@@ -132,7 +135,7 @@ describe("iTwinViewer", () => {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
     });
-    await viewer.load(mockProjectId, mockiModelId);
+    await viewer.load({ contextId: mockProjectId, iModelId: mockiModelId });
     expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
       contextId: mockProjectId,
       iModelId: mockiModelId,
@@ -154,7 +157,7 @@ describe("iTwinViewer", () => {
     };
 
     new ItwinViewer({
-      elementId: "viewerRoot",
+      elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
@@ -174,37 +177,34 @@ describe("iTwinViewer", () => {
   });
 
   it("sets the theme to the provided theme", async () => {
-    const mockProjectId = "mockProjectId";
-    const mockiModelId = "mockImodelId";
-    const elementId = "viewerRoot";
-
     const viewer = new ItwinViewer({
-      elementId: elementId,
+      elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
       theme: ColorTheme.Dark,
     });
 
-    await viewer.load(mockProjectId, mockiModelId);
+    await viewer.load({ contextId: mockProjectId, iModelId: mockiModelId });
 
     expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
 
   it("queries the iModel with the provided changeSetId", async () => {
-    const mockProjectId = "mockProjectId";
-    const mockiModelId = "mockImodelId";
-    const elementId = "viewerRoot";
     const changeSetId = "123";
 
     const viewer = new ItwinViewer({
-      elementId: elementId,
+      elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
     });
 
-    await viewer.load(mockProjectId, mockiModelId, changeSetId);
+    await viewer.load({
+      contextId: mockProjectId,
+      iModelId: mockiModelId,
+      changeSetId,
+    });
 
     expect(React.createElement).toHaveBeenCalledWith(IModelLoader, {
       contextId: mockProjectId,
@@ -214,10 +214,8 @@ describe("iTwinViewer", () => {
   });
 
   it("loads the extension with the passed in version and args", async () => {
-    const elementId = "viewerRoot";
-
     const viewer = new ItwinViewer({
-      elementId: elementId,
+      elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
       },
@@ -243,7 +241,6 @@ describe("iTwinViewer", () => {
 
   it("instantiates an instance of the Telemetry Service when an app insights key is provided", async () => {
     const appInsightsKey = "123";
-    const elementId = "viewerRoot";
 
     const viewer = new ItwinViewer({
       elementId,
@@ -259,8 +256,6 @@ describe("iTwinViewer", () => {
   });
 
   it("does not instantiate an instance of the Telemetry Service when an app insights key is not provided", async () => {
-    const elementId = "viewerRoot";
-
     const viewer = new ItwinViewer({
       elementId,
       authConfig: {
@@ -274,7 +269,6 @@ describe("iTwinViewer", () => {
   });
 
   it("adds the iModel.js telemetry client when the imjs key is provided", async () => {
-    const elementId = "viewerRoot";
     const appInsightsKey = "123";
     const imjsAppInsightsKey = "456";
 
@@ -292,7 +286,6 @@ describe("iTwinViewer", () => {
   });
 
   it("does not add the iModel.js telemetry client when the imjs key is not provided", async () => {
-    const elementId = "viewerRoot";
     const appInsightsKey = "123";
 
     const viewer = new ItwinViewer({
@@ -308,7 +301,6 @@ describe("iTwinViewer", () => {
   });
 
   it("overrides the i18n url template", async () => {
-    const elementId = "viewerRoot";
     const i18nUrlTemplate = "host/route";
 
     const viewer = new ItwinViewer({
@@ -324,5 +316,47 @@ describe("iTwinViewer", () => {
     expect(I18N).toHaveBeenCalledWith("iModelJs", {
       urlTemplate: i18nUrlTemplate,
     });
+  });
+
+  it("ensures that either a contextId/iModelId combination or a local snapshot is provided", async () => {
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    let error;
+    try {
+      await viewer.load({});
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toEqual(
+      new Error(
+        "Please provide a valid contextId and iModelId or a local snapshotPath"
+      )
+    );
+  });
+
+  it("renders if a local snapshot is provided", async () => {
+    jest.spyOn(ReactDOM, "render");
+
+    const snapshotPath = "/path/to/snapshot";
+
+    const viewer = new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+    });
+
+    await viewer.load({ snapshotPath });
+
+    expect(ReactDOM.render).toHaveBeenCalledWith(
+      expect.anything(),
+      document.getElementById(elementId)
+    );
   });
 });

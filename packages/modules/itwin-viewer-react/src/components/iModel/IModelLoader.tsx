@@ -8,8 +8,7 @@ import "./IModelLoader.scss";
 
 import {
   IModelConnection,
-  RemoteBriefcaseConnection,
-  StandardViewId,
+  SnapshotConnection,
 } from "@bentley/imodeljs-frontend";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import {
@@ -38,12 +37,13 @@ interface ViewerProps {
 }
 
 export interface ModelLoaderProps {
-  contextId: string;
-  iModelId: string;
+  contextId?: string;
+  iModelId?: string;
   changeSetId?: string;
   uiConfig?: ItwinViewerUi;
   appInsightsKey?: string;
-  onIModelConnected?: (iModel: RemoteBriefcaseConnection) => void;
+  onIModelConnected?: (iModel: IModelConnection) => void;
+  snapshotPath?: string;
 }
 
 const Loader = React.memo(
@@ -53,6 +53,7 @@ const Loader = React.memo(
     changeSetId,
     uiConfig,
     onIModelConnected,
+    snapshotPath,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [viewerProps, setViewerProps] = useState<ViewerProps>();
@@ -65,15 +66,18 @@ const Loader = React.memo(
 
     useEffect(() => {
       const getModelConnection = async () => {
-        if (!contextId || !iModelId) {
-          throw new Error("No contextId or iModelId provided!");
+        if (!(contextId && iModelId) && !snapshotPath) {
+          throw new Error(
+            "Please provide a valid contextId and iModelId or a local snapshotPath"
+          );
         }
+        let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
-        const imodelConnection = await openImodel(
-          contextId,
-          iModelId,
-          changeSetId
-        );
+        if (snapshotPath) {
+          imodelConnection = await SnapshotConnection.openFile(snapshotPath);
+        } else if (contextId && iModelId) {
+          imodelConnection = await openImodel(contextId, iModelId, changeSetId);
+        }
         if (imodelConnection) {
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
@@ -87,11 +91,7 @@ const Loader = React.memo(
           const savedViewState = await ViewCreator.createDefaultView(
             imodelConnection,
             undefined,
-            viewIds.length > 0 ? viewIds[0] : undefined,
-            {
-              displayEnvironment: false,
-              standardViewRotation: StandardViewId.Top,
-            }
+            viewIds.length > 0 ? viewIds[0] : undefined
           );
 
           // Should not be undefined
@@ -113,8 +113,10 @@ const Loader = React.memo(
             uiConfig
           );
 
-          await SelectionScopeClient.initializeSelectionScope();
-          SelectionScopeClient.setupSelectionScopeHandler();
+          if (!snapshotPath) {
+            await SelectionScopeClient.initializeSelectionScope();
+            SelectionScopeClient.setupSelectionScopeHandler();
+          }
 
           setViewerProps({
             imodel: imodelConnection,
