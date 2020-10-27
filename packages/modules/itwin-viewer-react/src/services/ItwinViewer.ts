@@ -39,6 +39,13 @@ export const getAuthClient = (
   );
 };
 
+export interface LoadParameters {
+  contextId?: string;
+  iModelId?: string;
+  changeSetId?: string;
+  snapshotPath?: string;
+}
+
 export class ItwinViewer {
   elementId: string;
   theme: ColorTheme | string | undefined;
@@ -73,7 +80,13 @@ export class ItwinViewer {
   }
 
   /** load a model in the viewer once iTwinViewerApp is ready */
-  load = async (contextId: string, iModelId: string, changeSetId?: string) => {
+  load = async (args: LoadParameters) => {
+    if (!(args?.contextId && args?.iModelId) && !args?.snapshotPath) {
+      throw new Error(
+        "Please provide a valid contextId and iModelId or a local snapshotPath"
+      );
+    }
+
     if (this.appInsightsKey) {
       trackEvent("iTwinViewer.Viewer.Load");
     }
@@ -91,12 +104,13 @@ export class ItwinViewer {
         ErrorBoundary,
         {},
         React.createElement(IModelLoader, {
-          contextId: contextId,
-          iModelId: iModelId,
-          changeSetId: changeSetId,
+          contextId: args?.contextId,
+          iModelId: args?.iModelId,
+          changeSetId: args?.changeSetId,
           uiConfig: this.uiConfig,
           appInsightsKey: this.appInsightsKey,
           onIModelConnected: this.onIModelConnected,
+          snapshotPath: args?.snapshotPath,
         } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)

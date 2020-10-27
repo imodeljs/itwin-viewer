@@ -24,10 +24,11 @@ export interface ViewerExtension {
 }
 
 export interface ViewerProps extends ItwinViewerCommonParams {
-  contextId: string;
-  iModelId: string;
+  contextId?: string;
+  iModelId?: string;
   extensions?: ViewerExtension[];
   changeSetId?: string;
+  snapshotPath?: string;
 }
 
 interface ExtensionUrl {
@@ -56,6 +57,8 @@ export const Viewer = ({
   imjsAppInsightsKey,
   onIModelConnected,
   i18nUrlTemplate,
+  snapshotPath,
+  desktopApp,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -149,6 +152,7 @@ export const Viewer = ({
           productId,
           imjsAppInsightsKey,
           i18nUrlTemplate,
+          desktopApp,
         }
       )
         .then(() => {
@@ -182,6 +186,7 @@ export const Viewer = ({
         uiConfig={defaultUiConfig}
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
+        snapshotPath={snapshotPath}
       />
     </ErrorBoundary>
   ) : null;

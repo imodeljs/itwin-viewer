@@ -31,18 +31,19 @@ class Initializer {
 
   /** initialize rpc */
   private static async _initializeRpc(
-    backendOptions?: IModelBackendOptions
+    backendOptions?: IModelBackendOptions,
+    isDesktop?: boolean
   ): Promise<void> {
     // if rpc params for a custom backend are provided, initialized with those
     if (
       backendOptions?.customBackend &&
       backendOptions.customBackend.rpcParams
     ) {
-      return initRpc(backendOptions.customBackend.rpcParams);
+      return initRpc(backendOptions.customBackend.rpcParams, isDesktop);
     }
     const rpcParams = await this._getHostedConnectionInfo(backendOptions);
     if (rpcParams) {
-      return initRpc(rpcParams);
+      return initRpc(rpcParams, isDesktop);
     }
   }
 
@@ -121,6 +122,7 @@ class Initializer {
     // IModelApp is already initialized.
     // Potentially a second viewer
     if (IModelApp.initialized) {
+      this._initialized = Promise.resolve();
       return;
     }
 
@@ -191,7 +193,10 @@ class Initializer {
         AppUi.initialize();
 
         // initialize RPC communication
-        await Initializer._initializeRpc(viewerOptions?.backend);
+        await Initializer._initializeRpc(
+          viewerOptions?.backend,
+          viewerOptions?.desktopApp
+        );
 
         if (viewerOptions?.appInsightsKey) {
           trackEvent("iTwinViewer.Viewer.Initialized");

@@ -4,8 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
-import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
-import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
+import {
+  BentleyCloudRpcParams,
+  ElectronRpcParams,
+} from "@bentley/imodeljs-common";
+import {
+  DesktopAuthorizationClient,
+  IModelConnection,
+} from "@bentley/imodeljs-frontend";
 import { ColorTheme } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
@@ -40,7 +46,7 @@ export interface HostedBackendConfig {
  * Custom rpc configuration
  */
 export interface CustomBackendConfig {
-  rpcParams: BentleyCloudRpcParams;
+  rpcParams: BentleyCloudRpcParams | ElectronRpcParams;
 }
 
 /**
@@ -48,7 +54,7 @@ export interface CustomBackendConfig {
  */
 export interface AuthorizationOptions {
   /** provide an existing iModel.js authorization client */
-  oidcClient?: FrontendAuthorizationClient;
+  oidcClient?: FrontendAuthorizationClient | DesktopAuthorizationClient;
   /** reference to a function that returns a pre-configured oidc UserManager */
   getUserManagerFunction?: () => UserManager;
 }
@@ -79,7 +85,7 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   /** Default UI configuration */
   defaultUiConfig?: ItwinViewerUi;
   /** Optional callback function when iModel is connected */
-  onIModelConnected?: (iModel: RemoteBriefcaseConnection) => void;
+  onIModelConnected?: (iModel: IModelConnection) => void;
 }
 
 export interface ItwinViewerInitializerParams {
@@ -93,6 +99,8 @@ export interface ItwinViewerInitializerParams {
   productId?: string;
   /** urlTemplate for querying i18n json files */
   i18nUrlTemplate?: string;
+  /** is this in the context of a desktop/electron app */
+  desktopApp?: boolean;
 }
 
 /**

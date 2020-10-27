@@ -3,7 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { RemoteBriefcaseConnection } from "@bentley/imodeljs-frontend";
+import { IModelConnection } from "@bentley/imodeljs-frontend";
 import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
@@ -39,7 +39,7 @@ export const UserManagerHome = () => {
     }
   };
 
-  const iModelConnected = (iModel: RemoteBriefcaseConnection) => {
+  const iModelConnected = (iModel: IModelConnection) => {
     console.log("iModel Connected!");
     console.log(iModel);
   };

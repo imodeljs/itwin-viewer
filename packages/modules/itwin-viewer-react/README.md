@@ -89,13 +89,23 @@ export const UserManagerHome = () => {
 
 #### Required
 
+##### Web
+
 - `contextId` - GUID for the context (project, asset, etc.) that contains the model that you wish to view
 - `iModelId` - GUID for the iModel that you wish to view
 - `authConfig` - an instance of an iModel.js [FrontendAuthorizationClient](https://www.imodeljs.org/reference/frontend-authorization-client/authorization/frontendauthorizationclient/) or a function that returns an oidc-client UserManager
 
+##### Desktop
+
+- `contextId` - GUID for the context (project, asset, etc.) that contains the model that you wish to view (it should be ommitted if using a snapshotPath instead)
+- `iModelId` - GUID for the iModel that you wish to view (it should be ommitted if using a snapshotPath instead)
+- `snapshotPath` - path to a local snapshot file (it should be ommitted if using a contextId/iModelId)
+- `authConfig` - an instance of an iModel.js `DesktopAuthorizationClient` or a function that returns an oidc-client UserManager
+- `desktopApp` - set to `true` to notify the Viewer that it is being used in a native desktop application
+
 #### Optional
 
-- `changeSetId` - changeset id to view
+- `changeSetId` - changeset id to view if combined with the contextId and iModelId props
 - `extensions` - array of extensions to load in the viewer
 - `backend` - backend connection info (defaults to the General Purpose backend)
 - `theme` - override the default theme

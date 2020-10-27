@@ -5,7 +5,7 @@
 
 import "@testing-library/jest-dom/extend-expect";
 
-import { IModelApp } from "@bentley/imodeljs-frontend";
+import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
@@ -64,6 +64,9 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     Tool: jest.fn(),
     RemoteBriefcaseConnection: {
       open: jest.fn(),
+    },
+    SnapshotConnection: {
+      openFile: jest.fn(),
     },
   };
 });
@@ -285,5 +288,46 @@ describe("Viewer", () => {
     expect(I18N).toHaveBeenCalledWith("iModelJs", {
       urlTemplate: i18nUrlTemplate,
     });
+  });
+
+  it("ensures that either a contextId/iModelId combination or a local snapshot is provided", async () => {
+    const events = {
+      onError: (event: ErrorEvent) => {
+        event.preventDefault();
+      },
+    };
+
+    jest.spyOn(events, "onError");
+
+    window.addEventListener("error", events.onError);
+
+    const { getByTestId } = render(
+      <Viewer
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+      />
+    );
+
+    const loader = await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(loader).not.toBeInTheDocument();
+    expect(events.onError).toHaveBeenCalled();
+
+    window.removeEventListener("error", events.onError);
+  });
+
+  it("renders and establishes a SnapshotConnection if a local snapshot is provided", async () => {
+    const snapshotPath = "/path/to/snapshot";
+
+    const { getByTestId } = render(
+      <Viewer
+        snapshotPath={snapshotPath}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+      />
+    );
+
+    const loader = await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(loader).toBeInTheDocument();
+    expect(SnapshotConnection.openFile).toHaveBeenCalledWith(snapshotPath);
   });
 });
