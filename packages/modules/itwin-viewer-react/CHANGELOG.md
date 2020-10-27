@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 20 Oct 2020 12:57:12 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Oct 2020 16:50:34 GMT and should not be manually modified.
+
+## 5.0.0
+Tue, 27 Oct 2020 16:50:34 GMT
+
+### Breaking changes
+
+- add support for desktop apps with local snapshots
 
 ## 4.2.1
 Tue, 20 Oct 2020 12:57:12 GMT

@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.0.0",
+      "tag": "@bentley/itwin-viewer-react_v5.0.0",
+      "date": "Tue, 27 Oct 2020 16:50:34 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "add support for desktop apps with local snapshots"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.2.1",
       "tag": "@bentley/itwin-viewer-react_v4.2.1",
       "date": "Tue, 20 Oct 2020 12:57:12 GMT",
