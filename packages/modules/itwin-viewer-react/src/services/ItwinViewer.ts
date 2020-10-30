@@ -83,7 +83,7 @@ export class ItwinViewer {
   }
 
   /** load a model in the viewer once iTwinViewerApp is ready */
-  load = async (args: LoadParameters): void => {
+  load = async (args: LoadParameters): Promise<void> => {
     if (!(args?.contextId && args?.iModelId) && !args?.snapshotPath) {
       throw new Error(
         "Please provide a valid contextId and iModelId or a local snapshotPath"
