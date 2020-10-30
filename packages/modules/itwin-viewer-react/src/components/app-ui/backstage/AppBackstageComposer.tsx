@@ -3,50 +3,33 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { UserInfo } from "@bentley/itwin-client";
+import { BackstageItem } from "@bentley/ui-abstract";
 import {
   BackstageComposer,
-  FrameworkState,
   UserProfileBackstageItem,
 } from "@bentley/ui-framework";
 import * as React from "react";
-import { connect } from "react-redux";
-
-import { AppBackstageItemProvider } from "./AppBackstageItemProvider";
-
-function mapStateToProps(state: any) {
-  const frameworkState = state.frameworkState as FrameworkState;
-
-  if (!frameworkState) {
-    return undefined;
-  }
-
-  return { userInfo: frameworkState.sessionState.userInfo };
-}
+import { useSelector } from "react-redux";
 
 interface AppBackstageComposerProps {
+  /** additional frontstages */
+  items: BackstageItem[];
+}
+
+const AppBackstageComposer: React.FC<AppBackstageComposerProps> = ({
+  items,
+}: AppBackstageComposerProps) => {
   /** UserInfo from sign-in */
-  userInfo: UserInfo | undefined;
-}
+  const userInfo = useSelector((state: any) => {
+    return state?.frameworkState?.sessionState?.userInfo;
+  });
 
-export class AppBackstageComposerComponent extends React.PureComponent<
-  AppBackstageComposerProps
-> {
-  private _itemsProvider = new AppBackstageItemProvider();
-  public render() {
-    return (
-      <BackstageComposer
-        header={
-          this.props.userInfo && (
-            <UserProfileBackstageItem userInfo={this.props.userInfo} />
-          )
-        }
-        items={[...this._itemsProvider.backstageItems]}
-      />
-    );
-  }
-}
+  return (
+    <BackstageComposer
+      header={userInfo && <UserProfileBackstageItem userInfo={userInfo} />}
+      items={items}
+    />
+  );
+};
 
-export const AppBackstageComposer = connect(mapStateToProps)(
-  AppBackstageComposerComponent
-);
+export default AppBackstageComposer;

@@ -43,7 +43,7 @@ interface ExtensionInstance {
   args?: string[];
 }
 
-export const Viewer = ({
+export const Viewer: React.FC<ViewerProps> = ({
   authConfig,
   extensions,
   iModelId,
@@ -59,6 +59,7 @@ export const Viewer = ({
   i18nUrlTemplate,
   snapshotPath,
   desktopApp,
+  frontstages,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -187,6 +188,7 @@ export const Viewer = ({
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
         snapshotPath={snapshotPath}
+        frontstages={frontstages}
       />
     </ErrorBoundary>
   ) : null;

@@ -15,7 +15,7 @@ import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { AuthorizationOptions } from "../";
+import { AuthorizationOptions, ViewerFrontstage } from "../";
 import IModelLoader, {
   ModelLoaderProps,
 } from "../components/iModel/IModelLoader";
@@ -51,6 +51,8 @@ export class ItwinViewer {
   theme: ColorTheme | string | undefined;
   uiConfig: ItwinViewerUi | undefined;
   appInsightsKey: string | undefined;
+  frontstages: ViewerFrontstage[] | undefined;
+
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
   constructor(options: ItwinViewerParams) {
@@ -63,6 +65,7 @@ export class ItwinViewer {
     this.uiConfig = options.defaultUiConfig;
     this.appInsightsKey = options.appInsightsKey;
     this.onIModelConnected = options.onIModelConnected;
+    this.frontstages = options.frontstages;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -80,7 +83,7 @@ export class ItwinViewer {
   }
 
   /** load a model in the viewer once iTwinViewerApp is ready */
-  load = async (args: LoadParameters) => {
+  load = async (args: LoadParameters): void => {
     if (!(args?.contextId && args?.iModelId) && !args?.snapshotPath) {
       throw new Error(
         "Please provide a valid contextId and iModelId or a local snapshotPath"
@@ -111,6 +114,7 @@ export class ItwinViewer {
           appInsightsKey: this.appInsightsKey,
           onIModelConnected: this.onIModelConnected,
           snapshotPath: args?.snapshotPath,
+          frontstages: this.frontstages,
         } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)

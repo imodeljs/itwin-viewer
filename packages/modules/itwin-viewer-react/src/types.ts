@@ -12,7 +12,11 @@ import {
   DesktopAuthorizationClient,
   IModelConnection,
 } from "@bentley/imodeljs-frontend";
-import { ColorTheme } from "@bentley/ui-framework";
+import {
+  BackstageStageLauncher,
+  ConditionalStringValue,
+} from "@bentley/ui-abstract";
+import { ColorTheme, FrontstageProvider } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
 /**
@@ -69,6 +73,27 @@ export interface IModelBackendOptions {
   buddiServer?: string;
 }
 
+export interface ViewerFrontstage {
+  /** unique id */
+  id: string;
+  /** frontstage provider to register */
+  provider: FrontstageProvider;
+  /** label for the backstage launcher */
+  label: string | ConditionalStringValue;
+  /** should this be the default frontstage? If multiple are defined as default, the last will be used */
+  default?: boolean;
+  /** priority of the item's group */
+  groupPriority?: number;
+  /** priority of the item within the group */
+  itemPriority?: number;
+  /** subtitle for the backstage launcher */
+  subtitle?: string | ConditionalStringValue;
+  /** icon for the backstage launcher */
+  icon?: string | ConditionalStringValue;
+  /** overrides for the backstage launcher */
+  overrides?: Partial<BackstageStageLauncher>;
+}
+
 /**
  * iTwin Viewer parameter list
  */
@@ -86,6 +111,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   defaultUiConfig?: ItwinViewerUi;
   /** Optional callback function when iModel is connected */
   onIModelConnected?: (iModel: IModelConnection) => void;
+  /** additional frontstages to register */
+  frontstages?: ViewerFrontstage[];
 }
 
 export interface ItwinViewerInitializerParams {
