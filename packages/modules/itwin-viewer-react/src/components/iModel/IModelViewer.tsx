@@ -60,9 +60,8 @@ export const IModelViewer: React.FC<ModelProps> = ({
     });
     // set the active frontstage to the current defaul
     if (defaultFrontstage) {
-      FrontstageManager.setActiveFrontstageDef(
-        defaultFrontstage.frontstageDef
-      ).catch((err) => console.error(err));
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      FrontstageManager.setActiveFrontstageDef(defaultFrontstage.frontstageDef);
     }
     // set the backstage items for the composer
     setBackstageItems(backstageLaunchers);
