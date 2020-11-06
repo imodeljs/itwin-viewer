@@ -147,7 +147,7 @@ class Initializer {
         });
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
-        appOptions.applicationId = viewerOptions?.productId || "3098";
+        appOptions.applicationId = viewerOptions?.productId ?? "3098";
 
         // if ITWIN_VIEWER_HOME is defined, the viewer is likely being served from another origin
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
