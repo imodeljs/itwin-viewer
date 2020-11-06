@@ -60,6 +60,8 @@ export const Viewer: React.FC<ViewerProps> = ({
   snapshotPath,
   desktopApp,
   frontstages,
+  backstageItems,
+  onIModelAppInit,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -154,6 +156,7 @@ export const Viewer: React.FC<ViewerProps> = ({
           imjsAppInsightsKey,
           i18nUrlTemplate,
           desktopApp,
+          onIModelAppInit,
         }
       )
         .then(() => {
@@ -189,6 +192,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         onIModelConnected={onIModelConnected}
         snapshotPath={snapshotPath}
         frontstages={frontstages}
+        backstageItems={backstageItems}
       />
     </ErrorBoundary>
   ) : null;

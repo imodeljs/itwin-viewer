@@ -76,6 +76,7 @@ export class ItwinViewer {
         productId: options.productId,
         imjsAppInsightsKey: options.imjsAppInsightsKey,
         i18nUrlTemplate: options.i18nUrlTemplate,
+        onIModelAppInit: options.onIModelAppInit,
       }
     ).catch((error) => {
       throw error;

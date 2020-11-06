@@ -12,10 +12,7 @@ import {
   DesktopAuthorizationClient,
   IModelConnection,
 } from "@bentley/imodeljs-frontend";
-import {
-  BackstageStageLauncher,
-  ConditionalStringValue,
-} from "@bentley/ui-abstract";
+import { BackstageItem } from "@bentley/ui-abstract";
 import { ColorTheme, FrontstageProvider } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
@@ -74,25 +71,15 @@ export interface IModelBackendOptions {
 }
 
 export interface ViewerFrontstage {
-  /** unique id */
-  id: string;
   /** frontstage provider to register */
   provider: FrontstageProvider;
-  /** label for the backstage launcher */
-  label: string | ConditionalStringValue;
   /** should this be the default frontstage? If multiple are defined as default, the last will be used */
   default?: boolean;
-  /** priority of the item's group */
-  groupPriority?: number;
-  /** priority of the item within the group */
-  itemPriority?: number;
-  /** subtitle for the backstage launcher */
-  subtitle?: string | ConditionalStringValue;
-  /** icon for the backstage launcher */
-  icon?: string | ConditionalStringValue;
-  /** overrides for the backstage launcher */
-  overrides?: Partial<BackstageStageLauncher>;
 }
+
+export type ViewerBackstageItem = BackstageItem & {
+  labeli18nKey?: string;
+};
 
 /**
  * iTwin Viewer parameter list
@@ -113,6 +100,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   onIModelConnected?: (iModel: IModelConnection) => void;
   /** additional frontstages to register */
   frontstages?: ViewerFrontstage[];
+  /** menu items for the backstage */
+  backstageItems?: ViewerBackstageItem[];
 }
 
 export interface ItwinViewerInitializerParams {
@@ -128,6 +117,8 @@ export interface ItwinViewerInitializerParams {
   i18nUrlTemplate?: string;
   /** is this in the context of a desktop/electron app */
   desktopApp?: boolean;
+  /** callback after iModelApp is initialized */
+  onIModelAppInit?: () => void;
 }
 
 /**

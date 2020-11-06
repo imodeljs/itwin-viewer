@@ -14,6 +14,11 @@ import {
 } from "@bentley/imodeljs-frontend";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import {
+  BackstageActionItem,
+  BackstageItemUtilities,
+  BackstageStageLauncher,
+} from "@bentley/ui-abstract";
+import {
   StateManager,
   SyncUiEventDispatcher,
   UiFramework,
@@ -29,7 +34,11 @@ import {
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
 import { ai } from "../../services/telemetry/TelemetryService";
-import { ItwinViewerUi, ViewerFrontstage } from "../../types";
+import {
+  ItwinViewerUi,
+  ViewerBackstageItem,
+  ViewerFrontstage,
+} from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
 
@@ -42,6 +51,7 @@ export interface ModelLoaderProps {
   onIModelConnected?: (iModel: IModelConnection) => void;
   snapshotPath?: string;
   frontstages?: ViewerFrontstage[];
+  backstageItems?: ViewerBackstageItem[];
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -53,10 +63,18 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     onIModelConnected,
     snapshotPath,
     frontstages,
+    backstageItems,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
       ViewerFrontstage[]
+    >();
+    const [finalBackstageItems, setFinalBackstageItems] = useState<
+      ViewerBackstageItem[]
+    >();
+    const [viewState, setViewState] = useState<ViewState>();
+    const [activeConnection, setActiveConnection] = useState<
+      IModelConnection
     >();
 
     // trigger error boundary when fatal error is thrown
@@ -66,36 +84,25 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     }, [errorManager.fatalError]);
 
     useEffect(() => {
-      const buildFrontstages = (viewStates: ViewState[]) => {
-        // initialize the DefaultFrontstage that contains the views that we want
-        const defaultFrontstageProvider = new DefaultFrontstage(
-          viewStates,
-          uiConfig
-        );
-
-        const allFrontstages = frontstages || [];
-        // add the default frontstage first so that it's default status can be overridden
-        allFrontstages.unshift({
-          id: "DefaultFrontstage",
-          provider: defaultFrontstageProvider,
-          groupPriority: 100,
-          itemPriority: 10,
-          label: IModelApp.i18n.translate(
-            "iTwinViewer:backstage.mainFrontstage"
-          ),
-          icon: "icon-placeholder",
-          default: true,
-        });
-
-        setFinalFrontstages(allFrontstages);
-      };
-
       const getModelConnection = async () => {
         if (!(contextId && iModelId) && !snapshotPath) {
+          // first check to see if some other frontstage is defined as the default
+          // allow fronstages other than the default viewport to continue to render if so
+          if (frontstages) {
+            const defaultFrontstages = frontstages.filter(
+              (frontstage) => frontstage.default
+            );
+            if (defaultFrontstages.length > 0) {
+              return;
+            }
+          }
           throw new Error(
             "Please provide a valid contextId and iModelId or a local snapshotPath"
           );
+        } else {
+          setActiveConnection(undefined);
         }
+
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
         if (snapshotPath) {
@@ -137,21 +144,99 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             SelectionScopeClient.setupSelectionScopeHandler();
           }
 
-          buildFrontstages([savedViewState]);
+          setViewState(savedViewState);
+
+          setActiveConnection(imodelConnection);
         }
       };
+
       getModelConnection().catch((error) => {
         errorManager.throwFatalError(error);
       });
-    }, [contextId, iModelId]);
+    }, [contextId, iModelId, snapshotPath, frontstages, backstageItems]);
+
+    useEffect(() => {
+      const allBackstageItems: ViewerBackstageItem[] = [];
+      if (backstageItems) {
+        backstageItems.forEach((backstageItem) => {
+          // check for label i18n key and translate if needed
+          if (backstageItem.labeli18nKey) {
+            let newItem;
+            if ((backstageItem as BackstageStageLauncher).stageId) {
+              newItem = BackstageItemUtilities.createStageLauncher(
+                (backstageItem as BackstageStageLauncher).stageId,
+                backstageItem.groupPriority,
+                backstageItem.itemPriority,
+                IModelApp.i18n.translate(backstageItem.labeli18nKey),
+                backstageItem.subtitle,
+                backstageItem.icon
+              );
+            } else {
+              newItem = BackstageItemUtilities.createActionItem(
+                backstageItem.id,
+                backstageItem.groupPriority,
+                backstageItem.itemPriority,
+                (backstageItem as BackstageActionItem).execute,
+                IModelApp.i18n.translate(backstageItem.labeli18nKey),
+                backstageItem.subtitle,
+                backstageItem.icon
+              );
+            }
+            allBackstageItems.push(newItem);
+          } else {
+            allBackstageItems.push(backstageItem);
+          }
+        });
+      }
+
+      if (viewState) {
+        allBackstageItems.unshift({
+          stageId: "DefaultFrontstage",
+          id: "DefaultFrontstage",
+          groupPriority: 100,
+          itemPriority: 10,
+          label: IModelApp.i18n.translate(
+            "iTwinViewer:backstage.mainFrontstage"
+          ),
+        });
+      }
+
+      setFinalBackstageItems(allBackstageItems);
+    }, [backstageItems, viewState]);
+
+    useEffect(() => {
+      let allFrontstages: ViewerFrontstage[] = [];
+      if (frontstages) {
+        allFrontstages = [...frontstages];
+      }
+
+      if (viewState) {
+        // initialize the DefaultFrontstage that contains the views that we want
+        const defaultFrontstageProvider = new DefaultFrontstage(
+          [viewState],
+          uiConfig
+        );
+
+        // add the default frontstage first so that it's default status can be overridden
+        allFrontstages.unshift({
+          provider: defaultFrontstageProvider,
+          default: true,
+        });
+      }
+
+      setFinalFrontstages(allFrontstages);
+    }, [frontstages, viewState]);
 
     if (error) {
       throw error;
     } else {
-      return finalFrontstages ? (
+      return finalFrontstages && finalBackstageItems && activeConnection ? (
         <div className="itwin-viewer-container">
           <Provider store={StateManager.store}>
-            <IModelViewer frontstages={finalFrontstages} />
+            <IModelViewer
+              frontstages={finalFrontstages}
+              backstageItems={finalBackstageItems}
+            />
           </Provider>
         </div>
       ) : (

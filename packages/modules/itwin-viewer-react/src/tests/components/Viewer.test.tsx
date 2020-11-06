@@ -31,10 +31,10 @@ jest.mock("@bentley/presentation-frontend");
 jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ReactPlugin: jest.fn(),
   withAITracking: (
-    reactPlugin: any | undefined,
+    reactPlugin: any | undefined, // eslint-disable-line no-unused-vars
     component: any,
-    componentName?: string,
-    className?: string
+    componentName?: string, // eslint-disable-line no-unused-vars
+    className?: string // eslint-disable-line no-unused-vars
   ) => component,
 }));
 
@@ -329,5 +329,24 @@ describe("Viewer", () => {
 
     expect(loader).toBeInTheDocument();
     expect(SnapshotConnection.openFile).toHaveBeenCalledWith(snapshotPath);
+  });
+
+  it("executes a callback after IModelApp is initialized", async () => {
+    const snapshotPath = "/path/to/snapshot";
+    const callbacks = {
+      onIModelAppInit: jest.fn(),
+    };
+    const { getByTestId } = render(
+      <Viewer
+        snapshotPath={snapshotPath}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        onIModelAppInit={callbacks.onIModelAppInit}
+      />
+    );
+
+    const loader = await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(loader).toBeInTheDocument();
+    expect(callbacks.onIModelAppInit).toHaveBeenCalled();
   });
 });
