@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 27 Oct 2020 16:50:34 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Nov 2020 14:12:37 GMT and should not be manually modified.
+
+## 5.1.0
+Mon, 09 Nov 2020 14:12:37 GMT
+
+### Minor changes
+
+- Add the ability to provide additional frontstages and backstage launchers for them
 
 ## 5.0.0
 Tue, 27 Oct 2020 16:50:34 GMT
