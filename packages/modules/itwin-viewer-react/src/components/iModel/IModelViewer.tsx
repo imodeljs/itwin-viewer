@@ -35,7 +35,7 @@ export const IModelViewer: React.FC<ModelProps> = ({
         defaultFrontstage = viewerFrontstage.provider;
       }
     });
-    // set the active frontstage to the current defaul
+    // set the active frontstage to the current default
     if (defaultFrontstage) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       FrontstageManager.setActiveFrontstageDef(defaultFrontstage.frontstageDef);
