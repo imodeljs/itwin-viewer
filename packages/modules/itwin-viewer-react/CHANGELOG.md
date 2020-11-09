@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 09 Nov 2020 14:12:37 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Nov 2020 18:43:01 GMT and should not be manually modified.
+
+## 5.1.1
+Mon, 09 Nov 2020 18:43:01 GMT
+
+### Patches
+
+- fix bug where viewer would not render with a default frontstage and no model
 
 ## 5.1.0
 Mon, 09 Nov 2020 14:12:37 GMT
