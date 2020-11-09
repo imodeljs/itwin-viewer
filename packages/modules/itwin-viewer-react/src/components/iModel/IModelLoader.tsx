@@ -73,9 +73,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
       ViewerBackstageItem[]
     >();
     const [viewState, setViewState] = useState<ViewState>();
-    const [activeConnection, setActiveConnection] = useState<
-      IModelConnection
-    >();
+    const [connected, setConnected] = useState<boolean>(false);
 
     // trigger error boundary when fatal error is thrown
     const errorManager = useErrorManager({});
@@ -93,6 +91,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
               (frontstage) => frontstage.default
             );
             if (defaultFrontstages.length > 0) {
+              setConnected(true);
               return;
             }
           }
@@ -100,7 +99,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             "Please provide a valid contextId and iModelId or a local snapshotPath"
           );
         } else {
-          setActiveConnection(undefined);
+          setConnected(false);
         }
 
         let imodelConnection: IModelConnection | undefined;
@@ -146,7 +145,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
 
           setViewState(savedViewState);
 
-          setActiveConnection(imodelConnection);
+          setConnected(true);
         }
       };
 
@@ -230,7 +229,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     if (error) {
       throw error;
     } else {
-      return finalFrontstages && finalBackstageItems && activeConnection ? (
+      return finalFrontstages && finalBackstageItems && connected ? (
         <div className="itwin-viewer-container">
           <Provider store={StateManager.store}>
             <IModelViewer
