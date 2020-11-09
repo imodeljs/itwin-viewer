@@ -28,6 +28,7 @@ import { ai, trackEvent } from "./telemetry/TelemetryService";
 // initialize required iModel.js services
 class Initializer {
   private static _initialized: Promise<void>;
+  private static _initializing = false;
 
   /** initialize rpc */
   private static async _initializeRpc(
@@ -98,12 +99,12 @@ class Initializer {
   }
 
   /** shutdown IModelApp */
-  static async shutdown() {
+  static async shutdown(): Promise<void> {
     await IModelApp.shutdown();
   }
 
   /** add required values to Config.App */
-  static setupEnv(options?: IModelBackendOptions) {
+  static setupEnv(options?: IModelBackendOptions): void {
     Config.App.merge({
       imjs_buddi_url:
         options?.buddiServer !== undefined
@@ -121,9 +122,15 @@ class Initializer {
   ): Promise<void> {
     // IModelApp is already initialized.
     // Potentially a second viewer
-    if (IModelApp.initialized) {
+    if (IModelApp.initialized && !this._initializing) {
       this._initialized = Promise.resolve();
       return;
+    } else if (this._initializing) {
+      // in the process of initializing, so return
+      return;
+    } else {
+      // start initializing
+      this._initializing = true;
     }
 
     this._initialized = new Promise(async (resolve, reject) => {
@@ -135,12 +142,12 @@ class Initializer {
 
         // Initialize state manager for extensions to have access to extending the redux store
         // This will setup a singleton store inside the StoreManager class.
-        const stateManager = new StateManager({
+        new StateManager({
           frameworkState: FrameworkReducer,
         });
 
         // Set the GPRID to the iTwinViewer. Revisit exposing if we need to use the app's version instead
-        appOptions.applicationId = viewerOptions?.productId || "3098";
+        appOptions.applicationId = viewerOptions?.productId ?? "3098";
 
         // if ITWIN_VIEWER_HOME is defined, the viewer is likely being served from another origin
         const viewerHome = (window as any).ITWIN_VIEWER_HOME;
@@ -157,6 +164,11 @@ class Initializer {
         this.setupEnv(viewerOptions?.backend);
 
         await IModelApp.startup(appOptions);
+
+        // execute the iModelApp initialization callback if provided
+        if (viewerOptions?.onIModelAppInit) {
+          viewerOptions.onIModelAppInit();
+        }
 
         // Add iModelJS ApplicationInsights telemetry client if a key is provided
         if (viewerOptions?.imjsAppInsightsKey) {
@@ -203,6 +215,7 @@ class Initializer {
         }
         console.log("iModel.js initialized");
 
+        this._initializing = false;
         resolve();
       } catch (error) {
         console.error(error);

@@ -12,7 +12,8 @@ import {
   DesktopAuthorizationClient,
   IModelConnection,
 } from "@bentley/imodeljs-frontend";
-import { ColorTheme } from "@bentley/ui-framework";
+import { BackstageItem } from "@bentley/ui-abstract";
+import { ColorTheme, FrontstageProvider } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
 /**
@@ -69,6 +70,17 @@ export interface IModelBackendOptions {
   buddiServer?: string;
 }
 
+export interface ViewerFrontstage {
+  /** frontstage provider to register */
+  provider: FrontstageProvider;
+  /** should this be the default frontstage? If multiple are defined as default, the last will be used */
+  default?: boolean;
+}
+
+export type ViewerBackstageItem = BackstageItem & {
+  labeli18nKey?: string;
+};
+
 /**
  * iTwin Viewer parameter list
  */
@@ -86,6 +98,10 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   defaultUiConfig?: ItwinViewerUi;
   /** Optional callback function when iModel is connected */
   onIModelConnected?: (iModel: IModelConnection) => void;
+  /** additional frontstages to register */
+  frontstages?: ViewerFrontstage[];
+  /** menu items for the backstage */
+  backstageItems?: ViewerBackstageItem[];
 }
 
 export interface ItwinViewerInitializerParams {
@@ -101,6 +117,8 @@ export interface ItwinViewerInitializerParams {
   i18nUrlTemplate?: string;
   /** is this in the context of a desktop/electron app */
   desktopApp?: boolean;
+  /** callback after iModelApp is initialized */
+  onIModelAppInit?: () => void;
 }
 
 /**

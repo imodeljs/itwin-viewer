@@ -3,58 +3,56 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModelConnection } from "@bentley/imodeljs-frontend";
+import { BackstageItem } from "@bentley/ui-abstract";
 import {
   ConfigurableUiContent,
   FrameworkVersion,
   FrontstageManager,
+  FrontstageProvider,
   ThemeManager,
 } from "@bentley/ui-framework";
 import React, { useEffect } from "react";
 
-import { AppBackstageComposer } from "../app-ui/backstage/AppBackstageComposer";
-import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
+import { ViewerFrontstage } from "../../types";
+import AppBackstageComposer from "../app-ui/backstage/AppBackstageComposer";
 
 interface ModelProps {
-  iModel: IModelConnection;
-  frontstage: DefaultFrontstage;
+  frontstages: ViewerFrontstage[];
+  backstageItems: BackstageItem[];
 }
 
-export const IModelViewer = ({ frontstage }: ModelProps) => {
+export const IModelViewer: React.FC<ModelProps> = ({
+  frontstages,
+  backstageItems,
+}: ModelProps) => {
   useEffect(() => {
-    // Need to call setActiveFrontstageDef in the useEffect as required by iModel.js at this time for proper widget initialization
-    // First render will call this twice (on render and in useEffect), but it's necessary for now
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    FrontstageManager.setActiveFrontstageDef(frontstage.frontstageDef);
-  }, [frontstage]);
-
-  // N.B. make checks to see if we really need to add the frontstage (initializes the frontstagedef) or set it active. When threads are created
-  // this is called multiple times and we lose opened XSection/Profile views because the content layout resets (briefly until the thread
-  // restores its snapshot).
-  if (
-    !frontstage.frontstageDef ||
-    !FrontstageManager.findFrontstageDef(frontstage.frontstageDef.id)
-  ) {
-    FrontstageManager.addFrontstageProvider(frontstage);
-  }
-  if (
-    !FrontstageManager.activeFrontstageDef ||
-    (frontstage.frontstageDef &&
-      FrontstageManager.activeFrontstageDef.id !== frontstage.frontstageDef.id)
-  ) {
-    // Need to set here so that the activefrontstagedef is set prior to rendering the model
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    FrontstageManager.setActiveFrontstageDef(frontstage.frontstageDef);
-  }
+    let defaultFrontstage: FrontstageProvider | undefined;
+    frontstages.forEach((viewerFrontstage) => {
+      // register the provider
+      FrontstageManager.addFrontstageProvider(viewerFrontstage.provider);
+      // override the default (last wins)
+      if (viewerFrontstage.default) {
+        defaultFrontstage = viewerFrontstage.provider;
+      }
+    });
+    // set the active frontstage to the current default
+    if (defaultFrontstage) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      FrontstageManager.setActiveFrontstageDef(defaultFrontstage.frontstageDef);
+    }
+  }, [frontstages]);
 
   const frameworkVersion =
     (process.env.REACT_APP_FRAMEWORK_VERSION as FrameworkVersion) || "1";
 
-  return (
+  // there will always be at least one (for the default frontstage). Wait for it to be loaded into the list before rendering the content
+  return backstageItems.length > 0 ? (
     <ThemeManager>
       <FrameworkVersion version={frameworkVersion}>
-        <ConfigurableUiContent appBackstage={<AppBackstageComposer />} />
+        <ConfigurableUiContent
+          appBackstage={<AppBackstageComposer items={backstageItems} />}
+        />
       </FrameworkVersion>
     </ThemeManager>
-  );
+  ) : null;
 };

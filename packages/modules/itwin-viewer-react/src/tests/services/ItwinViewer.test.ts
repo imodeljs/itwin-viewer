@@ -30,10 +30,10 @@ jest.mock("../../services/auth/AuthorizationClient");
 jest.mock("@microsoft/applicationinsights-react-js", () => ({
   ReactPlugin: jest.fn(),
   withAITracking: (
-    reactPlugin: any | undefined,
+    reactPlugin: any | undefined, // eslint-disable-line no-unused-vars
     component: any,
-    componentName?: string,
-    className?: string
+    componentName?: string, // eslint-disable-line no-unused-vars
+    className?: string // eslint-disable-line no-unused-vars
   ) => component,
 }));
 jest.mock("@bentley/ui-framework");
@@ -228,6 +228,8 @@ describe("iTwinViewer", () => {
       ["one", "two"]
     );
 
+    await Initializer.initialized;
+
     expect(
       IModelApp.extensionAdmin.addExtensionLoaderFront
     ).toHaveBeenCalledWith(
@@ -242,7 +244,7 @@ describe("iTwinViewer", () => {
   it("instantiates an instance of the Telemetry Service when an app insights key is provided", async () => {
     const appInsightsKey = "123";
 
-    const viewer = new ItwinViewer({
+    new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -256,7 +258,7 @@ describe("iTwinViewer", () => {
   });
 
   it("does not instantiate an instance of the Telemetry Service when an app insights key is not provided", async () => {
-    const viewer = new ItwinViewer({
+    new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -272,7 +274,7 @@ describe("iTwinViewer", () => {
     const appInsightsKey = "123";
     const imjsAppInsightsKey = "456";
 
-    const viewer = new ItwinViewer({
+    new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -288,7 +290,7 @@ describe("iTwinViewer", () => {
   it("does not add the iModel.js telemetry client when the imjs key is not provided", async () => {
     const appInsightsKey = "123";
 
-    const viewer = new ItwinViewer({
+    new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -303,7 +305,7 @@ describe("iTwinViewer", () => {
   it("overrides the i18n url template", async () => {
     const i18nUrlTemplate = "host/route";
 
-    const viewer = new ItwinViewer({
+    new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -358,5 +360,23 @@ describe("iTwinViewer", () => {
       expect.anything(),
       document.getElementById(elementId)
     );
+  });
+
+  it("executes a callback after IModelApp is initialized", async () => {
+    const callbacks = {
+      onIModelAppInit: jest.fn(),
+    };
+
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      onIModelAppInit: callbacks.onIModelAppInit,
+    });
+
+    await Initializer.initialized;
+
+    expect(callbacks.onIModelAppInit).toHaveBeenCalled();
   });
 });
