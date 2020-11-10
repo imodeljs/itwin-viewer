@@ -3,6 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { IModelApp } from "@bentley/imodeljs-frontend";
 import { BackstageItemUtilities } from "@bentley/ui-abstract";
 import { FrontstageProps, FrontstageProvider } from "@bentley/ui-framework";
 import { render } from "@testing-library/react";
@@ -62,7 +63,7 @@ class Frontstage2Provider extends FrontstageProvider {
 }
 
 describe("IModelLoader", () => {
-  it("translate backstage item labels properly", () => {
+  it("adds backstage items and translates their labels", () => {
     const fs1 = new Frontstage1Provider();
     const fs2 = new Frontstage2Provider();
     const frontstages: ViewerFrontstage[] = [
@@ -71,32 +72,33 @@ describe("IModelLoader", () => {
       },
       {
         provider: fs2,
-        default: true,
       },
     ];
 
-    const backstageItems: ViewerBackstageItem[] = [
-      {
-        id: "bs1",
-        execute: jest.fn(),
-        groupPriority: 100,
-        itemPriority: 1,
-        label: "",
-        labeli18nKey: "bs1Key",
-      },
-      {
-        id: "bs2",
-        stageId: "bs2",
-        groupPriority: 100,
-        itemPriority: 2,
-        label: "",
-        labeli18nKey: "bs2Key",
-      },
-    ];
+    const actionItem = {
+      id: "bs1",
+      execute: jest.fn(),
+      groupPriority: 100,
+      itemPriority: 1,
+      label: "",
+      labeli18nKey: "bs1Key",
+    };
+
+    const stageLauncher = {
+      id: "bs2",
+      stageId: "bs2",
+      groupPriority: 100,
+      itemPriority: 2,
+      label: "",
+      labeli18nKey: "bs2Key",
+    };
+
+    const backstageItems: ViewerBackstageItem[] = [actionItem, stageLauncher];
     render(
       <IModelLoader frontstages={frontstages} backstageItems={backstageItems} />
     );
-    expect(BackstageItemUtilities.createStageLauncher).toHaveBeenCalled();
-    expect(BackstageItemUtilities.createActionItem).toHaveBeenCalled();
+    expect(BackstageItemUtilities.createStageLauncher).toHaveBeenCalledTimes(1);
+    expect(BackstageItemUtilities.createActionItem).toHaveBeenCalledTimes(1);
+    expect(IModelApp.i18n.translate).toHaveBeenCalledTimes(2);
   });
 });
