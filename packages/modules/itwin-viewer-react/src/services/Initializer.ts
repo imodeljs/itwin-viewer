@@ -16,6 +16,7 @@ import { UiCore } from "@bentley/ui-core";
 import {
   AppNotificationManager,
   FrameworkReducer,
+  FrameworkUiAdmin,
   StateManager,
   UiFramework,
 } from "@bentley/ui-framework";
@@ -140,6 +141,9 @@ class Initializer {
         // Use the AppNotificationManager subclass from ui-framework to get prompts and messages
         appOptions.notifications = new AppNotificationManager();
 
+        // Set FrameworkUiAdmin as default uiAdmin which is used to display context menus, (toolbars, card, tool setting) popups and dialogs.
+        appOptions.uiAdmin = new FrameworkUiAdmin();
+
         // Initialize state manager for extensions to have access to extending the redux store
         // This will setup a singleton store inside the StoreManager class.
         new StateManager({
@@ -201,6 +205,9 @@ class Initializer {
         await Presentation.initialize({
           activeLocale: IModelApp.i18n.languageList()[0],
         });
+
+        // allow uiAdmin to open key-in palette when Ctrl+F2 is pressed - good for manually loading extensions
+        IModelApp.uiAdmin.updateFeatureFlags({ allowKeyinPalette: true });
 
         AppUi.initialize();
 
