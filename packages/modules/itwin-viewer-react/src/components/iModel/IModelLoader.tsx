@@ -83,25 +83,35 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
 
     useEffect(() => {
       const getModelConnection = async () => {
-        if (!(contextId && iModelId) && !snapshotPath) {
-          // first check to see if some other frontstage is defined as the default
-          // allow fronstages other than the default viewport to continue to render if so
-          if (frontstages) {
-            const defaultFrontstages = frontstages.filter(
-              (frontstage) => frontstage.default
-            );
-            if (defaultFrontstages.length > 0) {
+        // first check to see if some other frontstage is defined as the default
+        // allow fronstages other than the default viewport to continue to render if so
+        if (frontstages) {
+          const defaultFrontstages = frontstages.filter(
+            (frontstage) => frontstage.default
+          );
+          if (defaultFrontstages.length > 0) {
+            // there should only be one, but check if any default frontstage requires an iModel connection
+            let requiresConnection = false;
+            for (let i = 0; i < defaultFrontstages.length; i++) {
+              if (defaultFrontstages[i].requiresIModelConnection) {
+                requiresConnection = true;
+                break;
+              }
+            }
+            if (!requiresConnection) {
+              // allow to continue to render
               setConnected(true);
               return;
             }
           }
+        }
+        if (!(contextId && iModelId) && !snapshotPath) {
           throw new Error(
             "Please provide a valid contextId and iModelId or a local snapshotPath"
           );
-        } else {
-          setConnected(false);
         }
 
+        setConnected(false);
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
         if (snapshotPath) {
