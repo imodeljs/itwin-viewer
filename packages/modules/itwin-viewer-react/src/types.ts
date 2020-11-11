@@ -75,6 +75,8 @@ export interface ViewerFrontstage {
   provider: FrontstageProvider;
   /** should this be the default frontstage? If multiple are defined as default, the last will be used */
   default?: boolean;
+  /** the frontstage requires and iModel connection */
+  requiresIModelConnection?: boolean;
 }
 
 export type ViewerBackstageItem = BackstageItem & {

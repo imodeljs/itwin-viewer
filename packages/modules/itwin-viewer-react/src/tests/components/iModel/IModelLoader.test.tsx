@@ -14,8 +14,15 @@ import { ViewerBackstageItem, ViewerFrontstage } from "../../../types";
 
 jest.mock("@bentley/ui-framework");
 jest.mock("@bentley/ui-abstract");
-jest.mock("@microsoft/applicationinsights-react-js");
-
+jest.mock("@microsoft/applicationinsights-react-js", () => ({
+  ReactPlugin: jest.fn(),
+  withAITracking: (
+    reactPlugin: any | undefined, // eslint-disable-line no-unused-vars
+    component: any,
+    componentName?: string, // eslint-disable-line no-unused-vars
+    className?: string // eslint-disable-line no-unused-vars
+  ) => component,
+}));
 jest.mock("@bentley/imodeljs-frontend", () => {
   return {
     IModelApp: {
@@ -49,6 +56,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     },
   };
 });
+jest.mock("../../../services/iModel/IModelService");
 
 class Frontstage1Provider extends FrontstageProvider {
   public get frontstage(): React.ReactElement<FrontstageProps> {

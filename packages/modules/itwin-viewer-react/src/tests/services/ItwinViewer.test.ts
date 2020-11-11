@@ -68,6 +68,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
   };
 });
 jest.mock("../../services/telemetry/TelemetryService");
+jest.mock("../../services/iModel/IModelService");
 
 const elementId = "viewerRoot";
 const mockProjectId = "mockProjectId";
