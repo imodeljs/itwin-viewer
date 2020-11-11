@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 11 Nov 2020 20:24:23 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Nov 2020 20:36:10 GMT and should not be manually modified.
+
+## 5.1.4
+Wed, 11 Nov 2020 20:36:10 GMT
+
+### Patches
+
+- allow a default frontstage to render without an iModel connection unless otherwise specified
 
 ## 5.1.3
 Wed, 11 Nov 2020 20:24:23 GMT
