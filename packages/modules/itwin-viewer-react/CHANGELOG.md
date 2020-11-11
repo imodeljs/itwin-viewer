@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 10 Nov 2020 16:51:42 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Nov 2020 20:24:23 GMT and should not be manually modified.
+
+## 5.1.3
+Wed, 11 Nov 2020 20:24:23 GMT
+
+### Patches
+
+- Initialize FrameworkUiAdmin at startup so popup like context menus, tool settings, cards, and toolbars can be shown and hidden via ImodelApp.uiAdmin calls.
 
 ## 5.1.2
 Tue, 10 Nov 2020 16:51:42 GMT
