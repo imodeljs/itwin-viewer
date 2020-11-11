@@ -55,6 +55,9 @@ jest.mock("@bentley/imodeljs-frontend", () => {
         }),
         languageList: jest.fn().mockReturnValue(["en-US"]),
       },
+      uiAdmin: {
+        updateFeatureFlags: jest.fn(),
+      },
     },
     SnapMode: {},
     ActivityMessageDetails: jest.fn(),
