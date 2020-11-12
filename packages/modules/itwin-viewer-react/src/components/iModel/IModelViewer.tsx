@@ -19,11 +19,13 @@ import AppBackstageComposer from "../app-ui/backstage/AppBackstageComposer";
 interface ModelProps {
   frontstages: ViewerFrontstage[];
   backstageItems: BackstageItem[];
+  uiFrameworkVersion?: FrameworkVersion;
 }
 
 export const IModelViewer: React.FC<ModelProps> = ({
   frontstages,
   backstageItems,
+  uiFrameworkVersion,
 }: ModelProps) => {
   useEffect(() => {
     let defaultFrontstage: FrontstageProvider | undefined;
@@ -42,13 +44,10 @@ export const IModelViewer: React.FC<ModelProps> = ({
     }
   }, [frontstages]);
 
-  const frameworkVersion =
-    (process.env.REACT_APP_FRAMEWORK_VERSION as FrameworkVersion) || "1";
-
   // there will always be at least one (for the default frontstage). Wait for it to be loaded into the list before rendering the content
   return backstageItems.length > 0 ? (
     <ThemeManager>
-      <FrameworkVersion version={frameworkVersion}>
+      <FrameworkVersion version={uiFrameworkVersion || "2"}>
         <ConfigurableUiContent
           appBackstage={<AppBackstageComposer items={backstageItems} />}
         />

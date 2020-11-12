@@ -13,7 +13,11 @@ import {
   IModelConnection,
 } from "@bentley/imodeljs-frontend";
 import { BackstageItem } from "@bentley/ui-abstract";
-import { ColorTheme, FrontstageProvider } from "@bentley/ui-framework";
+import {
+  ColorTheme,
+  FrameworkVersion,
+  FrontstageProvider,
+} from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
 /**
@@ -104,6 +108,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   frontstages?: ViewerFrontstage[];
   /** menu items for the backstage */
   backstageItems?: ViewerBackstageItem[];
+  /** optionally override the UI framework version (defaults to 2) */
+  uiFrameworkVersion?: FrameworkVersion;
 }
 
 export interface ItwinViewerInitializerParams {
