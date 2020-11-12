@@ -19,6 +19,7 @@ import {
   BackstageStageLauncher,
 } from "@bentley/ui-abstract";
 import {
+  FrameworkVersion,
   StateManager,
   SyncUiEventDispatcher,
   UiFramework,
@@ -52,6 +53,7 @@ export interface ModelLoaderProps {
   snapshotPath?: string;
   frontstages?: ViewerFrontstage[];
   backstageItems?: ViewerBackstageItem[];
+  uiFrameworkVersion?: FrameworkVersion;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -64,6 +66,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     snapshotPath,
     frontstages,
     backstageItems,
+    uiFrameworkVersion,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -245,6 +248,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             <IModelViewer
               frontstages={finalFrontstages}
               backstageItems={finalBackstageItems}
+              uiFrameworkVersion={uiFrameworkVersion}
             />
           </Provider>
         </div>

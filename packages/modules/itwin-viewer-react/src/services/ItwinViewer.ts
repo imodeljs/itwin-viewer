@@ -11,7 +11,11 @@ import {
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
-import { ColorTheme, UiFramework } from "@bentley/ui-framework";
+import {
+  ColorTheme,
+  FrameworkVersion,
+  UiFramework,
+} from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -52,6 +56,7 @@ export class ItwinViewer {
   uiConfig: ItwinViewerUi | undefined;
   appInsightsKey: string | undefined;
   frontstages: ViewerFrontstage[] | undefined;
+  uiFrameworkVersion: FrameworkVersion | undefined;
 
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
@@ -66,6 +71,7 @@ export class ItwinViewer {
     this.appInsightsKey = options.appInsightsKey;
     this.onIModelConnected = options.onIModelConnected;
     this.frontstages = options.frontstages;
+    this.uiFrameworkVersion = options.uiFrameworkVersion;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -116,6 +122,7 @@ export class ItwinViewer {
           onIModelConnected: this.onIModelConnected,
           snapshotPath: args?.snapshotPath,
           frontstages: this.frontstages,
+          uiFrameworkVersion: this.uiFrameworkVersion,
         } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)
