@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 11 Nov 2020 20:36:10 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Nov 2020 15:18:47 GMT and should not be manually modified.
+
+## 5.2.0
+Thu, 12 Nov 2020 15:18:47 GMT
+
+### Minor changes
+
+- default to UI framework version 2; add prop to change
 
 ## 5.1.4
 Wed, 11 Nov 2020 20:36:10 GMT

@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.2.0",
+      "tag": "@bentley/itwin-viewer-react_v5.2.0",
+      "date": "Thu, 12 Nov 2020 15:18:47 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "default to UI framework version 2; add prop to change"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.1.4",
       "tag": "@bentley/itwin-viewer-react_v5.1.4",
       "date": "Wed, 11 Nov 2020 20:36:10 GMT",
