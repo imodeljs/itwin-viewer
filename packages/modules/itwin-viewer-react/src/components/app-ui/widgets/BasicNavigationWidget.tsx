@@ -33,16 +33,69 @@ export function BasicNavigationWidget({ config }: BasicNavigationWidgetProps) {
     if (config?.hideDefaultHorizontalItems) {
       return [];
     }
-    const items: CommonToolbarItem[] = ToolbarHelper.createToolbarItemsFromItemDefs(
-      [
-        CoreTools.rotateViewCommand,
-        CoreTools.panViewCommand,
-        CoreTools.fitViewCommand,
-        CoreTools.windowAreaCommand,
-        CoreTools.viewUndoCommand,
-        CoreTools.viewRedoCommand,
-      ]
-    );
+    const items: CommonToolbarItem[] = [];
+
+    if (
+      config?.horizontalItems?.rotateView === undefined ||
+      config?.horizontalItems?.rotateView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          10,
+          CoreTools.rotateViewCommand
+        )
+      );
+    }
+    if (
+      config?.horizontalItems?.panView === undefined ||
+      config?.horizontalItems?.panView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(20, CoreTools.panViewCommand)
+      );
+    }
+    if (
+      config?.horizontalItems?.fitView === undefined ||
+      config?.horizontalItems?.fitView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(30, CoreTools.fitViewCommand)
+      );
+    }
+    if (
+      config?.horizontalItems?.windowArea === undefined ||
+      config?.horizontalItems?.windowArea === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          40,
+          CoreTools.windowAreaCommand
+        )
+      );
+    }
+    if (
+      config?.horizontalItems?.undoView === undefined ||
+      config?.horizontalItems?.undoView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          50,
+          CoreTools.viewUndoCommand
+        )
+      );
+    }
+    if (
+      config?.horizontalItems?.redoView === undefined ||
+      config?.horizontalItems?.redoView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          60,
+          CoreTools.viewRedoCommand
+        )
+      );
+    }
+
     return items;
   }, [config]);
 
@@ -51,13 +104,30 @@ export function BasicNavigationWidget({ config }: BasicNavigationWidgetProps) {
       return [];
     }
     const items: CommonToolbarItem[] = [];
-    items.push(
-      ToolbarHelper.createToolbarItemFromItemDef(10, CoreTools.walkViewCommand),
-      ToolbarHelper.createToolbarItemFromItemDef(
-        20,
-        CoreTools.toggleCameraViewCommand
-      )
-    );
+
+    if (
+      config?.verticalItems?.walkView === undefined ||
+      config?.verticalItems?.walkView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          10,
+          CoreTools.walkViewCommand
+        )
+      );
+    }
+    if (
+      config?.verticalItems?.cameraView === undefined ||
+      config?.verticalItems?.cameraView === true
+    ) {
+      items.push(
+        ToolbarHelper.createToolbarItemFromItemDef(
+          20,
+          CoreTools.toggleCameraViewCommand
+        )
+      );
+    }
+
     return items;
   }, [config]);
 

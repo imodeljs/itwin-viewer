@@ -138,12 +138,54 @@ export interface CornerItem {
 }
 
 /**
+ * Control visibility of individual tools or tool groups in the content manipulation vertical section. Default is true
+ */
+export interface ContentManipulationVerticalItems {
+  selectTool?: boolean;
+  measureTools?: boolean;
+  sectionTools?: boolean;
+}
+
+/**
+ * Control visibility of individual tools or tool groups in the content manipulation horizontal section. Default is true
+ */
+export interface ContentManipulationHorizontalItems {
+  clearSelection?: boolean;
+  clearHideIsolateEmphasizeElements?: boolean;
+  hideElements?: boolean;
+  isolateElements?: boolean;
+  emphasizeElements?: boolean;
+}
+
+/**
  * Configure options for the content manipulation section
  */
 export interface ContentManipulationTools {
   cornerItem?: CornerItem;
   hideDefaultHorizontalItems?: boolean;
   hideDefaultVerticalItems?: boolean;
+  verticalItems?: ContentManipulationVerticalItems;
+  horizontalItems?: ContentManipulationHorizontalItems;
+}
+
+/**
+ * Control visibility of individual tools or tool groups in the view navigation horizontal section. Default is true
+ */
+export interface ViewNavigationHorizontalItems {
+  rotateView?: boolean;
+  panView?: boolean;
+  fitView?: boolean;
+  windowArea?: boolean;
+  undoView?: boolean;
+  redoView?: boolean;
+}
+
+/**
+ * Control visibility of individual tools or tool groups in the view navigation vertical section. Default is true
+ */
+export interface ViewNavigationVerticalItems {
+  walkView?: boolean;
+  cameraView?: boolean;
 }
 
 /**
@@ -152,6 +194,8 @@ export interface ContentManipulationTools {
 export interface ViewNavigationTools {
   hideDefaultHorizontalItems?: boolean;
   hideDefaultVerticalItems?: boolean;
+  verticalItems?: ViewNavigationVerticalItems;
+  horizontalItems?: ViewNavigationHorizontalItems;
 }
 
 /**
