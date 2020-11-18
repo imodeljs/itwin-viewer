@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 18 Nov 2020 15:12:01 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Nov 2020 22:13:04 GMT and should not be manually modified.
+
+## 5.4.0
+Wed, 18 Nov 2020 22:13:04 GMT
+
+### Minor changes
+
+- Add the ability to hide individual default tools
 
 ## 5.3.0
 Wed, 18 Nov 2020 15:12:01 GMT
