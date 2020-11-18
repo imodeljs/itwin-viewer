@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import { StatusBarSection } from "@bentley/ui-abstract";
 import {
   ClearEmphasisStatusField,
@@ -9,6 +10,7 @@ import {
   FooterModeField,
   MessageCenterField,
   SelectionScopeField,
+  SnapModeField,
   StatusBarComposer,
   StatusBarItem,
   StatusBarItemUtilities,
@@ -37,6 +39,7 @@ export class AppStatusBarWidget extends StatusBarWidgetControl {
     const TileLoadIndicator = withStatusFieldProps(TileLoadingIndicator);
     const SelectionScope = withStatusFieldProps(SelectionScopeField);
     const FooterOnlyDisplay = withStatusFieldProps(FooterModeField);
+    const SnapMode = withStatusFieldProps(SnapModeField);
 
     this._footerModeOnlySeparator = (): React.ReactNode => {
       return (
@@ -99,9 +102,17 @@ export class AppStatusBarWidget extends StatusBarWidgetControl {
     );
     this._statusBarItems.push(
       StatusBarItemUtilities.createStatusBarItem(
-        "SelectionScope",
+        "SnapModeField",
         StatusBarSection.Right,
         20,
+        <SnapMode />
+      )
+    );
+    this._statusBarItems.push(
+      StatusBarItemUtilities.createStatusBarItem(
+        "SelectionScope",
+        StatusBarSection.Right,
+        30,
         <SelectionScope />
       )
     );
