@@ -5,6 +5,7 @@
 
 import { Id64 } from "@bentley/bentleyjs-core";
 import { ViewState } from "@bentley/imodeljs-frontend";
+import { MultiElementPropertyGridWidgetControl } from "@bentley/property-grid-react";
 import {
   ContentGroup,
   ContentLayoutDef,
@@ -25,7 +26,6 @@ import {
 import * as React from "react";
 
 import { ItwinViewerUi } from "../../../types";
-import { PropertyGridWidget } from "../../property";
 import { AppStatusBarWidget } from "../statusbars/AppStatusBar";
 import { BasicNavigationWidget, BasicToolWidget, TreeWidget } from "../widgets";
 
@@ -157,7 +157,7 @@ export class DefaultFrontstage extends FrontstageProvider {
                 ? [
                     <Widget
                       key={DefaultFrontstage.DEFAULT_PROPERTIES_WIDGET_KEY}
-                      control={PropertyGridWidget}
+                      control={MultiElementPropertyGridWidgetControl}
                       defaultState={WidgetState.Hidden}
                       fillZone={true}
                       iconSpec="icon-properties-list"

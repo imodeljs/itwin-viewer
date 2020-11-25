@@ -22,7 +22,7 @@ dependencies:
   '@bentley/presentation-components': 2.6.4_3afc63cc02a405adbe4486f0ac030644
   '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
   '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
-  '@bentley/property-grid-react': 1.2.1_5a549018a7b34d1bda3d84a8473a4dfa
+  '@bentley/property-grid-react': 1.2.1_3f326713d12802dc69e6081cea0e671e
   '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
   '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
   '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
@@ -90,6 +90,7 @@ dependencies:
   react-redux: 7.2.0_redux@4.0.5
   react-router: 5.2.0
   react-router-dom: 5.2.0
+  react-spring: 8.0.27
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: 4.0.5
@@ -2950,7 +2951,7 @@ packages:
       '@bentley/itwin-client': ^2.6.4
     resolution:
       integrity: sha512-UC3n167bvAijdCHy8Ay9X3JPgqIT11bpu73m06WqFB9U1OVwEZZMYTyxwsnNGzFC6ZV+CfyT1Dd2S1drrm/7lQ==
-  /@bentley/property-grid-react/1.2.1_5a549018a7b34d1bda3d84a8473a4dfa:
+  /@bentley/property-grid-react/1.2.1_3f326713d12802dc69e6081cea0e671e:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -2976,6 +2977,7 @@ packages:
       classnames: 2.2.6
       i18next: 10.6.0
       react-redux: 7.2.0_redux@4.0.5
+      react-spring: 8.0.27
       redux: 4.0.5
     dev: false
     peerDependencies:
@@ -3008,7 +3010,7 @@ packages:
       react-spring: ^8.0.27
     resolution:
       integrity: sha512-1sBEm8RSCEfP8PmQBs6fzVjGY07mbQm4a1mDk2Apkl7CTsenebjJ5nREYQoe0HWBhNDrxIGMhP4fcJZ0DFvs2w==
-  /@bentley/property-grid-react/1.2.1_e4aebd083604837fc3880f99d02cd423:
+  /@bentley/property-grid-react/1.2.1_fdfc3a6f04b412a067b1a50e965eda25:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -3036,6 +3038,7 @@ packages:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       react-redux: 7.2.0_49f644e2f7de4182503f8b93abece808
+      react-spring: 8.0.27_react-dom@16.13.1+react@16.13.1
       redux: 4.0.5
     dev: false
     peerDependencies:
@@ -16405,6 +16408,28 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xq0PPsbkNI9xEd6yTrGPr7hzf6XfIgnsxuUEdRJELq+kLPHMsO3ymFCjhiYP35wlDPn9W46+rHDsJd7LFYteMw==
+  /react-spring/8.0.27:
+    dependencies:
+      '@babel/runtime': 7.10.4
+      prop-types: 15.7.2
+    dev: false
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+    resolution:
+      integrity: sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==
+  /react-spring/8.0.27_react-dom@16.13.1+react@16.13.1:
+    dependencies:
+      '@babel/runtime': 7.10.4
+      prop-types: 15.7.2
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+    dev: false
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+    resolution:
+      integrity: sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==
   /react-style-proptype/3.2.2:
     dependencies:
       prop-types: 15.7.2
@@ -20459,7 +20484,7 @@ packages:
       '@bentley/presentation-components': 2.6.4_117202f7105ff6bbaf35578297e6e84f
       '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
       '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
-      '@bentley/property-grid-react': 1.2.1_e4aebd083604837fc3880f99d02cd423
+      '@bentley/property-grid-react': 1.2.1_fdfc3a6f04b412a067b1a50e965eda25
       '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
       '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
       '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
@@ -20502,6 +20527,7 @@ packages:
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
       react-redux: 7.2.0_49f644e2f7de4182503f8b93abece808
+      react-spring: 8.0.27_react-dom@16.13.1+react@16.13.1
       redux: 4.0.5
       redux-devtools-extension: 2.13.8_redux@4.0.5
       rewire: 5.0.0
@@ -20515,7 +20541,7 @@ packages:
     dev: false
     name: '@rush-temp/itwin-viewer-react'
     resolution:
-      integrity: sha512-G7pWbwpjQLDoBf0l7/UQp2pgisxQFTUY+kQpHVOm+9gLKarpJh4cteOgSLGoLSiBclkD0zyvpuwolaWj+JQwZA==
+      integrity: sha512-T8wsF0CDKJ6L3LfdrxOCuox0kjMxRAaXpqhm7QmHFuBOttBnWmfTuK0vkU0nh9vs29HHNt2mpAY94NiuuI3pcg==
       tarball: 'file:projects/itwin-viewer-react.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-scripts.tgz_typescript@3.9.6':
@@ -20717,6 +20743,7 @@ specifiers:
   react-redux: ^7.2.0
   react-router: ^5.1.2
   react-router-dom: ^5.1.2
+  react-spring: ^8.0.27
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: ^4.0.5
