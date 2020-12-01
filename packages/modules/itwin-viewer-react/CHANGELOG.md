@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 18 Nov 2020 22:13:04 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Dec 2020 21:06:06 GMT and should not be manually modified.
+
+## 5.4.1
+Tue, 01 Dec 2020 21:06:06 GMT
+
+### Patches
+
+- Switch to the property-grid-react package
 
 ## 5.4.0
 Wed, 18 Nov 2020 22:13:04 GMT
