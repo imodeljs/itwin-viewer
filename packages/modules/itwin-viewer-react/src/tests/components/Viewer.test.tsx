@@ -75,6 +75,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
 });
 
 jest.mock("../../services/telemetry/TelemetryService");
+jest.mock("@bentley/property-grid-react");
 
 const mockProjectId = "123";
 const mockIModelId = "456";

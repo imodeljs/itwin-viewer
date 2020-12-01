@@ -11,6 +11,7 @@ import { IModelApp, IModelAppOptions } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { Presentation } from "@bentley/presentation-frontend";
+import { PropertyGridManager } from "@bentley/property-grid-react";
 import { UiComponents } from "@bentley/ui-components";
 import { UiCore } from "@bentley/ui-core";
 import {
@@ -220,6 +221,9 @@ class Initializer {
         if (viewerOptions?.appInsightsKey) {
           trackEvent("iTwinViewer.Viewer.Initialized");
         }
+
+        await PropertyGridManager.initialize(IModelApp.i18n);
+
         console.log("iModel.js initialized");
 
         this._initializing = false;
