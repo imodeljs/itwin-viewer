@@ -3,6 +3,8 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import "./DefaultFrontstage.scss";
+
 import { Id64 } from "@bentley/bentleyjs-core";
 import { ViewState } from "@bentley/imodeljs-frontend";
 import { MultiElementPropertyGridWidgetControl } from "@bentley/property-grid-react";
@@ -164,8 +166,8 @@ export class DefaultFrontstage extends FrontstageProvider {
                       labelKey="iTwinViewer:components.properties"
                       applicationData={{
                         iModelConnection: UiFramework.getIModelConnection(),
-                        rulesetId: "Default",
-                        contextId: UiFramework.getIModelConnection()?.contextId,
+                        projectId: UiFramework.getIModelConnection()?.contextId,
+                        rootClassName: "itv-property-grid",
                       }}
                       syncEventIds={[SyncUiEventId.SelectionSetChanged]}
                       stateFunc={_determineWidgetStateForSelectionSet}
