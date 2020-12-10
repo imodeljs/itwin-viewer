@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.4.2",
+      "tag": "@bentley/itwin-viewer-react_v5.4.2",
+      "date": "Thu, 10 Dec 2020 14:50:58 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixes for the property grid"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.4.1",
       "tag": "@bentley/itwin-viewer-react_v5.4.1",
       "date": "Tue, 01 Dec 2020 21:06:06 GMT",
