@@ -8,6 +8,7 @@ import "./DefaultFrontstage.scss";
 import { Id64 } from "@bentley/bentleyjs-core";
 import { ViewState } from "@bentley/imodeljs-frontend";
 import { MultiElementPropertyGridWidgetControl } from "@bentley/property-grid-react";
+import { TreeWidgetControl } from "@bentley/tree-widget-react";
 import {
   ContentGroup,
   ContentLayoutDef,
@@ -29,7 +30,7 @@ import * as React from "react";
 
 import { ItwinViewerUi } from "../../../types";
 import { AppStatusBarWidget } from "../statusbars/AppStatusBar";
-import { BasicNavigationWidget, BasicToolWidget, TreeWidget } from "../widgets";
+import { BasicNavigationWidget, BasicToolWidget } from "../widgets";
 
 /**
  * Default Frontstage for the iTwinViewer
@@ -137,12 +138,13 @@ export class DefaultFrontstage extends FrontstageProvider {
                 ? [
                     <Widget
                       key={DefaultFrontstage.DEFAULT_TREE_WIDGET_KEY}
-                      control={TreeWidget}
+                      control={TreeWidgetControl}
                       fillZone={true}
                       iconSpec="icon-tree"
                       labelKey="iTwinViewer:components.tree"
                       applicationData={{
                         iModelConnection: UiFramework.getIModelConnection(),
+                        enableElementsClassGrouping: true,
                       }}
                     />,
                   ]
