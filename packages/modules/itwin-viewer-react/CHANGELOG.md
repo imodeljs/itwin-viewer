@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 10 Dec 2020 14:50:58 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Dec 2020 20:28:48 GMT and should not be manually modified.
+
+## 5.5.0
+Wed, 16 Dec 2020 20:28:48 GMT
+
+### Minor changes
+
+- Replace selection tree with the packged visibility tree
 
 ## 5.4.2
 Thu, 10 Dec 2020 14:50:58 GMT

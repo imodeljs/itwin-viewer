@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.5.0",
+      "tag": "@bentley/itwin-viewer-react_v5.5.0",
+      "date": "Wed, 16 Dec 2020 20:28:48 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Replace selection tree with the packged visibility tree"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.4.2",
       "tag": "@bentley/itwin-viewer-react_v5.4.2",
       "date": "Thu, 10 Dec 2020 14:50:58 GMT",
