@@ -14,6 +14,7 @@ import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import {
   ColorTheme,
   FrameworkVersion,
+  IModelViewportControlOptions,
   UiFramework,
 } from "@bentley/ui-framework";
 import React from "react";
@@ -57,6 +58,7 @@ export class ItwinViewer {
   appInsightsKey: string | undefined;
   frontstages: ViewerFrontstage[] | undefined;
   uiFrameworkVersion: FrameworkVersion | undefined;
+  viewportOptions: IModelViewportControlOptions | undefined;
 
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
@@ -72,6 +74,7 @@ export class ItwinViewer {
     this.onIModelConnected = options.onIModelConnected;
     this.frontstages = options.frontstages;
     this.uiFrameworkVersion = options.uiFrameworkVersion;
+    this.viewportOptions = options.viewportOptions;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -123,6 +126,7 @@ export class ItwinViewer {
           snapshotPath: args?.snapshotPath,
           frontstages: this.frontstages,
           uiFrameworkVersion: this.uiFrameworkVersion,
+          viewportOptions: this.viewportOptions,
         } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)

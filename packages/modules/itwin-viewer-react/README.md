@@ -149,6 +149,7 @@ export const UserManagerHome = () => {
 - `frontstages` - Provide additional frontstages for the viewer to render
 - `backstageItems` - Provide additional backstage items for the viewer's backstage composer
 - `onIModelAppInit` - Callback function that executes after IModelApp.startup completes
+- `viewportOptions` - Additional options for the default frontstage's IModelViewportControl
 
 ## Typescript API
 
@@ -175,7 +176,7 @@ const viewer = new iTwinViewer({
 
 if (viewer) {
   viewer.addExtension("dialogItemsSample");
-  viewer.load(contextId, iModelId);
+  viewer.load({ contextId, iModelId });
 }
 ```
 

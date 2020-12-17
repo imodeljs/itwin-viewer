@@ -17,6 +17,7 @@ import {
   Frontstage,
   FrontstageProvider,
   IModelViewportControl,
+  IModelViewportControlOptions,
   StagePanel,
   SyncUiEventId,
   UiFramework,
@@ -53,7 +54,11 @@ export class DefaultFrontstage extends FrontstageProvider {
 
   private _uiConfig?: ItwinViewerUi;
 
-  constructor(public viewStates: ViewState[], uiConfig?: ItwinViewerUi) {
+  constructor(
+    public viewStates: ViewState[],
+    uiConfig?: ItwinViewerUi,
+    viewportOptions?: IModelViewportControlOptions
+  ) {
     super();
 
     this._uiConfig = uiConfig;
@@ -70,6 +75,7 @@ export class DefaultFrontstage extends FrontstageProvider {
           applicationData: {
             viewState: this.viewStates[0],
             iModelConnection: UiFramework.getIModelConnection(),
+            ...viewportOptions,
           },
         },
       ],
