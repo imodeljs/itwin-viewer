@@ -191,7 +191,18 @@ class Initializer {
         }
 
         // initialize localization for the app
-        await IModelApp.i18n.registerNamespace("iTwinViewer").readFinished;
+        const viewerNamespace = "iTwinViewer";
+        let i18nNamespaces = [viewerNamespace];
+        if (viewerOptions?.additionalI18nNamespaces) {
+          i18nNamespaces = i18nNamespaces.concat(
+            viewerOptions.additionalI18nNamespaces
+          );
+        }
+        const i18nPromises = i18nNamespaces.map(
+          async (ns) => IModelApp.i18n.registerNamespace(ns).readFinished
+        );
+
+        await Promise.all(i18nPromises);
 
         // initialize UiCore
         await UiCore.initialize(IModelApp.i18n);
