@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 16 Dec 2020 20:28:48 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Dec 2020 20:52:12 GMT and should not be manually modified.
+
+## 5.6.0
+Thu, 17 Dec 2020 20:52:12 GMT
+
+### Minor changes
+
+- Add the ability to provide options to the IModelViewportControl in the default frontstage
 
 ## 5.5.0
 Wed, 16 Dec 2020 20:28:48 GMT
