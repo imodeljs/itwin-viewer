@@ -353,4 +353,20 @@ describe("Viewer", () => {
     expect(loader).toBeInTheDocument();
     expect(callbacks.onIModelAppInit).toHaveBeenCalled();
   });
+
+  it("registers additional i18n namespaces", async () => {
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        additionalI18nNamespaces={["test1", "test2"]}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
+    expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
 });

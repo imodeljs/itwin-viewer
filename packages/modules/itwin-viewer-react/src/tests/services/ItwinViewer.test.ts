@@ -384,4 +384,19 @@ describe("iTwinViewer", () => {
 
     expect(callbacks.onIModelAppInit).toHaveBeenCalled();
   });
+
+  it("registers additional i18n namespaces", async () => {
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      additionalI18nNamespaces: ["test1", "test2"],
+    });
+
+    await Initializer.initialized;
+
+    expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
+    expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
 });
