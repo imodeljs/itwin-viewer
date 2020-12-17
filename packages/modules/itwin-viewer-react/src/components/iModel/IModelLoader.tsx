@@ -20,6 +20,7 @@ import {
 } from "@bentley/ui-abstract";
 import {
   FrameworkVersion,
+  IModelViewportControlOptions,
   StateManager,
   SyncUiEventDispatcher,
   UiFramework,
@@ -54,6 +55,7 @@ export interface ModelLoaderProps {
   frontstages?: ViewerFrontstage[];
   backstageItems?: ViewerBackstageItem[];
   uiFrameworkVersion?: FrameworkVersion;
+  viewportOptions?: IModelViewportControlOptions;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -67,6 +69,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     frontstages,
     backstageItems,
     uiFrameworkVersion,
+    viewportOptions,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -226,7 +229,8 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         // initialize the DefaultFrontstage that contains the views that we want
         const defaultFrontstageProvider = new DefaultFrontstage(
           [viewState],
-          uiConfig
+          uiConfig,
+          viewportOptions
         );
 
         // add the default frontstage first so that it's default status can be overridden

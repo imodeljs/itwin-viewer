@@ -63,6 +63,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   backstageItems,
   onIModelAppInit,
   uiFrameworkVersion,
+  viewportOptions,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -195,6 +196,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         frontstages={frontstages}
         backstageItems={backstageItems}
         uiFrameworkVersion={uiFrameworkVersion}
+        viewportOptions={viewportOptions}
       />
     </ErrorBoundary>
   ) : null;

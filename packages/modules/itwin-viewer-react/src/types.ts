@@ -17,6 +17,7 @@ import {
   ColorTheme,
   FrameworkVersion,
   FrontstageProvider,
+  IModelViewportControlOptions,
 } from "@bentley/ui-framework";
 import { UserManager } from "oidc-client";
 
@@ -110,6 +111,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   backstageItems?: ViewerBackstageItem[];
   /** optionally override the UI framework version (defaults to 2) */
   uiFrameworkVersion?: FrameworkVersion;
+  /** additional viewport options for the default frontstage's viewport control */
+  viewportOptions?: IModelViewportControlOptions;
 }
 
 export interface ItwinViewerInitializerParams {
