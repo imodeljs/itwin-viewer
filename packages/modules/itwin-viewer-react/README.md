@@ -176,7 +176,7 @@ const viewer = new iTwinViewer({
 
 if (viewer) {
   viewer.addExtension("dialogItemsSample");
-  viewer.load({ contextId: contextId, iModelId: iModelId });
+  viewer.load({ contextId, iModelId });
 }
 ```
 
