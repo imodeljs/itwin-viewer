@@ -150,6 +150,7 @@ export const UserManagerHome = () => {
 - `backstageItems` - Provide additional backstage items for the viewer's backstage composer
 - `onIModelAppInit` - Callback function that executes after IModelApp.startup completes
 - `viewportOptions` - Additional options for the default frontstage's IModelViewportControl
+- `additionalI18nNamespaces` - Additional i18n namespaces to register
 
 ## Typescript API
 
