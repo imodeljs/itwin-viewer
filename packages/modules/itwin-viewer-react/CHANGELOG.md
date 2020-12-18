@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 17 Dec 2020 20:52:12 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Dec 2020 13:05:20 GMT and should not be manually modified.
+
+## 5.7.0
+Fri, 18 Dec 2020 13:05:20 GMT
+
+### Minor changes
+
+- Add the ability to provide addiitonal i18n namespaces to register
 
 ## 5.6.0
 Thu, 17 Dec 2020 20:52:12 GMT
