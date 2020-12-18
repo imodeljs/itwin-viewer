@@ -130,6 +130,8 @@ export interface ItwinViewerInitializerParams {
   desktopApp?: boolean;
   /** callback after iModelApp is initialized */
   onIModelAppInit?: () => void;
+  /** additional i18n namespaces to register */
+  additionalI18nNamespaces?: string[];
 }
 
 /**
