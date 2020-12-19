@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/cra-template-itwin-viewer",
+      "comment": "add missing peer deps, context-registry-client & presentation-components. bump to latest min ver we support",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@bentley/cra-template-itwin-viewer",
+  "email": "aruniverse@users.noreply.github.com"
+}
