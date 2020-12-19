@@ -62,7 +62,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="itwin-viewer-sample">
       <Header
         handleLogin={onLoginClick}
         loggedIn={isAuthorized}
