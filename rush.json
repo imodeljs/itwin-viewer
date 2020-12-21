@@ -4,7 +4,7 @@
   "pnpmVersion": "4.12.5",
   "nodeSupportedVersionRange": ">=10.13.0 <13.0.0",
   "projectFolderMinDepth": 2,
-  "projectFolderMaxDepth": 3,
+  "projectFolderMaxDepth": 5,
   "repository": {
     "url": "https://github.com/imodeljs/itwin-viewer"
   },
@@ -36,6 +36,16 @@
       "projectFolder": "packages/modules/cra-template-itwin-viewer",
       "versionPolicyName": "independentModule",
       "shouldPublish": true
+    },
+    {
+      "packageName": "@bentley/tree-widget-react",
+      "projectFolder": "../viewer-components-react/packages/tree-widget",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@bentley/property-grid-react",
+      "projectFolder": "../viewer-components-react/packages/property-grid",
+      "shouldPublish": false
     }
   ]
 }
