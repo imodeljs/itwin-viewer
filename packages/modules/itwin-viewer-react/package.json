@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@bentley/bentleyjs-core": "^2.6.4",
+    "@bentley/context-registry-client": "^2.6.4",
     "@bentley/extension-client": "^2.6.4",
     "@bentley/frontend-application-insights-client": "^2.6.4",
     "@bentley/frontend-authorization-client": "^2.6.4",
@@ -99,6 +100,7 @@
   },
   "peerDependencies": {
     "@bentley/bentleyjs-core": "^2.6.4",
+    "@bentley/context-registry-client": "^2.6.4",
     "@bentley/extension-client": "^2.6.4",
     "@bentley/frontend-application-insights-client": "^2.6.4",
     "@bentley/frontend-authorization-client": "^2.6.4",

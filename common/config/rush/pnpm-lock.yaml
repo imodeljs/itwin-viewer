@@ -4,6 +4,7 @@ dependencies:
   '@babel/preset-env': 7.10.4
   '@babel/preset-react': 7.10.4
   '@bentley/bentleyjs-core': 2.6.4
+  '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
   '@bentley/extension-client': 2.6.4_0d9c3c0741138331450950942c76c177
   '@bentley/frontend-application-insights-client': 2.6.4_@bentley+itwin-client@2.6.4
   '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -22,11 +23,11 @@ dependencies:
   '@bentley/presentation-components': 2.6.4_3afc63cc02a405adbe4486f0ac030644
   '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
   '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
-  '@bentley/property-grid-react': 1.3.2_5a549018a7b34d1bda3d84a8473a4dfa
+  '@bentley/property-grid-react': 1.3.2_c8c1ba1e46cad898994a705e43558237
   '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
   '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
   '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
-  '@bentley/tree-widget-react': 1.2.5_04aebb10856995cfcea732b49dda6117
+  '@bentley/tree-widget-react': 1.2.5_c2462dbb28a54e6aede8104a4a6d9265
   '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
   '@bentley/ui-components': 2.6.4_1c2fc51d5b0bf1709fad3a804ba2b64f
   '@bentley/ui-core': 2.6.4_23d5a887a2ab6b36e5e013fdcd253801
@@ -91,7 +92,6 @@ dependencies:
   react-redux: 7.2.0_redux@4.0.5
   react-router: 5.2.0
   react-router-dom: 5.2.0
-  react-spring: 8.0.27
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: 4.0.5
@@ -2952,9 +2952,10 @@ packages:
       '@bentley/itwin-client': ^2.6.4
     resolution:
       integrity: sha512-UC3n167bvAijdCHy8Ay9X3JPgqIT11bpu73m06WqFB9U1OVwEZZMYTyxwsnNGzFC6ZV+CfyT1Dd2S1drrm/7lQ==
-  /@bentley/property-grid-react/1.3.2_5a549018a7b34d1bda3d84a8473a4dfa:
+  /@bentley/property-grid-react/1.3.2_7d2911c92f0b6736793d7762a53ba4f7:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
+      '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/geometry-core': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/imodelhub-client': 2.6.4_2fd28347157114d8169a5bff5cd2060d
@@ -2966,19 +2967,21 @@ packages:
       '@bentley/itwin-client': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/orbitgt-core': 2.6.4
       '@bentley/presentation-common': 2.6.4_246e0f094ee2bb0c08f1af739d73de6b
-      '@bentley/presentation-components': 2.6.4_3afc63cc02a405adbe4486f0ac030644
+      '@bentley/presentation-components': 2.6.4_117202f7105ff6bbaf35578297e6e84f
       '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
       '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
-      '@bentley/ui-components': 2.6.4_1c2fc51d5b0bf1709fad3a804ba2b64f
-      '@bentley/ui-core': 2.6.4_23d5a887a2ab6b36e5e013fdcd253801
-      '@bentley/ui-framework': 2.6.4_a84f997d520fa1dc887d295163990c62
-      '@bentley/ui-ninezone': 2.6.4_2f0bca1ca9460a463cda33c94204da48
+      '@bentley/ui-components': 2.6.4_4a0ac98b8f2714b72d1e144c0d95ebe8
+      '@bentley/ui-core': 2.6.4_da91f9a552badb807cd96420d5bf59f1
+      '@bentley/ui-framework': 2.6.4_e6bdb898b106e3140eb2b8f1fe770f0d
+      '@bentley/ui-ninezone': 2.6.4_1807177401d5d25a3a9a3e1853dcc278
       '@bentley/webgl-compatibility': 2.6.4
       classnames: 2.2.6
       i18next: 10.6.0
-      react-redux: 7.2.0_redux@4.0.5
-      react-spring: 8.0.27
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+      react-redux: 7.2.0_49f644e2f7de4182503f8b93abece808
+      react-spring: 8.0.27_react-dom@16.13.1+react@16.13.1
       redux: 4.0.5
     dev: false
     peerDependencies:
@@ -3009,9 +3012,10 @@ packages:
       react-redux: ^7.2.0
     resolution:
       integrity: sha512-InQ3GTP7qWfdXAdJvL8ksUtnzgpqMbZkHKSH3/ByjB7awwaLlbvnq7cm/N4IoPQp5bsz/akPPhlwhXRvNMQDAA==
-  /@bentley/property-grid-react/1.3.2_e4aebd083604837fc3880f99d02cd423:
+  /@bentley/property-grid-react/1.3.2_c8c1ba1e46cad898994a705e43558237:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
+      '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/geometry-core': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/imodelhub-client': 2.6.4_2fd28347157114d8169a5bff5cd2060d
@@ -3023,21 +3027,19 @@ packages:
       '@bentley/itwin-client': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/orbitgt-core': 2.6.4
       '@bentley/presentation-common': 2.6.4_246e0f094ee2bb0c08f1af739d73de6b
-      '@bentley/presentation-components': 2.6.4_117202f7105ff6bbaf35578297e6e84f
+      '@bentley/presentation-components': 2.6.4_3afc63cc02a405adbe4486f0ac030644
       '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
       '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
-      '@bentley/ui-components': 2.6.4_4a0ac98b8f2714b72d1e144c0d95ebe8
-      '@bentley/ui-core': 2.6.4_da91f9a552badb807cd96420d5bf59f1
-      '@bentley/ui-framework': 2.6.4_e6bdb898b106e3140eb2b8f1fe770f0d
-      '@bentley/ui-ninezone': 2.6.4_1807177401d5d25a3a9a3e1853dcc278
+      '@bentley/ui-components': 2.6.4_1c2fc51d5b0bf1709fad3a804ba2b64f
+      '@bentley/ui-core': 2.6.4_23d5a887a2ab6b36e5e013fdcd253801
+      '@bentley/ui-framework': 2.6.4_a84f997d520fa1dc887d295163990c62
+      '@bentley/ui-ninezone': 2.6.4_2f0bca1ca9460a463cda33c94204da48
       '@bentley/webgl-compatibility': 2.6.4
       classnames: 2.2.6
       i18next: 10.6.0
-      react: 16.13.1
-      react-dom: 16.13.1_react@16.13.1
-      react-redux: 7.2.0_49f644e2f7de4182503f8b93abece808
-      react-spring: 8.0.27_react-dom@16.13.1+react@16.13.1
+      react-redux: 7.2.0_redux@4.0.5
+      react-spring: 8.0.27
       redux: 4.0.5
     dev: false
     peerDependencies:
@@ -3172,9 +3174,10 @@ packages:
       '@bentley/itwin-client': ^2.6.4
     resolution:
       integrity: sha512-rhZliRnjleaiMqRDRaXzPlIEl5sPiVzBi2uPnbAJrX5OmXCGLOrQHo456OA6yQkwAOpD/veljssDR2b8+Dq0Dw==
-  /@bentley/tree-widget-react/1.2.5_04aebb10856995cfcea732b49dda6117:
+  /@bentley/tree-widget-react/1.2.5_c2462dbb28a54e6aede8104a4a6d9265:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
+      '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/geometry-core': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/imodelhub-client': 2.6.4_2fd28347157114d8169a5bff5cd2060d
@@ -3227,9 +3230,10 @@ packages:
       react-dom: ^16.8.0
     resolution:
       integrity: sha512-IPAm7DU/Ri0UERGegT27sDIQXdFFyNA6YFzfxd+UdbhQDCmW0+k7OxEZrZ1AvgW9gUgarWcHawjhczS4lgC5jA==
-  /@bentley/tree-widget-react/1.2.5_68ef192efbfd49164c02592d4a0b6e59:
+  /@bentley/tree-widget-react/1.2.5_d9ab09769d4861c54d7cf0b4ea39fe04:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
+      '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/geometry-core': 2.6.4_@bentley+bentleyjs-core@2.6.4
       '@bentley/imodelhub-client': 2.6.4_2fd28347157114d8169a5bff5cd2060d
@@ -20576,6 +20580,7 @@ packages:
   'file:projects/itwin-viewer-react.tgz':
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
+      '@bentley/context-registry-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
       '@bentley/extension-client': 2.6.4_0d9c3c0741138331450950942c76c177
       '@bentley/frontend-application-insights-client': 2.6.4_@bentley+itwin-client@2.6.4
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -20593,11 +20598,11 @@ packages:
       '@bentley/presentation-components': 2.6.4_117202f7105ff6bbaf35578297e6e84f
       '@bentley/presentation-frontend': 2.6.4_aaebb6583f7741d2b28ea2a6b784da5b
       '@bentley/product-settings-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
-      '@bentley/property-grid-react': 1.3.2_e4aebd083604837fc3880f99d02cd423
+      '@bentley/property-grid-react': 1.3.2_7d2911c92f0b6736793d7762a53ba4f7
       '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
       '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
       '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
-      '@bentley/tree-widget-react': 1.2.5_68ef192efbfd49164c02592d4a0b6e59
+      '@bentley/tree-widget-react': 1.2.5_d9ab09769d4861c54d7cf0b4ea39fe04
       '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
       '@bentley/ui-components': 2.6.4_4a0ac98b8f2714b72d1e144c0d95ebe8
       '@bentley/ui-core': 2.6.4_da91f9a552badb807cd96420d5bf59f1
@@ -20651,7 +20656,7 @@ packages:
     dev: false
     name: '@rush-temp/itwin-viewer-react'
     resolution:
-      integrity: sha512-Zc04jD1lvisv3zH2/E3UsQiiuTOTTISU1uLxsTlwTlgVF+ndWlEK2pbnx7YnKvwvFHc8P29qRVqRndHdnkx4Eg==
+      integrity: sha512-jLS5CUwt/efBM1YoBTwZ//vZxX9n3xoQ3sBFqeKtTLdZYCGXZQY82JEuHs+HV8t0pTbTNSTGYKK6rjCVZ2sS8g==
       tarball: 'file:projects/itwin-viewer-react.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-scripts.tgz_typescript@3.9.6':
@@ -20767,6 +20772,7 @@ specifiers:
   '@babel/preset-env': ^7.9.6
   '@babel/preset-react': ^7.9.4
   '@bentley/bentleyjs-core': ^2.6.4
+  '@bentley/context-registry-client': ^2.6.4
   '@bentley/extension-client': ^2.6.4
   '@bentley/frontend-application-insights-client': ^2.6.4
   '@bentley/frontend-authorization-client': ^2.6.4
@@ -20854,7 +20860,6 @@ specifiers:
   react-redux: ^7.2.0
   react-router: ^5.1.2
   react-router-dom: ^5.1.2
-  react-spring: ^8.0.27
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: ^4.0.5
