@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-viewer-react",
+      "comment": "add dev+peer dep on context-registry-client",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@bentley/itwin-viewer-react",
+  "email": "aruniverse@users.noreply.github.com"
+}
