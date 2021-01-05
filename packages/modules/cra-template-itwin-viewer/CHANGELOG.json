@@ -2,6 +2,18 @@
   "name": "@bentley/cra-template-itwin-viewer",
   "entries": [
     {
+      "version": "3.0.0",
+      "tag": "@bentley/cra-template-itwin-viewer_v3.0.0",
+      "date": "Tue, 05 Jan 2021 20:11:01 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Change REACT_APP_ env var prefixes to IMJS_"
+          }
+        ]
+      }
+    },
+    {
       "version": "2.0.0",
       "tag": "@bentley/cra-template-itwin-viewer_v2.0.0",
       "date": "Tue, 10 Nov 2020 16:51:42 GMT",
