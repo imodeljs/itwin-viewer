@@ -19,15 +19,15 @@ export class AuthorizationClient {
     return this._oidcClient;
   }
 
-  public static async initializeOidc() {
+  public static async initializeOidc(): Promise<void> {
     if (this._oidcClient) {
       return;
     }
 
-    const scope = process.env.REACT_APP_AUTH_CLIENT_SCOPES ?? "";
-    const clientId = process.env.REACT_APP_AUTH_CLIENT_CLIENT_ID ?? "";
-    const redirectUri = process.env.REACT_APP_AUTH_CLIENT_REDIRECT_URI ?? "";
-    const postSignoutRedirectUri = process.env.REACT_APP_AUTH_CLIENT_LOGOUT_URI;
+    const scope = process.env.IMJS_AUTH_CLIENT_SCOPES ?? "";
+    const clientId = process.env.IMJS_AUTH_CLIENT_CLIENT_ID ?? "";
+    const redirectUri = process.env.IMJS_AUTH_CLIENT_REDIRECT_URI ?? "";
+    const postSignoutRedirectUri = process.env.IMJS_AUTH_CLIENT_LOGOUT_URI;
 
     // authority is optional and will default to Production IMS
     const oidcConfiguration: BrowserAuthorizationClientConfiguration = {
@@ -45,7 +45,7 @@ export class AuthorizationClient {
     this._oidcClient = new BrowserAuthorizationClient(oidcConfiguration);
   }
 
-  public static async signIn(redirectPath?: string) {
+  public static async signIn(redirectPath?: string): Promise<void> {
     sessionStorage.setItem(AuthTypeKey, AuthType.IMODELJS);
     if (redirectPath) {
       sessionStorage.setItem(RedirectKey, redirectPath);
@@ -53,7 +53,7 @@ export class AuthorizationClient {
     await this.oidcClient.signIn(new FrontendRequestContext());
   }
 
-  public static async signOut(redirectPath?: string) {
+  public static async signOut(redirectPath?: string): Promise<void> {
     if (redirectPath) {
       sessionStorage.setItem(RedirectKey, redirectPath);
     }

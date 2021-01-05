@@ -13,7 +13,7 @@ import { AuthorizationClient } from "../../services/auth";
 import { Header } from "./";
 import styles from "./Home.module.scss";
 
-export const AuthClientHome = () => {
+export const AuthClientHome: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(
     AuthorizationClient.oidcClient && AuthorizationClient.oidcClient.hasSignedIn
   );
@@ -61,9 +61,9 @@ export const AuthClientHome = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
-          contextId={process.env.REACT_APP_AUTH_CLIENT_CONTEXT_ID as string}
-          iModelId={process.env.REACT_APP_AUTH_CLIENT_IMODEL_ID as string}
-          appInsightsKey={process.env.REACT_APP_APPLICATION_INSIGHTS_KEY}
+          contextId={process.env.IMJS_AUTH_CLIENT_CONTEXT_ID as string}
+          iModelId={process.env.IMJS_AUTH_CLIENT_IMODEL_ID as string}
+          appInsightsKey={process.env.IMJS_APPLICATION_INSIGHTS_KEY}
           theme={ColorTheme.Dark}
           defaultUiConfig={{
             contentManipulationTools: {
