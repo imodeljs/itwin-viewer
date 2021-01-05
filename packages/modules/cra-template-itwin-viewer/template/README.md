@@ -8,8 +8,8 @@ Prior to running the app, add a valid contextId and iModelId for your user in th
 
 ```
 # ---- Test ids ----
-REACT_APP_TEST_CONTEXT_ID = ""
-REACT_APP_TEST_IMODEL_ID = ""
+IMJS_CONTEXT_ID = ""
+IMJS_IMODEL_ID = ""
 ```
 
 You can also replace the OIDC client data in this file with your own if you'd prefer.

@@ -12,19 +12,17 @@ export class OidcClient {
   public loggedIn: boolean;
 
   constructor() {
-    /* eslint-disable @typescript-eslint/camelcase */
     const userSettings = {
-      scope: process.env.REACT_APP_OIDC_CLIENT_SCOPES,
-      client_id: process.env.REACT_APP_OIDC_CLIENT_CLIENT_ID,
-      redirect_uri: process.env.REACT_APP_OIDC_CLIENT_REDIRECT_URI,
-      post_logout_redirect_uri: process.env.REACT_APP_OIDC_CLIENT_LOGOUT_URI,
-      authority: process.env.REACT_APP_OIDC_CLIENT_AUTHORITY,
-      response_type: process.env.REACT_APP_OIDC_CLIENT_RESPONSE_TYPE,
+      scope: process.env.IMJS_OIDC_CLIENT_SCOPES,
+      client_id: process.env.IMJS_OIDC_CLIENT_CLIENT_ID,
+      redirect_uri: process.env.IMJS_OIDC_CLIENT_REDIRECT_URI,
+      post_logout_redirect_uri: process.env.IMJS_OIDC_CLIENT_LOGOUT_URI,
+      authority: process.env.IMJS_OIDC_CLIENT_AUTHORITY,
+      response_type: process.env.IMJS_OIDC_CLIENT_RESPONSE_TYPE,
       userStore: new WebStorageStateStore({ store: localStorage }),
       automaticSilentRenew: true,
       accessTokenExpiringNotificationTime: 600,
     };
-    /* eslint-enable @typescript-eslint/camelcase */
     this._userManager = new UserManager(userSettings);
     this.loggedIn = false;
 
@@ -50,7 +48,7 @@ export class OidcClient {
     return this._userManager;
   };
 
-  public signIn = async (redirectPath?: string) => {
+  public signIn = async (redirectPath?: string): Promise<void> => {
     this._userManager.clearStaleState().catch((error) => console.error(error));
     sessionStorage.setItem(AuthTypeKey, AuthType.OIDC);
     if (redirectPath) {
@@ -59,7 +57,7 @@ export class OidcClient {
     await this._userManager.signinRedirect();
   };
 
-  public signOut = async (redirectPath?: string) => {
+  public signOut = async (redirectPath?: string): Promise<void> => {
     if (redirectPath) {
       sessionStorage.setItem(RedirectKey, redirectPath);
     }

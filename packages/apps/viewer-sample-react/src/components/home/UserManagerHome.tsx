@@ -12,7 +12,7 @@ import { oidcClient } from "../../services/auth/AuthInstances";
 import { Header } from "./";
 import styles from "./Home.module.scss";
 
-export const UserManagerHome = () => {
+export const UserManagerHome: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(oidcClient.loggedIn);
   const location = useLocation();
   const extensions: ViewerExtension[] = [
@@ -50,8 +50,8 @@ export const UserManagerHome = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-          contextId={process.env.REACT_APP_OIDC_CLIENT_CONTEXT_ID as string}
-          iModelId={process.env.REACT_APP_OIDC_CLIENT_IMODEL_ID as string}
+          contextId={process.env.IMJS_OIDC_CLIENT_CONTEXT_ID as string}
+          iModelId={process.env.IMJS_OIDC_CLIENT_IMODEL_ID as string}
           extensions={extensions}
           productId={productId}
           onIModelConnected={iModelConnected}
