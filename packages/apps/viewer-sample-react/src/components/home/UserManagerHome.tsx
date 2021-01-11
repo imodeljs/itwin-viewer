@@ -50,8 +50,8 @@ export const UserManagerHome: React.FC = () => {
       {loggedIn && (
         <Viewer
           authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-          contextId={process.env.IMJS_OIDC_CLIENT_CONTEXT_ID as string}
-          iModelId={process.env.IMJS_OIDC_CLIENT_IMODEL_ID as string}
+          contextId={process.env.IMJS_OIDC_CLIENT_CONTEXT_ID}
+          iModelId={process.env.IMJS_OIDC_CLIENT_IMODEL_ID}
           extensions={extensions}
           productId={productId}
           onIModelConnected={iModelConnected}
