@@ -156,7 +156,9 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
               }
             )}`;
             msgDiv.innerHTML = msg;
-            await IModelApp.notifications.openMessageBox(
+            // this can and should be async. No need to wait on it
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            IModelApp.notifications.openMessageBox(
               MessageBoxType.Ok,
               msgDiv,
               MessageBoxIconType.Critical
