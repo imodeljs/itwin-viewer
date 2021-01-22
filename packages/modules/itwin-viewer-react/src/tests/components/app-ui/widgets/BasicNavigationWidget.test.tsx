@@ -3,11 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import {
-  CoreTools,
-  SelectionContextToolDefinitions,
-  ToolbarHelper,
-} from "@bentley/ui-framework";
+import { CoreTools, ToolbarHelper } from "@bentley/ui-framework";
 import { render } from "@testing-library/react";
 import React from "react";
 

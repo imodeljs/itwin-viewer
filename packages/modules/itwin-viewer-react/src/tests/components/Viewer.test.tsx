@@ -5,8 +5,16 @@
 
 import "@testing-library/jest-dom/extend-expect";
 
+import {
+  BentleyCloudRpcManager,
+  IModelReadRpcInterface,
+  IModelTileRpcInterface,
+  IModelWriteRpcInterface,
+  SnapshotIModelRpcInterface,
+} from "@bentley/imodeljs-common";
 import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
+import { PresentationRpcInterface } from "@bentley/presentation-common";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
@@ -368,5 +376,30 @@ describe("Viewer", () => {
 
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
+
+  it("registers additional rpc interfaces", async () => {
+    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
+
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        additionalRpcInterfaces={[IModelWriteRpcInterface]}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(
+      BentleyCloudRpcManager.initializeClient
+    ).toHaveBeenCalledWith(expect.anything(), [
+      IModelReadRpcInterface,
+      IModelTileRpcInterface,
+      PresentationRpcInterface,
+      SnapshotIModelRpcInterface,
+      IModelWriteRpcInterface,
+    ]);
   });
 });
