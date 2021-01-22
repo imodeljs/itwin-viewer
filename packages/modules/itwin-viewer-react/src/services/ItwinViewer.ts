@@ -87,6 +87,7 @@ export class ItwinViewer {
         i18nUrlTemplate: options.i18nUrlTemplate,
         onIModelAppInit: options.onIModelAppInit,
         additionalI18nNamespaces: options.additionalI18nNamespaces,
+        additionalRpcInterfaces: options.additionalRpcInterfaces,
       }
     ).catch((error) => {
       throw error;

@@ -6,7 +6,11 @@
 import { ClientRequestContext } from "@bentley/bentleyjs-core";
 import { Config } from "@bentley/bentleyjs-core";
 import { FrontendApplicationInsightsClient } from "@bentley/frontend-application-insights-client";
-import { BentleyCloudRpcParams } from "@bentley/imodeljs-common";
+import {
+  BentleyCloudRpcParams,
+  RpcInterface,
+  RpcInterfaceDefinition,
+} from "@bentley/imodeljs-common";
 import { IModelApp, IModelAppOptions } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { UrlDiscoveryClient } from "@bentley/itwin-client";
@@ -36,18 +40,23 @@ class Initializer {
   /** initialize rpc */
   private static async _initializeRpc(
     backendOptions?: IModelBackendOptions,
-    isDesktop?: boolean
+    isDesktop?: boolean,
+    additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[]
   ): Promise<void> {
     // if rpc params for a custom backend are provided, initialized with those
     if (
       backendOptions?.customBackend &&
       backendOptions.customBackend.rpcParams
     ) {
-      return initRpc(backendOptions.customBackend.rpcParams, isDesktop);
+      return initRpc(
+        backendOptions.customBackend.rpcParams,
+        isDesktop,
+        additionalRpcInterfaces
+      );
     }
     const rpcParams = await this._getHostedConnectionInfo(backendOptions);
     if (rpcParams) {
-      return initRpc(rpcParams, isDesktop);
+      return initRpc(rpcParams, isDesktop, additionalRpcInterfaces);
     }
   }
 
@@ -227,7 +236,8 @@ class Initializer {
         // initialize RPC communication
         await Initializer._initializeRpc(
           viewerOptions?.backend,
-          viewerOptions?.desktopApp
+          viewerOptions?.desktopApp,
+          viewerOptions?.additionalRpcInterfaces
         );
 
         if (viewerOptions?.appInsightsKey) {
