@@ -4,10 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
+  BentleyCloudRpcManager,
+  IModelReadRpcInterface,
+  IModelTileRpcInterface,
+  IModelWriteRpcInterface,
+  SnapshotIModelRpcInterface,
+} from "@bentley/imodeljs-common";
+import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
+import { PresentationRpcInterface } from "@bentley/presentation-common";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -398,5 +406,29 @@ describe("iTwinViewer", () => {
 
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
+
+  it("registers additional rpc interfaces", async () => {
+    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
+
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      additionalRpcInterfaces: [IModelWriteRpcInterface],
+    });
+
+    await Initializer.initialized;
+
+    expect(
+      BentleyCloudRpcManager.initializeClient
+    ).toHaveBeenCalledWith(expect.anything(), [
+      IModelReadRpcInterface,
+      IModelTileRpcInterface,
+      PresentationRpcInterface,
+      SnapshotIModelRpcInterface,
+      IModelWriteRpcInterface,
+    ]);
   });
 });

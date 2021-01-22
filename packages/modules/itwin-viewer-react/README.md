@@ -151,6 +151,7 @@ export const UserManagerHome = () => {
 - `onIModelAppInit` - Callback function that executes after IModelApp.startup completes
 - `viewportOptions` - Additional options for the default frontstage's IModelViewportControl
 - `additionalI18nNamespaces` - Additional i18n namespaces to register
+- `additionalRpcInterfaces` - Additional rpc interfaces to register (assumes that they are supported in your backend)
 
 ## Typescript API
 

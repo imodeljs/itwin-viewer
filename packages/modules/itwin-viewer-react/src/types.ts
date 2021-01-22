@@ -7,6 +7,8 @@ import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-cli
 import {
   BentleyCloudRpcParams,
   ElectronRpcParams,
+  RpcInterface,
+  RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
   DesktopAuthorizationClient,
@@ -132,6 +134,8 @@ export interface ItwinViewerInitializerParams {
   onIModelAppInit?: () => void;
   /** additional i18n namespaces to register */
   additionalI18nNamespaces?: string[];
+  /** custom rpc interfaces (assumes that they are supported in your backend) */
+  additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
 }
 
 /**
