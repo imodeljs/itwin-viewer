@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.8.0",
+      "tag": "@bentley/itwin-viewer-react_v5.8.0",
+      "date": "Fri, 22 Jan 2021 17:10:24 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to provide additional rpc interfaces to be registered"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.7.0",
       "tag": "@bentley/itwin-viewer-react_v5.7.0",
       "date": "Fri, 18 Dec 2020 13:05:20 GMT",

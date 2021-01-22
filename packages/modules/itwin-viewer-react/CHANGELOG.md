@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 18 Dec 2020 13:05:20 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Jan 2021 17:10:24 GMT and should not be manually modified.
+
+## 5.8.0
+Fri, 22 Jan 2021 17:10:24 GMT
+
+### Minor changes
+
+- Add the ability to provide additional rpc interfaces to be registered
 
 ## 5.7.0
 Fri, 18 Dec 2020 13:05:20 GMT
