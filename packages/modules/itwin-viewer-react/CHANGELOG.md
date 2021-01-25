@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 22 Jan 2021 17:10:24 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jan 2021 21:51:38 GMT and should not be manually modified.
+
+## 5.8.1
+Mon, 25 Jan 2021 21:51:38 GMT
+
+### Patches
+
+- Add message for empty iModels
 
 ## 5.8.0
 Fri, 22 Jan 2021 17:10:24 GMT
