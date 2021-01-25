@@ -96,7 +96,7 @@ export const getDefaultViewIds = async (
     (spec) => acceptedViewClasses.indexOf(spec.classFullName) !== -1
   );
   if (acceptedViewSpecs.length < 1) {
-    throw new Error("No valid view definitions in imodel");
+    return [];
   }
   const ids = acceptedViewSpecs.map((spec) => {
     return spec.id as Id64String;

@@ -6,12 +6,16 @@
 import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
+import { ClientRequestContext, Config } from "@bentley/bentleyjs-core";
 import {
   IModelApp,
   IModelConnection,
+  MessageBoxIconType,
+  MessageBoxType,
   SnapshotConnection,
   ViewState,
 } from "@bentley/imodeljs-frontend";
+import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import {
   BackstageActionItem,
@@ -43,7 +47,6 @@ import {
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
-
 export interface ModelLoaderProps {
   contextId?: string;
   iModelId?: string;
@@ -129,11 +132,39 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
           }
-          // TODO revist this logic for the viewer
-          // pass the default viewids to the frontstage.
-          // currently we pass the first 2 spatial views to support split screen
-          // this logic will likely change when we have proper use cases
+
           const viewIds = await getDefaultViewIds(imodelConnection);
+
+          if (viewIds.length === 0) {
+            // no valid view data in the model. Direct the user to the synchronization portal
+            const urlDiscoveryClient = new UrlDiscoveryClient();
+            const portalRootUrl = await urlDiscoveryClient.discoverUrl(
+              new ClientRequestContext(),
+              "itwinbridgeportal",
+              Config.App.get("imjs_buddi_resolve_url_using_region")
+            );
+            const portalUrl = `${portalRootUrl}/${contextId}/${iModelId}`;
+            const msgDiv = document.createElement("div");
+            const msg = `${IModelApp.i18n.translateWithNamespace(
+              "iTwinViewer",
+              "iModels.emptyIModel",
+              {
+                bridgePortal: portalUrl,
+                interpolation: {
+                  escapeValue: true,
+                },
+              }
+            )}`;
+            msgDiv.innerHTML = msg;
+            // this can and should be async. No need to wait on it
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            IModelApp.notifications.openMessageBox(
+              MessageBoxType.Ok,
+              msgDiv,
+              MessageBoxIconType.Critical
+            );
+          }
+
           // attempt to construct a default viewState
           const savedViewState = await ViewCreator.createDefaultView(
             imodelConnection,
@@ -246,7 +277,10 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     if (error) {
       throw error;
     } else {
-      return finalFrontstages && finalBackstageItems && connected ? (
+      return finalFrontstages &&
+        finalBackstageItems &&
+        connected &&
+        StateManager.store ? (
         <div className="itwin-viewer-container">
           <Provider store={StateManager.store}>
             <IModelViewer

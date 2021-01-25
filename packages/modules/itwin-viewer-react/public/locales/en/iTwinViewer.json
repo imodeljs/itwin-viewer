@@ -2,5 +2,8 @@
   "components": {
     "tree": "Tree View",
     "properties": "Properties"
+  },
+  "iModels": {
+    "emptyIModel": "This iModel has no data. Please visit <a href={{bridgePortal}} rel=\"noopener noreferrer\" target=\"_blank\">the Synchronization Portal</a> to add data connections to your iModel and synchronize changes."
   }
 }

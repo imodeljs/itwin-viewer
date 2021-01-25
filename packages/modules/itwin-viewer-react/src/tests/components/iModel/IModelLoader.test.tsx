@@ -3,13 +3,19 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModelApp } from "@bentley/imodeljs-frontend";
+import { Config } from "@bentley/bentleyjs-core";
+import {
+  IModelApp,
+  RemoteBriefcaseConnection,
+} from "@bentley/imodeljs-frontend";
+import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { BackstageItemUtilities } from "@bentley/ui-abstract";
 import { FrontstageProps, FrontstageProvider } from "@bentley/ui-framework";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
 import IModelLoader from "../../../components/iModel/IModelLoader";
+import * as IModelServices from "../../../services/iModel/IModelService";
 import { ViewerBackstageItem, ViewerFrontstage } from "../../../types";
 
 jest.mock("@bentley/ui-framework");
@@ -40,9 +46,13 @@ jest.mock("@bentley/imodeljs-frontend", () => {
         }),
         languageList: jest.fn().mockReturnValue(["en-US"]),
         translate: jest.fn(),
+        translateWithNamespace: jest.fn(),
       },
       uiAdmin: {
         updateFeatureFlags: jest.fn(),
+      },
+      notifications: {
+        openMessageBox: jest.fn(),
       },
     },
     SnapMode: {},
@@ -57,9 +67,24 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     SnapshotConnection: {
       openFile: jest.fn(),
     },
+    MessageBoxType: {
+      Ok: 1,
+    },
+    MessageBoxIconType: {
+      Critical: 1,
+    },
   };
 });
 jest.mock("../../../services/iModel/IModelService");
+jest.mock("@bentley/itwin-client");
+jest.mock("../../../services/iModel/ViewCreator", () => {
+  return {
+    ViewCreator: {
+      createDefaultView: jest.fn().mockResolvedValue({}),
+    },
+  };
+});
+jest.mock("../../../services/iModel/SelectionScopeClient");
 
 class Frontstage1Provider extends FrontstageProvider {
   public get frontstage(): React.ReactElement<FrontstageProps> {
@@ -73,8 +98,22 @@ class Frontstage2Provider extends FrontstageProvider {
   }
 }
 
+const mockContextId = "mockContextId";
+const mockIModelId = "mockIModelId";
+
 describe("IModelLoader", () => {
-  it("adds backstage items and translates their labels", () => {
+  beforeEach(() => {
+    jest.spyOn(IModelServices, "getDefaultViewIds").mockResolvedValue([]);
+    jest
+      .spyOn(IModelServices, "openImodel")
+      .mockResolvedValue({} as RemoteBriefcaseConnection);
+    jest
+      .spyOn(UrlDiscoveryClient.prototype, "discoverUrl")
+      .mockResolvedValue("https://test.com");
+    jest.spyOn(Config.App, "get").mockReturnValue(1);
+  });
+
+  it("adds backstage items and translates their labels", async () => {
     const fs1 = new Frontstage1Provider();
     const fs2 = new Frontstage2Provider();
     const frontstages: ViewerFrontstage[] = [
@@ -105,11 +144,31 @@ describe("IModelLoader", () => {
     };
 
     const backstageItems: ViewerBackstageItem[] = [actionItem, stageLauncher];
-    render(
-      <IModelLoader frontstages={frontstages} backstageItems={backstageItems} />
+
+    const { getByTestId } = render(
+      <IModelLoader
+        frontstages={frontstages}
+        backstageItems={backstageItems}
+        contextId={mockContextId}
+        iModelId={mockIModelId}
+      />
     );
-    expect(BackstageItemUtilities.createStageLauncher).toHaveBeenCalledTimes(1);
-    expect(BackstageItemUtilities.createActionItem).toHaveBeenCalledTimes(1);
-    expect(IModelApp.i18n.translate).toHaveBeenCalledTimes(2);
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    // these calls will be doubled. items will be set first without a viewState and reset with one additional translation for the default frontstage once we have a viewState
+    expect(BackstageItemUtilities.createStageLauncher).toHaveBeenCalledTimes(2);
+    expect(BackstageItemUtilities.createActionItem).toHaveBeenCalledTimes(2);
+    expect(IModelApp.i18n.translate).toHaveBeenCalledTimes(5);
+  });
+
+  it("notifies the user when the model has no data", async () => {
+    const { getByTestId } = render(
+      <IModelLoader contextId={mockContextId} iModelId={mockIModelId} />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(IModelApp.notifications.openMessageBox).toHaveBeenCalled();
   });
 });
