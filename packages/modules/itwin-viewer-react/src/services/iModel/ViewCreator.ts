@@ -13,11 +13,14 @@ import {
 } from "@bentley/imodeljs-common";
 import {
   DisplayStyle3dState,
+  IModelApp,
   IModelConnection,
   SpatialViewState,
   StandardViewId,
   ViewState,
 } from "@bentley/imodeljs-frontend";
+
+import Initializer from "../Initializer";
 
 /** Options for ViewCreator to override certain state */
 export interface ViewCreatorOptions {
@@ -210,44 +213,65 @@ export class ViewCreator {
     viewDefId?: Id64String,
     options?: ViewCreatorOptions
   ): Promise<ViewState | undefined> {
-    const categories: Id64Array = await ViewCreator.getAllCategories(
-      iModelConnection
-    );
-    const models = modelIds
-      ? modelIds
-      : await ViewCreator._getAllModels(iModelConnection);
-    if (!models) {
-      return undefined;
-    }
+    try {
+      const categories: Id64Array = await ViewCreator.getAllCategories(
+        iModelConnection
+      );
+      const models = modelIds
+        ? modelIds
+        : await ViewCreator._getAllModels(iModelConnection);
+      if (!models) {
+        return undefined;
+      }
 
-    const props = await ViewCreator._manufactureViewStateProps(
-      iModelConnection,
-      categories,
-      models,
-      viewDefId
-    );
-    const viewState = SpatialViewState.createFromProps(props, iModelConnection);
-    if (!viewState) {
-      return undefined;
-    }
+      const props = await ViewCreator._manufactureViewStateProps(
+        iModelConnection,
+        categories,
+        models,
+        viewDefId
+      );
+      const viewState = SpatialViewState.createFromProps(
+        props,
+        iModelConnection
+      );
+      if (!viewState) {
+        return undefined;
+      }
 
-    await viewState.load();
+      await viewState.load();
 
-    this._applyOptions(viewState, options);
+      this._applyOptions(viewState, options);
 
-    if (iModelConnection.isGeoLocated) {
-      viewState.viewFlags.backgroundMap = true;
-      if (
-        (viewState.getDisplayStyle3d().settings.backgroundMap
-          .providerName as string) !== "BingProvider"
-      ) {
-        viewState.getDisplayStyle3d().changeBackgroundMapProps({
-          providerName: "BingProvider",
-          providerData: { mapType: BackgroundMapType.Hybrid },
-        });
+      if (iModelConnection.isGeoLocated) {
+        viewState.viewFlags.backgroundMap = true;
+        if (
+          (viewState.getDisplayStyle3d().settings.backgroundMap
+            .providerName as string) !== "BingProvider"
+        ) {
+          viewState.getDisplayStyle3d().changeBackgroundMapProps({
+            providerName: "BingProvider",
+            providerData: { mapType: BackgroundMapType.Hybrid },
+          });
+        }
+      }
+      return viewState;
+    } catch (error) {
+      console.log(`Error obtaining default viewState: ${error}`);
+      const viewStateError = IModelApp.i18n.translateWithNamespace(
+        "iTwinViewer",
+        "iModels.viewStateError"
+      );
+      if (iModelConnection.contextId && iModelConnection.iModelId) {
+        const msg = await Initializer.getIModelDataErrorMessage(
+          iModelConnection.contextId,
+          iModelConnection.iModelId,
+          viewStateError
+        );
+        throw msg;
+      } else {
+        throw viewStateError;
       }
     }
-    return viewState;
   }
 
   private static _applyOptions(

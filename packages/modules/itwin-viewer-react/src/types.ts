@@ -136,6 +136,8 @@ export interface ItwinViewerInitializerParams {
   additionalI18nNamespaces?: string[];
   /** custom rpc interfaces (assumes that they are supported in your backend) */
   additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
+  /** override the default message that sends users to the iTwin Synchronizer when there are data-related errors with an iModel. Pass empty string to override with no message. */
+  iModelDataErrorMessage?: string;
 }
 
 /**

@@ -4,6 +4,9 @@
     "properties": "Properties"
   },
   "iModels": {
-    "emptyIModel": "This iModel has no data. Please visit <a href={{bridgePortal}} rel=\"noopener noreferrer\" target=\"_blank\">the Synchronization Portal</a> to add data connections to your iModel and synchronize changes."
+    "emptyIModelError": "This iModel has no data.",
+    "viewStateError": "This iModel has invalid or corrupt data.",
+    "connectionError": "An error occurred while establishing a connection to the iModel.",
+    "synchronizerLink": "Please visit <a href={{bridgePortal}} rel=\"noopener noreferrer\" target=\"_blank\">the Synchronization Portal</a> to review the iModel's data connections and synchronize changes."
   }
 }

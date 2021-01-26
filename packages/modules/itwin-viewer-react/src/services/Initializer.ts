@@ -36,6 +36,8 @@ import { ai, trackEvent } from "./telemetry/TelemetryService";
 class Initializer {
   private static _initialized: Promise<void>;
   private static _initializing = false;
+  private static _iModelDataErrorMessage: string | undefined;
+  private static _synchronizerRootUrl: string | undefined;
 
   /** initialize rpc */
   private static async _initializeRpc(
@@ -105,9 +107,51 @@ class Initializer {
     }
   }
 
+  public static async getSynchronizerUrl(
+    contextId: string,
+    iModelId: string
+  ): Promise<string> {
+    if (!this._synchronizerRootUrl) {
+      const urlDiscoveryClient = new UrlDiscoveryClient();
+      this._synchronizerRootUrl = await urlDiscoveryClient.discoverUrl(
+        new ClientRequestContext(),
+        "itwinbridgeportal",
+        Config.App.get("imjs_buddi_resolve_url_using_region")
+      );
+    }
+    const portalUrl = `${this._synchronizerRootUrl}/${contextId}/${iModelId}`;
+    return IModelApp.i18n.translateWithNamespace(
+      "iTwinViewer",
+      "iModels.synchronizerLink",
+      {
+        bridgePortal: portalUrl,
+      }
+    );
+  }
+
   /** expose initialized promise */
   public static get initialized(): Promise<void> {
     return this._initialized;
+  }
+
+  /** Message to display when there are iModel data-related errors */
+  public static async getIModelDataErrorMessage(
+    contextId: string,
+    iModelId: string,
+    prefix?: string
+  ): Promise<string> {
+    if (this._iModelDataErrorMessage !== undefined) {
+      return prefix
+        ? `${prefix} ${this._iModelDataErrorMessage}`
+        : this._iModelDataErrorMessage;
+    }
+    const synchronizerPortalUrl = await this.getSynchronizerUrl(
+      contextId,
+      iModelId
+    );
+    return prefix
+      ? `${prefix} ${synchronizerPortalUrl}`
+      : synchronizerPortalUrl;
   }
 
   /** shutdown IModelApp */
@@ -247,6 +291,9 @@ class Initializer {
         await PropertyGridManager.initialize(IModelApp.i18n);
 
         await TreeWidget.initialize(IModelApp.i18n);
+
+        // override the defaut daa error message
+        this._iModelDataErrorMessage = viewerOptions?.iModelDataErrorMessage;
 
         console.log("iModel.js initialized");
 

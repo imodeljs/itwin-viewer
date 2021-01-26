@@ -39,6 +39,7 @@ import {
 } from "../../services/iModel/IModelService";
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
+import Initializer from "../../services/Initializer";
 import { ai } from "../../services/telemetry/TelemetryService";
 import {
   ItwinViewerUi,
@@ -47,6 +48,7 @@ import {
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
+
 export interface ModelLoaderProps {
   contextId?: string;
   iModelId?: string;
@@ -135,26 +137,17 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
 
           const viewIds = await getDefaultViewIds(imodelConnection);
 
-          if (viewIds.length === 0) {
+          if (viewIds.length === 0 && contextId && iModelId) {
             // no valid view data in the model. Direct the user to the synchronization portal
-            const urlDiscoveryClient = new UrlDiscoveryClient();
-            const portalRootUrl = await urlDiscoveryClient.discoverUrl(
-              new ClientRequestContext(),
-              "itwinbridgeportal",
-              Config.App.get("imjs_buddi_resolve_url_using_region")
-            );
-            const portalUrl = `${portalRootUrl}/${contextId}/${iModelId}`;
             const msgDiv = document.createElement("div");
-            const msg = `${IModelApp.i18n.translateWithNamespace(
-              "iTwinViewer",
-              "iModels.emptyIModel",
-              {
-                bridgePortal: portalUrl,
-                interpolation: {
-                  escapeValue: true,
-                },
-              }
-            )}`;
+            const msg = await Initializer.getIModelDataErrorMessage(
+              contextId,
+              iModelId,
+              IModelApp.i18n.translateWithNamespace(
+                "iTwinViewer",
+                "iModels.emptyIModelError"
+              )
+            );
             msgDiv.innerHTML = msg;
             // this can and should be async. No need to wait on it
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
