@@ -21,13 +21,13 @@ import { UiComponents } from "@bentley/ui-components";
 import { UiCore } from "@bentley/ui-core";
 import {
   AppNotificationManager,
+  ConfigurableUiManager,
   FrameworkReducer,
   FrameworkUiAdmin,
   StateManager,
   UiFramework,
 } from "@bentley/ui-framework";
 
-import { AppUi } from "../components/app-ui/AppUi";
 import { initRpc } from "../config/rpc";
 import { IModelBackendOptions, ItwinViewerInitializerParams } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
@@ -231,7 +231,7 @@ class Initializer {
         // allow uiAdmin to open key-in palette when Ctrl+F2 is pressed - good for manually loading extensions
         IModelApp.uiAdmin.updateFeatureFlags({ allowKeyinPalette: true });
 
-        AppUi.initialize();
+        ConfigurableUiManager.initialize();
 
         // initialize RPC communication
         await Initializer._initializeRpc(
