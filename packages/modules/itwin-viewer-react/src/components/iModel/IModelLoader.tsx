@@ -129,6 +129,10 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           imodelConnection = await openImodel(contextId, iModelId, changeSetId);
         }
         if (imodelConnection) {
+          // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection
+          UiFramework.setIModelConnection(imodelConnection);
+          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
+
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
           }
@@ -177,12 +181,8 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             throw new Error("No default view state for the imodel!");
           }
 
-          // Tell the SyncUiEventDispatcher about the iModelConnection
-          UiFramework.setIModelConnection(imodelConnection);
           // Set default view state
           UiFramework.setDefaultViewState(savedViewState);
-
-          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
           // TODO revist for snapshots once settings are removed
           if (!snapshotPath) {

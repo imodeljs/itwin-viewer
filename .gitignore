@@ -27,3 +27,5 @@ common/temp/
 
 # Error reports
 **/report.**.json
+
+*.eslintcache
