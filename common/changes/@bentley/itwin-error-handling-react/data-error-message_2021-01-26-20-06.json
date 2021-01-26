@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-error-handling-react",
+      "comment": "Add the ability to render html in an error message",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@bentley/itwin-error-handling-react",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}
