@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 25 Jan 2021 21:51:38 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 20:28:07 GMT and should not be manually modified.
+
+## 5.8.2
+Tue, 26 Jan 2021 20:28:07 GMT
+
+### Patches
+
+- move up UiFramework.setIModelConnection in order to be able to fetch connection from StateManager in the onIModelConnected callback
 
 ## 5.8.1
 Mon, 25 Jan 2021 21:51:38 GMT

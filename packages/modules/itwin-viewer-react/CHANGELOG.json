@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.8.2",
+      "tag": "@bentley/itwin-viewer-react_v5.8.2",
+      "date": "Tue, 26 Jan 2021 20:28:07 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "move up UiFramework.setIModelConnection in order to be able to fetch connection from StateManager in the onIModelConnected callback"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.8.1",
       "tag": "@bentley/itwin-viewer-react_v5.8.1",
       "date": "Mon, 25 Jan 2021 21:51:38 GMT",
