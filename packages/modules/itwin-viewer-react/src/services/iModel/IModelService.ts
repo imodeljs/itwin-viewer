@@ -13,6 +13,8 @@ import {
 } from "@bentley/imodeljs-frontend";
 import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
 
+import Initializer from "../Initializer";
+
 /** determine the proper version of the iModel to open
  * 1. If named versions exist, get the named version that contains the latest changeset
  * 2. If no named version exists, return the latest changeset
@@ -71,11 +73,17 @@ export const openImodel = async (
     );
     return connection;
   } catch (error) {
-    console.error(
-      `Error opening the iModel: ${imodelId} in Project: ${contextId}`,
-      error
+    console.log(`Error opening the iModel connection: ${error}`);
+    const connectionError = IModelApp.i18n.translateWithNamespace(
+      "iTwinViewer",
+      "iModels.connectionError"
     );
-    throw error;
+    const msg = await Initializer.getIModelDataErrorMessage(
+      contextId,
+      imodelId,
+      connectionError
+    );
+    throw msg;
   }
 };
 
