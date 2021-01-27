@@ -38,9 +38,7 @@ export const FallbackUi = ({
           <Subheading2>{title}</Subheading2>
         </p>
         <p className={styles.message} data-testid="test-fallback-text">
-          <Subheading
-            dangerouslySetInnerHTML={{ __html: innerText }}
-          ></Subheading>
+          <Subheading dangerouslySetInnerHTML={{ __html: innerText }} />
         </p>
       </div>
     </div>
