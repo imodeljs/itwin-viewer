@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-error-handling-react",
   "entries": [
     {
+      "version": "3.1.0",
+      "tag": "@bentley/itwin-error-handling-react_v3.1.0",
+      "date": "Wed, 27 Jan 2021 13:46:09 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to render html in an error message"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.0",
       "tag": "@bentley/itwin-error-handling-react_v3.0.0",
       "date": "Wed, 23 Sep 2020 20:36:01 GMT",

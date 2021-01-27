@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-error-handling-react
 
-This log was last generated on Wed, 23 Sep 2020 20:36:01 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jan 2021 13:46:09 GMT and should not be manually modified.
+
+## 3.1.0
+Wed, 27 Jan 2021 13:46:09 GMT
+
+### Minor changes
+
+- Add the ability to render html in an error message
 
 ## 3.0.0
 Wed, 23 Sep 2020 20:36:01 GMT

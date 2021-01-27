@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 26 Jan 2021 20:28:07 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jan 2021 13:46:09 GMT and should not be manually modified.
+
+## 5.9.0
+Wed, 27 Jan 2021 13:46:09 GMT
+
+### Minor changes
+
+- better handle data-related errors and allow configurability of message
 
 ## 5.8.2
 Tue, 26 Jan 2021 20:28:07 GMT
