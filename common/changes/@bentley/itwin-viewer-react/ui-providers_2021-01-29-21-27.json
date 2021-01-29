@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-viewer-react",
+      "comment": "Add the ability to provide UI providers to the viewer",
+      "type": "minor"
+    }
+  ],
+  "packageName": "@bentley/itwin-viewer-react",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}
