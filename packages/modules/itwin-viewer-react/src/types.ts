@@ -14,7 +14,7 @@ import {
   DesktopAuthorizationClient,
   IModelConnection,
 } from "@bentley/imodeljs-frontend";
-import { BackstageItem } from "@bentley/ui-abstract";
+import { BackstageItem, UiItemsProvider } from "@bentley/ui-abstract";
 import {
   ColorTheme,
   FrameworkVersion,
@@ -138,6 +138,8 @@ export interface ItwinViewerInitializerParams {
   additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
   /** override the default message that sends users to the iTwin Synchronizer when there are data-related errors with an iModel. Pass empty string to override with no message. */
   iModelDataErrorMessage?: string;
+  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
+  uiProviders?: UiItemsProvider[];
 }
 
 /**

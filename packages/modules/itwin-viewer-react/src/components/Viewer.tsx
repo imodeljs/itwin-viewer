@@ -66,6 +66,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   viewportOptions,
   additionalI18nNamespaces,
   additionalRpcInterfaces,
+  uiProviders,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -163,6 +164,7 @@ export const Viewer: React.FC<ViewerProps> = ({
           onIModelAppInit,
           additionalI18nNamespaces,
           additionalRpcInterfaces,
+          uiProviders,
         }
       )
         .then(() => {
