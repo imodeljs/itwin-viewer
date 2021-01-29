@@ -15,6 +15,7 @@ import {
 import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
+import { UiItemsManager } from "@bentley/ui-abstract";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
@@ -29,6 +30,7 @@ import {
   IModelBackendOptions,
 } from "../../types";
 import MockOidcClient from "../mocks/MockOidcClient";
+import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -401,5 +403,22 @@ describe("Viewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
+  });
+
+  it("registers ui providers", async () => {
+    jest.spyOn(UiItemsManager, "register");
+
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        uiProviders={[new TestUiProvider(), new TestUiProvider2()]}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
   });
 });

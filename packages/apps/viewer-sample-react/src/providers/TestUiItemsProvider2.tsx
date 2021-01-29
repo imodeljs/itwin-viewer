@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import {
   AbstractWidgetProps,
   StagePanelLocation,
@@ -9,7 +10,7 @@ import {
   UiItemsProvider,
 } from "@bentley/ui-abstract";
 import { FillCentered } from "@bentley/ui-core";
-import * as React from "react";
+import React from "react";
 
 export class TestUiProvider2 implements UiItemsProvider {
   public readonly id = "TestUiProvider2";

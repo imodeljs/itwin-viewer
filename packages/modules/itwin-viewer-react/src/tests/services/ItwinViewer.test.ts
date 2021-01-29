@@ -16,6 +16,7 @@ import {
 } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
+import { UiItemsManager } from "@bentley/ui-abstract";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -32,6 +33,7 @@ import {
 } from "../../types";
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
+import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -430,5 +432,21 @@ describe("iTwinViewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
+  });
+
+  it("registers ui providers", async () => {
+    jest.spyOn(UiItemsManager, "register");
+
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      uiProviders: [new TestUiProvider(), new TestUiProvider2()],
+    });
+
+    await Initializer.initialized;
+
+    expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
   });
 });
