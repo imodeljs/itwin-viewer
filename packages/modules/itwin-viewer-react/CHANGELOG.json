@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "5.10.0",
+      "tag": "@bentley/itwin-viewer-react_v5.10.0",
+      "date": "Mon, 01 Feb 2021 18:57:57 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to provide UI providers to the viewer"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.9.0",
       "tag": "@bentley/itwin-viewer-react_v5.9.0",
       "date": "Wed, 27 Jan 2021 13:46:09 GMT",

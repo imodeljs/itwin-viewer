@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 27 Jan 2021 13:46:09 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Feb 2021 18:57:57 GMT and should not be manually modified.
+
+## 5.10.0
+Mon, 01 Feb 2021 18:57:57 GMT
+
+### Minor changes
+
+- Add the ability to provide UI providers to the viewer
 
 ## 5.9.0
 Wed, 27 Jan 2021 13:46:09 GMT
