@@ -8,6 +8,7 @@ import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
 
+import { TestUiProvider, TestUiProvider2 } from "../../providers";
 import { oidcClient } from "../../services/auth/AuthInstances";
 import { Header } from "./";
 import styles from "./Home.module.scss";
@@ -55,6 +56,7 @@ export const UserManagerHome: React.FC = () => {
           extensions={extensions}
           productId={productId}
           onIModelConnected={iModelConnected}
+          uiProviders={[new TestUiProvider(), new TestUiProvider2()]}
         />
       )}
     </div>
