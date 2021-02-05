@@ -6,7 +6,6 @@
 import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
-import { ClientRequestContext, Config } from "@bentley/bentleyjs-core";
 import {
   IModelApp,
   IModelConnection,
@@ -15,7 +14,6 @@ import {
   SnapshotConnection,
   ViewState,
 } from "@bentley/imodeljs-frontend";
-import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { useErrorManager } from "@bentley/itwin-error-handling-react";
 import {
   BackstageActionItem,
@@ -270,21 +268,25 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     if (error) {
       throw error;
     } else {
-      return finalFrontstages &&
-        finalBackstageItems &&
-        connected &&
-        StateManager.store ? (
+      return (
         <div className="itwin-viewer-container">
-          <Provider store={StateManager.store}>
-            <IModelViewer
-              frontstages={finalFrontstages}
-              backstageItems={finalBackstageItems}
-              uiFrameworkVersion={uiFrameworkVersion}
-            />
-          </Provider>
+          {finalFrontstages &&
+          finalBackstageItems &&
+          connected &&
+          StateManager.store ? (
+            <Provider store={StateManager.store}>
+              <IModelViewer
+                frontstages={finalFrontstages}
+                backstageItems={finalBackstageItems}
+                uiFrameworkVersion={uiFrameworkVersion}
+              />
+            </Provider>
+          ) : (
+            <div className="itwin-viewer-loading-container">
+              <IModelBusy />
+            </div>
+          )}
         </div>
-      ) : (
-        <IModelBusy />
       );
     }
   }
