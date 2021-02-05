@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 01 Feb 2021 18:57:57 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Feb 2021 20:14:46 GMT and should not be manually modified.
+
+## 6.0.0
+Fri, 05 Feb 2021 20:14:46 GMT
+
+### Breaking changes
+
+- Fix loading spinner position and change viewer height to 100%. REQUIRES CONTAINER ELEMENTS TO HAVE AN EXPLICIT HEIGHT
 
 ## 5.10.0
 Mon, 01 Feb 2021 18:57:57 GMT
