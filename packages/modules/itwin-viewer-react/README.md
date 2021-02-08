@@ -109,7 +109,7 @@ export const UserManagerHome = () => {
 - `extensions` - array of extensions to load in the viewer
 - `backend` - backend connection info (defaults to the General Purpose backend)
 - `theme` - override the default theme
-- `defaultUIConfig` - hide or override default tooling and widgets
+- `defaultUiConfig` - hide or override default tooling and widgets
   - `contentManipulationTools` - options for the content manipulation section (top left)
     - `cornerItem` - replace the default backstage navigation button with a new item
     - `hideDefaultHorizontalItems` - hide all horizontal tools in the top left section of the viewer
