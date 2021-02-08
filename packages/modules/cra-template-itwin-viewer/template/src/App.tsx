@@ -62,7 +62,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="viewer-container">
       <Header
         handleLogin={onLoginClick}
         loggedIn={isAuthorized}
