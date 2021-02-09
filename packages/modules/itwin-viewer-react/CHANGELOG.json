@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.0.1",
+      "tag": "@bentley/itwin-viewer-react_v6.0.1",
+      "date": "Tue, 09 Feb 2021 00:48:09 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix typo in README"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.0.0",
       "tag": "@bentley/itwin-viewer-react_v6.0.0",
       "date": "Fri, 05 Feb 2021 20:14:46 GMT",
