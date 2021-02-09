@@ -263,7 +263,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
       }
 
       setFinalFrontstages(allFrontstages);
-    }, [frontstages, viewState]);
+    }, [frontstages, viewportOptions, viewState]);
 
     if (error) {
       throw error;

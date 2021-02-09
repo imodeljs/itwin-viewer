@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-viewer-react",
+      "comment": "add viewportOptions to dependency list",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@bentley/itwin-viewer-react",
+  "email": "aruniverse@users.noreply.github.com"
+}
