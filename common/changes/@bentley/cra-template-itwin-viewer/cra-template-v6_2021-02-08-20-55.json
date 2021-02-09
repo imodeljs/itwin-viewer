@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/cra-template-itwin-viewer",
+      "comment": "Upgrade viewer to v6",
+      "type": "major"
+    }
+  ],
+  "packageName": "@bentley/cra-template-itwin-viewer",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}
