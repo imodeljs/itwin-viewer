@@ -1,6 +1,14 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 09 Feb 2021 00:48:09 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 20:51:36 GMT and should not be manually modified.
+
+## 6.0.2
+Tue, 09 Feb 2021 20:51:36 GMT
+
+### Patches
+
+- add viewportOptions to dependency list
+- Update statusbar to pass ReactNode and not a function to return a ReactNode.
 
 ## 6.0.1
 Tue, 09 Feb 2021 00:48:09 GMT
