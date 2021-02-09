@@ -44,7 +44,8 @@ export class AppStatusBarWidget extends StatusBarWidgetControl {
     this._footerModeOnlySeparator = (): React.ReactNode => {
       return (
         <FooterOnlyDisplay>
-          <FooterSeparator />
+          {" "}
+          <FooterSeparator />{" "}
         </FooterOnlyDisplay>
       );
     };
@@ -62,7 +63,7 @@ export class AppStatusBarWidget extends StatusBarWidgetControl {
         "PreToolAssistance",
         StatusBarSection.Left,
         15,
-        this._footerModeOnlySeparator()
+        this._footerModeOnlySeparator
       )
     );
     this._statusBarItems.push(
@@ -78,7 +79,7 @@ export class AppStatusBarWidget extends StatusBarWidgetControl {
         "PostToolAssistance",
         StatusBarSection.Left,
         25,
-        this._footerModeOnlySeparator()
+        this._footerModeOnlySeparator
       )
     );
 
