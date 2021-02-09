@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 09 Feb 2021 20:45:37 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 20:56:47 GMT and should not be manually modified.
+
+## 6.0.3
+Tue, 09 Feb 2021 20:56:47 GMT
+
+### Patches
+
+- add viewportOptions to dependency list
 
 ## 6.0.2
 Tue, 09 Feb 2021 20:45:37 GMT

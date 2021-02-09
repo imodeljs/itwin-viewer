@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.0.3",
+      "tag": "@bentley/itwin-viewer-react_v6.0.3",
+      "date": "Tue, 09 Feb 2021 20:56:47 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add viewportOptions to dependency list"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.0.2",
       "tag": "@bentley/itwin-viewer-react_v6.0.2",
       "date": "Tue, 09 Feb 2021 20:45:37 GMT",
