@@ -46,10 +46,9 @@ const getVersion = async (
 
 /** parse the comma-delimited config value that is a list of accepted schema:classnames or return a default */
 const getAcceptedViewClasses = (): string[] => {
-  // TODO configurable?
+  // TODO configurable? support for 2d (DrawingViewDefinition)?
   const acceptedClasses = [
     "BisCore:SpatialViewDefinition",
-    "BisCore:DrawingViewDefinition",
     "BisCore:OrthographicViewDefinition",
   ];
   return acceptedClasses;
