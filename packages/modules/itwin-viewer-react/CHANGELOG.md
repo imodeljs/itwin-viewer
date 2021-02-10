@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 09 Feb 2021 20:56:47 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Feb 2021 19:10:29 GMT and should not be manually modified.
+
+## 6.0.4
+Wed, 10 Feb 2021 19:10:29 GMT
+
+### Patches
+
+- Remove DrawingViewDefinition from list of accepted classes
 
 ## 6.0.3
 Tue, 09 Feb 2021 20:56:47 GMT

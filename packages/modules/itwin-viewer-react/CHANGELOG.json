@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.0.4",
+      "tag": "@bentley/itwin-viewer-react_v6.0.4",
+      "date": "Wed, 10 Feb 2021 19:10:29 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove DrawingViewDefinition from list of accepted classes"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.0.3",
       "tag": "@bentley/itwin-viewer-react_v6.0.3",
       "date": "Tue, 09 Feb 2021 20:56:47 GMT",
