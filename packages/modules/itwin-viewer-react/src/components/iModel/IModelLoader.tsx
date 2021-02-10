@@ -7,6 +7,8 @@ import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
 import {
+  BlankConnection,
+  BlankConnectionProps,
   IModelApp,
   IModelConnection,
   MessageBoxIconType,
@@ -59,6 +61,7 @@ export interface ModelLoaderProps {
   backstageItems?: ViewerBackstageItem[];
   uiFrameworkVersion?: FrameworkVersion;
   viewportOptions?: IModelViewportControlOptions;
+  blankConnection?: BlankConnectionProps;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -73,6 +76,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     backstageItems,
     uiFrameworkVersion,
     viewportOptions,
+    blankConnection,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -114,16 +118,22 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             }
           }
         }
-        if (!(contextId && iModelId) && !snapshotPath) {
+        if (!(contextId && iModelId) && !snapshotPath && !blankConnection) {
           throw new Error(
-            "Please provide a valid contextId and iModelId or a local snapshotPath"
+            IModelApp.i18n.translateWithNamespace(
+              "iTwinViewer",
+              "missingConnectionProps"
+            )
           );
         }
 
         setConnected(false);
+
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
-        if (snapshotPath) {
+        if (blankConnection) {
+          imodelConnection = BlankConnection.create(blankConnection);
+        } else if (snapshotPath) {
           imodelConnection = await SnapshotConnection.openFile(snapshotPath);
         } else if (contextId && iModelId) {
           imodelConnection = await openImodel(contextId, iModelId, changeSetId);
@@ -131,57 +141,61 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         if (imodelConnection) {
           // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection
           UiFramework.setIModelConnection(imodelConnection);
-          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
+
+          !blankConnection &&
+            SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
           }
 
-          const viewIds = await getDefaultViewIds(imodelConnection);
+          if (!blankConnection) {
+            const viewIds = await getDefaultViewIds(imodelConnection);
 
-          if (viewIds.length === 0 && contextId && iModelId) {
-            // no valid view data in the model. Direct the user to the synchronization portal
-            const msgDiv = document.createElement("div");
-            const msg = await Initializer.getIModelDataErrorMessage(
-              contextId,
-              iModelId,
-              IModelApp.i18n.translateWithNamespace(
-                "iTwinViewer",
-                "iModels.emptyIModelError"
-              )
+            if (viewIds.length === 0 && contextId && iModelId) {
+              // no valid view data in the model. Direct the user to the synchronization portal
+              const msgDiv = document.createElement("div");
+              const msg = await Initializer.getIModelDataErrorMessage(
+                contextId,
+                iModelId,
+                IModelApp.i18n.translateWithNamespace(
+                  "iTwinViewer",
+                  "iModels.emptyIModelError"
+                )
+              );
+              msgDiv.innerHTML = msg;
+              // this can and should be async. No need to wait on it
+              // eslint-disable-next-line @typescript-eslint/no-floating-promises
+              IModelApp.notifications.openMessageBox(
+                MessageBoxType.Ok,
+                msgDiv,
+                MessageBoxIconType.Critical
+              );
+            }
+
+            // attempt to construct a default viewState
+            const savedViewState = await ViewCreator.createDefaultView(
+              imodelConnection,
+              undefined,
+              viewIds.length > 0 ? viewIds[0] : undefined
             );
-            msgDiv.innerHTML = msg;
-            // this can and should be async. No need to wait on it
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
-            IModelApp.notifications.openMessageBox(
-              MessageBoxType.Ok,
-              msgDiv,
-              MessageBoxIconType.Critical
-            );
+
+            // Should not be undefined
+            if (!savedViewState) {
+              throw new Error("No default view state for the imodel!");
+            }
+
+            // Set default view state
+            UiFramework.setDefaultViewState(savedViewState);
+
+            // TODO revist for snapshots once settings are removed
+            if (!snapshotPath) {
+              await SelectionScopeClient.initializeSelectionScope();
+              SelectionScopeClient.setupSelectionScopeHandler();
+            }
+
+            setViewState(savedViewState);
           }
-
-          // attempt to construct a default viewState
-          const savedViewState = await ViewCreator.createDefaultView(
-            imodelConnection,
-            undefined,
-            viewIds.length > 0 ? viewIds[0] : undefined
-          );
-
-          // Should not be undefined
-          if (!savedViewState) {
-            throw new Error("No default view state for the imodel!");
-          }
-
-          // Set default view state
-          UiFramework.setDefaultViewState(savedViewState);
-
-          // TODO revist for snapshots once settings are removed
-          if (!snapshotPath) {
-            await SelectionScopeClient.initializeSelectionScope();
-            SelectionScopeClient.setupSelectionScopeHandler();
-          }
-
-          setViewState(savedViewState);
 
           setConnected(true);
         }

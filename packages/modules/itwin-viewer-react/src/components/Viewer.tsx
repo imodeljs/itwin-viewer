@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
+  BlankConnectionProps,
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
@@ -29,6 +30,7 @@ export interface ViewerProps extends ItwinViewerCommonParams {
   extensions?: ViewerExtension[];
   changeSetId?: string;
   snapshotPath?: string;
+  blankConnection?: BlankConnectionProps;
 }
 
 interface ExtensionUrl {
@@ -67,6 +69,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   additionalI18nNamespaces,
   additionalRpcInterfaces,
   uiProviders,
+  blankConnection,
 }: ViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
@@ -203,6 +206,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         backstageItems={backstageItems}
         uiFrameworkVersion={uiFrameworkVersion}
         viewportOptions={viewportOptions}
+        blankConnection={blankConnection}
       />
     </ErrorBoundary>
   ) : null;
