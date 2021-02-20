@@ -8,7 +8,6 @@ import "./IModelLoader.scss";
 
 import {
   BlankConnection,
-  BlankConnectionProps,
   IModelApp,
   IModelConnection,
   MessageBoxIconType,
@@ -44,6 +43,7 @@ import { ai } from "../../services/telemetry/TelemetryService";
 import {
   ItwinViewerUi,
   ViewerBackstageItem,
+  ViewerBlankConnection,
   ViewerFrontstage,
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
@@ -61,7 +61,7 @@ export interface ModelLoaderProps {
   backstageItems?: ViewerBackstageItem[];
   uiFrameworkVersion?: FrameworkVersion;
   viewportOptions?: IModelViewportControlOptions;
-  blankConnection?: BlankConnectionProps;
+  blankConnection?: ViewerBlankConnection;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -94,6 +94,22 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
       setError(errorManager.fatalError);
     }, [errorManager.fatalError]);
 
+    /**
+     * Initialize a blank connection and viewState
+     * @param blankConnection
+     */
+    const initBlankConnection = (blankConnection: ViewerBlankConnection) => {
+      const imodelConnection = BlankConnection.create(blankConnection);
+      const viewState = ViewCreator.createBlankViewState(
+        imodelConnection,
+        blankConnection.viewStateOptions
+      );
+      UiFramework.setIModelConnection(imodelConnection);
+      UiFramework.setDefaultViewState(viewState);
+      setViewState(viewState);
+      setConnected(true);
+    };
+
     useEffect(() => {
       const getModelConnection = async () => {
         // first check to see if some other frontstage is defined as the default
@@ -118,7 +134,14 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             }
           }
         }
-        if (!(contextId && iModelId) && !snapshotPath && !blankConnection) {
+
+        setConnected(false);
+
+        if (blankConnection) {
+          return initBlankConnection(blankConnection);
+        }
+
+        if (!(contextId && iModelId) && !snapshotPath) {
           throw new Error(
             IModelApp.i18n.translateWithNamespace(
               "iTwinViewer",
@@ -127,13 +150,9 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           );
         }
 
-        setConnected(false);
-
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
-        if (blankConnection) {
-          imodelConnection = BlankConnection.create(blankConnection);
-        } else if (snapshotPath) {
+        if (snapshotPath) {
           imodelConnection = await SnapshotConnection.openFile(snapshotPath);
         } else if (contextId && iModelId) {
           imodelConnection = await openImodel(contextId, iModelId, changeSetId);
@@ -142,60 +161,57 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection
           UiFramework.setIModelConnection(imodelConnection);
 
-          !blankConnection &&
-            SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
+          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
           }
 
-          if (!blankConnection) {
-            const viewIds = await getDefaultViewIds(imodelConnection);
+          const viewIds = await getDefaultViewIds(imodelConnection);
 
-            if (viewIds.length === 0 && contextId && iModelId) {
-              // no valid view data in the model. Direct the user to the synchronization portal
-              const msgDiv = document.createElement("div");
-              const msg = await Initializer.getIModelDataErrorMessage(
-                contextId,
-                iModelId,
-                IModelApp.i18n.translateWithNamespace(
-                  "iTwinViewer",
-                  "iModels.emptyIModelError"
-                )
-              );
-              msgDiv.innerHTML = msg;
-              // this can and should be async. No need to wait on it
-              // eslint-disable-next-line @typescript-eslint/no-floating-promises
-              IModelApp.notifications.openMessageBox(
-                MessageBoxType.Ok,
-                msgDiv,
-                MessageBoxIconType.Critical
-              );
-            }
-
-            // attempt to construct a default viewState
-            const savedViewState = await ViewCreator.createDefaultView(
-              imodelConnection,
-              undefined,
-              viewIds.length > 0 ? viewIds[0] : undefined
+          if (viewIds.length === 0 && contextId && iModelId) {
+            // no valid view data in the model. Direct the user to the synchronization portal
+            const msgDiv = document.createElement("div");
+            const msg = await Initializer.getIModelDataErrorMessage(
+              contextId,
+              iModelId,
+              IModelApp.i18n.translateWithNamespace(
+                "iTwinViewer",
+                "iModels.emptyIModelError"
+              )
             );
-
-            // Should not be undefined
-            if (!savedViewState) {
-              throw new Error("No default view state for the imodel!");
-            }
-
-            // Set default view state
-            UiFramework.setDefaultViewState(savedViewState);
-
-            // TODO revist for snapshots once settings are removed
-            if (!snapshotPath) {
-              await SelectionScopeClient.initializeSelectionScope();
-              SelectionScopeClient.setupSelectionScopeHandler();
-            }
-
-            setViewState(savedViewState);
+            msgDiv.innerHTML = msg;
+            // this can and should be async. No need to wait on it
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            IModelApp.notifications.openMessageBox(
+              MessageBoxType.Ok,
+              msgDiv,
+              MessageBoxIconType.Critical
+            );
           }
+
+          // attempt to construct a default viewState
+          const savedViewState = await ViewCreator.createDefaultView(
+            imodelConnection,
+            undefined,
+            viewIds.length > 0 ? viewIds[0] : undefined
+          );
+
+          // Should not be undefined
+          if (!savedViewState) {
+            throw new Error("No default view state for the imodel!");
+          }
+
+          // Set default view state
+          UiFramework.setDefaultViewState(savedViewState);
+
+          // TODO revist for snapshots once settings are removed
+          if (!snapshotPath) {
+            await SelectionScopeClient.initializeSelectionScope();
+            SelectionScopeClient.setupSelectionScopeHandler();
+          }
+
+          setViewState(savedViewState);
 
           setConnected(true);
         }

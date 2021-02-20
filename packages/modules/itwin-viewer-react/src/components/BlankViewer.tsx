@@ -17,33 +17,28 @@ import {
   ExtensionInstance,
   ExtensionUrl,
   ItwinViewerCommonParams,
+  ItwinViewerUi,
+  ViewerBlankConnection,
   ViewerExtension,
 } from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
-export interface ViewerProps extends ItwinViewerCommonParams {
-  contextId?: string;
-  iModelId?: string;
+export interface BlankViewerProps extends ItwinViewerCommonParams {
+  blankConnection: ViewerBlankConnection;
   extensions?: ViewerExtension[];
-  changeSetId?: string;
-  snapshotPath?: string;
 }
 
-export const Viewer: React.FC<ViewerProps> = ({
+export const BlankViewer: React.FC<BlankViewerProps> = ({
   authConfig,
   extensions,
-  iModelId,
-  contextId,
   appInsightsKey,
   backend,
   productId,
   theme,
-  changeSetId,
   defaultUiConfig,
   imjsAppInsightsKey,
   onIModelConnected,
   i18nUrlTemplate,
-  snapshotPath,
   desktopApp,
   frontstages,
   backstageItems,
@@ -53,7 +48,8 @@ export const Viewer: React.FC<ViewerProps> = ({
   additionalI18nNamespaces,
   additionalRpcInterfaces,
   uiProviders,
-}: ViewerProps) => {
+  blankConnection,
+}: BlankViewerProps) => {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
     ExtensionInstance[]
@@ -64,6 +60,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   const [extensionsLoaded, setExtensionsLoaded] = useState<boolean>(
     !extensions
   );
+  const [uiConfig, setUiConfig] = useState<ItwinViewerUi>();
 
   useEffect(() => {
     //TODO add the ability to remove extensions?
@@ -175,20 +172,30 @@ export const Viewer: React.FC<ViewerProps> = ({
     }
   }, [theme, iModelJsInitialized]);
 
+  useEffect(() => {
+    // hide the property grid and treeview by default, but allow to be overridden via props
+    const defaultBlankViewerUiConfig: ItwinViewerUi = {
+      hidePropertyGrid: true,
+      hideTreeView: true,
+    };
+    const blankViewerUiConfig = {
+      ...defaultBlankViewerUiConfig,
+      ...defaultUiConfig,
+    };
+    setUiConfig(blankViewerUiConfig);
+  }, [defaultUiConfig]);
+
   return iModelJsInitialized && extensionsLoaded ? (
     <ErrorBoundary>
       <IModelLoader
-        contextId={contextId}
-        iModelId={iModelId}
-        changeSetId={changeSetId}
-        uiConfig={defaultUiConfig}
+        uiConfig={uiConfig}
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
-        snapshotPath={snapshotPath}
         frontstages={frontstages}
         backstageItems={backstageItems}
         uiFrameworkVersion={uiFrameworkVersion}
         viewportOptions={viewportOptions}
+        blankConnection={blankConnection}
       />
     </ErrorBoundary>
   ) : null;

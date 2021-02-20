@@ -7,3 +7,4 @@ export * from "./AuthClientHome";
 export * from "./Home";
 export * from "./UserManagerHome";
 export * from "./Header";
+export * from "./BlankConnectionHome";

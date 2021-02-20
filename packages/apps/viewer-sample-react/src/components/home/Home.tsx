@@ -37,6 +37,13 @@ export const Home = ({ history }: RouteComponentProps) => {
           >
             {"Use iModel.js Auth Client"}
           </Button>
+          <Button
+            className={styles.homeButton}
+            onClick={() => history.push("/blankconnection")}
+            buttonType={ButtonType.Hollow}
+          >
+            {"Blank Connection"}
+          </Button>
         </div>
       </div>
     </div>
