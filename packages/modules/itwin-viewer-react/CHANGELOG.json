@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.1.0",
+      "tag": "@bentley/itwin-viewer-react_v6.1.0",
+      "date": "Mon, 22 Feb 2021 19:29:08 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add BlankViewer component for blank iModel connections"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.0.4",
       "tag": "@bentley/itwin-viewer-react_v6.0.4",
       "date": "Wed, 10 Feb 2021 19:10:29 GMT",

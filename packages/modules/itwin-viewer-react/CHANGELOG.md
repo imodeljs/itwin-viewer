@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 10 Feb 2021 19:10:29 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Feb 2021 19:29:08 GMT and should not be manually modified.
+
+## 6.1.0
+Mon, 22 Feb 2021 19:29:08 GMT
+
+### Minor changes
+
+- Add BlankViewer component for blank iModel connections
 
 ## 6.0.4
 Wed, 10 Feb 2021 19:10:29 GMT
