@@ -278,10 +278,3 @@ export interface BlankConnectionViewState {
   displayStyle?: BlankConnectionViewStateDisplayStyle;
   viewFlags?: BlankConnectionViewStateViewFlags;
 }
-
-/**
- * Blank connection type
- */
-export interface ViewerBlankConnection extends BlankConnectionProps {
-  viewStateOptions?: BlankConnectionViewState;
-}

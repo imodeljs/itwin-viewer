@@ -8,6 +8,7 @@ import "./IModelLoader.scss";
 
 import {
   BlankConnection,
+  BlankConnectionProps,
   IModelApp,
   IModelConnection,
   MessageBoxIconType,
@@ -41,9 +42,9 @@ import { ViewCreator } from "../../services/iModel/ViewCreator";
 import Initializer from "../../services/Initializer";
 import { ai } from "../../services/telemetry/TelemetryService";
 import {
+  BlankConnectionViewState,
   ItwinViewerUi,
   ViewerBackstageItem,
-  ViewerBlankConnection,
   ViewerFrontstage,
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
@@ -61,7 +62,8 @@ export interface ModelLoaderProps {
   backstageItems?: ViewerBackstageItem[];
   uiFrameworkVersion?: FrameworkVersion;
   viewportOptions?: IModelViewportControlOptions;
-  blankConnection?: ViewerBlankConnection;
+  blankConnection?: BlankConnectionProps;
+  blankConnectionViewState?: BlankConnectionViewState;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -77,6 +79,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     uiFrameworkVersion,
     viewportOptions,
     blankConnection,
+    blankConnectionViewState,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -98,11 +101,14 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
      * Initialize a blank connection and viewState
      * @param blankConnection
      */
-    const initBlankConnection = (blankConnection: ViewerBlankConnection) => {
+    const initBlankConnection = (
+      blankConnection: BlankConnectionProps,
+      viewStateOptions?: BlankConnectionViewState
+    ) => {
       const imodelConnection = BlankConnection.create(blankConnection);
       const viewState = ViewCreator.createBlankViewState(
         imodelConnection,
-        blankConnection.viewStateOptions
+        viewStateOptions
       );
       UiFramework.setIModelConnection(imodelConnection);
       UiFramework.setDefaultViewState(viewState);
@@ -138,7 +144,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         setConnected(false);
 
         if (blankConnection) {
-          return initBlankConnection(blankConnection);
+          return initBlankConnection(blankConnection, blankConnectionViewState);
         }
 
         if (!(contextId && iModelId) && !snapshotPath) {

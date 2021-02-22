@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Range3d } from "@bentley/geometry-core";
-import { Cartographic } from "@bentley/imodeljs-common";
+import { Cartographic, ColorDef } from "@bentley/imodeljs-common";
 import { IModelApp } from "@bentley/imodeljs-frontend";
 import { BlankViewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
@@ -59,6 +59,11 @@ export const BlankConnectionHome: React.FC = () => {
             name: "GeometryConnection",
             location: Cartographic.fromDegrees(0, 0, 0),
             extents: new Range3d(-30, -30, -30, 30, 30, 30),
+          }}
+          viewStateOptions={{
+            displayStyle: {
+              backgroundColor: ColorDef.blue,
+            },
           }}
           extensions={extensions}
           productId={productId}

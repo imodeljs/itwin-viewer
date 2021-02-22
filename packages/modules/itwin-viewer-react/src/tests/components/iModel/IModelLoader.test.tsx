@@ -4,7 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Config } from "@bentley/bentleyjs-core";
+import { Range3d } from "@bentley/geometry-core";
+import { Cartographic, ColorDef } from "@bentley/imodeljs-common";
 import {
+  BlankConnection,
+  BlankConnectionProps,
   IModelApp,
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
@@ -16,7 +20,12 @@ import React from "react";
 
 import IModelLoader from "../../../components/iModel/IModelLoader";
 import * as IModelServices from "../../../services/iModel/IModelService";
-import { ViewerBackstageItem, ViewerFrontstage } from "../../../types";
+import { ViewCreator } from "../../../services/iModel/ViewCreator";
+import {
+  BlankConnectionViewState,
+  ViewerBackstageItem,
+  ViewerFrontstage,
+} from "../../../types";
 
 jest.mock("@bentley/ui-framework");
 jest.mock("@bentley/ui-abstract");
@@ -73,6 +82,9 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     MessageBoxIconType: {
       Critical: 1,
     },
+    BlankConnection: {
+      create: jest.fn().mockReturnValue({}),
+    },
   };
 });
 jest.mock("../../../services/iModel/IModelService");
@@ -81,6 +93,7 @@ jest.mock("../../../services/iModel/ViewCreator", () => {
   return {
     ViewCreator: {
       createDefaultView: jest.fn().mockResolvedValue({}),
+      createBlankViewState: jest.fn().mockResolvedValue({}),
     },
   };
 });
@@ -170,5 +183,35 @@ describe("IModelLoader", () => {
     await waitFor(() => getByTestId("loader-wrapper"));
 
     expect(IModelApp.notifications.openMessageBox).toHaveBeenCalled();
+  });
+
+  it("creates a blank connection and a blank ViewState", async () => {
+    const blankConnection: BlankConnectionProps = {
+      name: "GeometryConnection",
+      location: Cartographic.fromDegrees(0, 0, 0),
+      extents: new Range3d(-30, -30, -30, 30, 30, 30),
+    };
+
+    const viewStateOptions: BlankConnectionViewState = {
+      setAllow3dManipulations: true,
+      displayStyle: {
+        backgroundColor: ColorDef.blue,
+      },
+    };
+
+    const { getByTestId } = render(
+      <IModelLoader
+        blankConnection={blankConnection}
+        blankConnectionViewState={viewStateOptions}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(BlankConnection.create).toHaveBeenCalledWith(blankConnection);
+    expect(ViewCreator.createBlankViewState).toHaveBeenCalledWith(
+      {},
+      viewStateOptions
+    );
   });
 });
