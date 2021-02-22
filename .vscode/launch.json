@@ -17,7 +17,8 @@
       "runtimeArgs": [
         "--inspect-brk",
         "${workspaceFolder}/packages/modules/itwin-viewer-react/node_modules/jest/bin/jest.js",
-        "--runInBand"
+        "--runInBand",
+        "--watch"
       ],
       "cwd": "${workspaceFolder}/packages/modules/itwin-viewer-react",
       "console": "integratedTerminal",
