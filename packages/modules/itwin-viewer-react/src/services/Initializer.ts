@@ -17,7 +17,6 @@ import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { Presentation } from "@bentley/presentation-frontend";
 import { PropertyGridManager } from "@bentley/property-grid-react";
 import { TreeWidget } from "@bentley/tree-widget-react";
-import { UiItemsManager } from "@bentley/ui-abstract";
 import { UiComponents } from "@bentley/ui-components";
 import { UiCore } from "@bentley/ui-core";
 import {
@@ -295,10 +294,6 @@ class Initializer {
 
         // override the defaut daa error message
         this._iModelDataErrorMessage = viewerOptions?.iModelDataErrorMessage;
-
-        viewerOptions?.uiProviders?.forEach((uiProvider) => {
-          UiItemsManager.register(uiProvider);
-        });
 
         console.log("iModel.js initialized");
 

@@ -437,7 +437,7 @@ describe("iTwinViewer", () => {
   it("registers ui providers", async () => {
     jest.spyOn(UiItemsManager, "register");
 
-    new ItwinViewer({
+    const viewer = new ItwinViewer({
       elementId,
       authConfig: {
         oidcClient: MockAuthorizationClient.oidcClient,
@@ -445,7 +445,7 @@ describe("iTwinViewer", () => {
       uiProviders: [new TestUiProvider(), new TestUiProvider2()],
     });
 
-    await Initializer.initialized;
+    await viewer.load({ contextId: mockProjectId, iModelId: mockiModelId });
 
     expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
   });

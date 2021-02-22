@@ -421,4 +421,35 @@ describe("Viewer", () => {
 
     expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
   });
+
+  it("reregisters ui providers", async () => {
+    jest.spyOn(UiItemsManager, "register");
+    jest.spyOn(UiItemsManager, "unregister");
+
+    const result = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        uiProviders={[new TestUiProvider()]}
+      />
+    );
+
+    await waitFor(() => result.getByTestId("loader-wrapper"));
+
+    expect(UiItemsManager.register).toHaveBeenCalledTimes(1);
+
+    result.rerender(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        uiProviders={[new TestUiProvider2()]}
+      />
+    );
+
+    await waitFor(() => result.getByTestId("loader-wrapper"));
+
+    expect(UiItemsManager.unregister).toHaveBeenCalledTimes(1);
+  });
 });

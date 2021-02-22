@@ -6,7 +6,7 @@
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React, { useEffect, useState } from "react";
 
-import { useExtensions, useTheme } from "../hooks";
+import { useExtensions, useTheme, useUiProviders } from "../hooks";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
 import { ItwinViewerCommonParams, ViewerExtension } from "../types";
@@ -50,6 +50,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   );
   const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
   useTheme(iModelJsInitialized, theme);
+  useUiProviders(iModelJsInitialized, uiProviders);
 
   useEffect(() => {
     if (!iModelJsInitialized) {
@@ -66,7 +67,6 @@ export const Viewer: React.FC<ViewerProps> = ({
           onIModelAppInit,
           additionalI18nNamespaces,
           additionalRpcInterfaces,
-          uiProviders,
         }
       )
         .then(() => {

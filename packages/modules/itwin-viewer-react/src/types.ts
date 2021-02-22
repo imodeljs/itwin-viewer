@@ -120,6 +120,8 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   uiFrameworkVersion?: FrameworkVersion;
   /** additional viewport options for the default frontstage's viewport control */
   viewportOptions?: IModelViewportControlOptions;
+  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
+  uiProviders?: UiItemsProvider[];
 }
 
 export interface ItwinViewerInitializerParams {
@@ -143,8 +145,6 @@ export interface ItwinViewerInitializerParams {
   additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
   /** override the default message that sends users to the iTwin Synchronizer when there are data-related errors with an iModel. Pass empty string to override with no message. */
   iModelDataErrorMessage?: string;
-  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
-  uiProviders?: UiItemsProvider[];
 }
 
 /**

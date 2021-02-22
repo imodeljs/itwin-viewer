@@ -11,6 +11,7 @@ import {
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
+import { UiItemsManager, UiItemsProvider } from "@bentley/ui-abstract";
 import {
   ColorTheme,
   FrameworkVersion,
@@ -59,6 +60,7 @@ export class ItwinViewer {
   frontstages: ViewerFrontstage[] | undefined;
   uiFrameworkVersion: FrameworkVersion | undefined;
   viewportOptions: IModelViewportControlOptions | undefined;
+  uiProviders: UiItemsProvider[] | undefined;
 
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
@@ -75,6 +77,7 @@ export class ItwinViewer {
     this.frontstages = options.frontstages;
     this.uiFrameworkVersion = options.uiFrameworkVersion;
     this.viewportOptions = options.viewportOptions;
+    this.uiProviders = options.uiProviders;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -88,7 +91,6 @@ export class ItwinViewer {
         onIModelAppInit: options.onIModelAppInit,
         additionalI18nNamespaces: options.additionalI18nNamespaces,
         additionalRpcInterfaces: options.additionalRpcInterfaces,
-        uiProviders: options.uiProviders,
       }
     ).catch((error) => {
       throw error;
@@ -112,6 +114,13 @@ export class ItwinViewer {
     if (this.theme) {
       // use the provided theme
       UiFramework.setColorTheme(this.theme);
+    }
+
+    if (this.uiProviders) {
+      // use the provided uiProviders
+      this.uiProviders.forEach((uiProvider) => {
+        UiItemsManager.register(uiProvider);
+      });
     }
 
     // render the viewer for the given iModel on the given element
