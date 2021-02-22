@@ -5,10 +5,9 @@
 
 import { BlankConnectionProps } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
-import { UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
-import useExtensions from "../hooks/useExtensions";
+import { useExtensions, useTheme } from "../hooks";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
 import {
@@ -53,6 +52,7 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
   );
   const [uiConfig, setUiConfig] = useState<ItwinViewerUi>();
   const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
+  useTheme(iModelJsInitialized, theme);
 
   useEffect(() => {
     if (!iModelJsInitialized) {
@@ -84,15 +84,6 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
         });
     }
   }, [authConfig]);
-
-  useEffect(() => {
-    if (iModelJsInitialized) {
-      if (theme) {
-        // use the provided theme
-        UiFramework.setColorTheme(theme);
-      }
-    }
-  }, [theme, iModelJsInitialized]);
 
   useEffect(() => {
     // hide the property grid and treeview by default, but allow to be overridden via props

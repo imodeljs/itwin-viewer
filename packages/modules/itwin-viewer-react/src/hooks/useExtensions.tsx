@@ -2,6 +2,7 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+
 import {
   ExternalServerExtensionLoader,
   IModelApp,
@@ -10,9 +11,9 @@ import { useEffect, useState } from "react";
 
 import { ExtensionInstance, ExtensionUrl, ViewerExtension } from "../types";
 
-export default function useExtensions(
+export function useExtensions(
   imjsInitialized: boolean,
-  extensions: ViewerExtension[] | undefined
+  extensions?: ViewerExtension[]
 ): boolean {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<

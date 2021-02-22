@@ -4,10 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
-import { UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
-import useExtensions from "../hooks/useExtensions";
+import { useExtensions, useTheme } from "../hooks";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
 import { ItwinViewerCommonParams, ViewerExtension } from "../types";
@@ -50,6 +49,7 @@ export const Viewer: React.FC<ViewerProps> = ({
     false
   );
   const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
+  useTheme(iModelJsInitialized, theme);
 
   useEffect(() => {
     if (!iModelJsInitialized) {
@@ -81,15 +81,6 @@ export const Viewer: React.FC<ViewerProps> = ({
         });
     }
   }, [authConfig]);
-
-  useEffect(() => {
-    if (iModelJsInitialized) {
-      if (theme) {
-        // use the provided theme
-        UiFramework.setColorTheme(theme);
-      }
-    }
-  }, [theme, iModelJsInitialized]);
 
   return iModelJsInitialized && extensionsLoaded ? (
     <ErrorBoundary>
