@@ -3,22 +3,14 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import {
-  ExternalServerExtensionLoader,
-  IModelApp,
-} from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import { UiFramework } from "@bentley/ui-framework";
 import React, { useEffect, useState } from "react";
 
+import useExtensions from "../hooks/useExtensions";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
-import {
-  ExtensionInstance,
-  ExtensionUrl,
-  ItwinViewerCommonParams,
-  ViewerExtension,
-} from "../types";
+import { ItwinViewerCommonParams, ViewerExtension } from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
 export interface ViewerProps extends ItwinViewerCommonParams {
@@ -54,86 +46,10 @@ export const Viewer: React.FC<ViewerProps> = ({
   additionalRpcInterfaces,
   uiProviders,
 }: ViewerProps) => {
-  const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
-  const [extensionInstances, setExtensionInstances] = useState<
-    ExtensionInstance[]
-  >([]);
   const [iModelJsInitialized, setIModelJsInitialized] = useState<boolean>(
     false
   );
-  const [extensionsLoaded, setExtensionsLoaded] = useState<boolean>(
-    !extensions
-  );
-
-  useEffect(() => {
-    //TODO add the ability to remove extensions?
-    const urls = [...extensionUrls];
-    const instances = [...extensionInstances];
-    let urlsUpdated = false;
-    let instancesUpdated = false;
-    extensions?.forEach((extension) => {
-      const url = extension.url;
-      if (url) {
-        if (!urls.some((extensionUrl) => extensionUrl.url === url)) {
-          urls.push({ url, loaded: false });
-          urlsUpdated = true;
-        }
-      }
-
-      if (
-        !instances.some(
-          (extensionInstance) => extensionInstance.name === extension.name
-        )
-      ) {
-        instances.push({
-          name: extension.name,
-          loaded: false,
-          version: extension.version,
-          args: extension.args,
-        });
-        instancesUpdated = true;
-      }
-    });
-    if (urlsUpdated) {
-      setExtensionUrls(urls);
-    }
-    if (instancesUpdated) {
-      setExtensionInstances(instances);
-    }
-  }, [extensions]);
-
-  useEffect(() => {
-    if (iModelJsInitialized) {
-      extensionUrls?.forEach((extensionUrl) => {
-        if (!extensionUrl.loaded) {
-          IModelApp.extensionAdmin.addExtensionLoaderFront(
-            new ExternalServerExtensionLoader(extensionUrl.url)
-          );
-          extensionUrl.loaded = true;
-        }
-      });
-    }
-  }, [extensionUrls, iModelJsInitialized]);
-
-  useEffect(() => {
-    if (iModelJsInitialized) {
-      extensionInstances?.forEach((extensionInstance) => {
-        if (!extensionInstance.loaded) {
-          IModelApp.extensionAdmin
-            .loadExtension(
-              extensionInstance.name,
-              extensionInstance.version,
-              extensionInstance.args
-            )
-            .then(() => (extensionInstance.loaded = true))
-            .catch((error) => {
-              throw error;
-            });
-        }
-      });
-      setExtensionsLoaded(true);
-    }
-  }, [extensionInstances, iModelJsInitialized]);
+  const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
 
   useEffect(() => {
     if (!iModelJsInitialized) {

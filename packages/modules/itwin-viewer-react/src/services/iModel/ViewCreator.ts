@@ -22,7 +22,6 @@ import {
   StandardViewId,
   ViewState,
 } from "@bentley/imodeljs-frontend";
-import { UiFramework } from "@bentley/ui-framework";
 
 import { BlankConnectionViewState } from "../../types";
 import Initializer from "../Initializer";
@@ -319,8 +318,7 @@ export class ViewCreator {
     );
 
     viewState.displayStyle.backgroundColor =
-      viewStateOptions?.displayStyle?.backgroundColor ??
-      ColorDef.fromString(UiFramework.getColorTheme());
+      viewStateOptions?.displayStyle?.backgroundColor ?? ColorDef.white;
     viewState.viewFlags.grid = viewStateOptions?.viewFlags?.grid ?? false;
     viewState.viewFlags.renderMode =
       viewStateOptions?.viewFlags?.renderMode ?? RenderMode.SmoothShade;
