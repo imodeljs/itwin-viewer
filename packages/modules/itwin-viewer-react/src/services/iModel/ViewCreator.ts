@@ -4,14 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Id64Array, Id64String } from "@bentley/bentleyjs-core";
+import { Point3d, Vector3d } from "@bentley/geometry-core";
 import {
   BackgroundMapType,
   Code,
+  ColorDef,
   IModel,
   RenderMode,
   ViewStateProps,
 } from "@bentley/imodeljs-common";
 import {
+  BlankConnection,
   DisplayStyle3dState,
   IModelApp,
   IModelConnection,
@@ -20,6 +23,7 @@ import {
   ViewState,
 } from "@bentley/imodeljs-frontend";
 
+import { BlankConnectionViewState } from "../../types";
 import Initializer from "../Initializer";
 
 /** Options for ViewCreator to override certain state */
@@ -273,6 +277,53 @@ export class ViewCreator {
       }
     }
   }
+
+  /**
+   * Generate a default viewState for a blank connection
+   * @param iModel
+   * @param viewStateOptions
+   */
+  public static createBlankViewState = (
+    iModel: BlankConnection,
+    viewStateOptions?: BlankConnectionViewState
+  ) => {
+    const ext = iModel.projectExtents;
+    const viewState = SpatialViewState.createBlank(
+      iModel,
+      ext.low,
+      ext.high.minus(ext.low)
+    );
+
+    const allow3dManipulations =
+      viewStateOptions?.setAllow3dManipulations !== undefined
+        ? viewStateOptions?.setAllow3dManipulations
+        : true;
+
+    viewState.setAllow3dManipulations(allow3dManipulations);
+
+    const viewStateLookAt = viewStateOptions?.lookAt || {
+      eyePoint: new Point3d(15, 15, 15),
+      targetPoint: new Point3d(0, 0, 0),
+      upVector: new Vector3d(0, 0, 1),
+    };
+
+    viewState.lookAt(
+      viewStateLookAt.eyePoint,
+      viewStateLookAt.targetPoint,
+      viewStateLookAt.upVector,
+      viewStateLookAt.newExtents,
+      viewStateLookAt.frontDistance,
+      viewStateLookAt.backDistance,
+      viewStateLookAt.opts
+    );
+
+    viewState.displayStyle.backgroundColor =
+      viewStateOptions?.displayStyle?.backgroundColor ?? ColorDef.white;
+    viewState.viewFlags.grid = viewStateOptions?.viewFlags?.grid ?? false;
+    viewState.viewFlags.renderMode =
+      viewStateOptions?.viewFlags?.renderMode ?? RenderMode.SmoothShade;
+    return viewState;
+  };
 
   private static _applyOptions(
     viewState: SpatialViewState,

@@ -4,15 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
+import { Vector3d, XAndY, XYAndZ } from "@bentley/geometry-core";
 import {
   BentleyCloudRpcParams,
+  ColorDef,
   ElectronRpcParams,
+  RenderMode,
   RpcInterface,
   RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
+  BlankConnectionProps,
   DesktopAuthorizationClient,
   IModelConnection,
+  ViewChangeOptions,
 } from "@bentley/imodeljs-frontend";
 import { BackstageItem, UiItemsProvider } from "@bentley/ui-abstract";
 import {
@@ -221,4 +226,55 @@ export interface ItwinViewerUi {
   hideTreeView?: boolean;
   hidePropertyGrid?: boolean;
   hideDefaultStatusBar?: boolean;
+}
+
+/**
+ * Extension options
+ */
+export interface ViewerExtension {
+  name: string;
+  url?: string;
+  version?: string;
+  args?: string[];
+}
+
+export interface ExtensionUrl {
+  url: string;
+  loaded: boolean;
+}
+
+export interface ExtensionInstance {
+  name: string;
+  loaded: boolean;
+  version?: string;
+  args?: string[];
+}
+
+/**
+ * Blank connection ViewState types
+ */
+export interface BlankConnectionViewStateLookAt {
+  eyePoint: XYAndZ;
+  targetPoint: XYAndZ;
+  upVector: Vector3d;
+  newExtents?: XAndY;
+  frontDistance?: number;
+  backDistance?: number;
+  opts?: ViewChangeOptions;
+}
+
+export interface BlankConnectionViewStateDisplayStyle {
+  backgroundColor?: ColorDef;
+}
+
+export interface BlankConnectionViewStateViewFlags {
+  grid?: boolean;
+  renderMode?: RenderMode;
+}
+
+export interface BlankConnectionViewState {
+  setAllow3dManipulations?: boolean;
+  lookAt?: BlankConnectionViewStateLookAt;
+  displayStyle?: BlankConnectionViewStateDisplayStyle;
+  viewFlags?: BlankConnectionViewStateViewFlags;
 }

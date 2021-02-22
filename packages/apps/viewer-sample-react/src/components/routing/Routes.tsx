@@ -7,7 +7,12 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { LoginRedirect, LogoutRedirect } from "../auth";
-import { AuthClientHome, Home, UserManagerHome } from "../home";
+import {
+  AuthClientHome,
+  BlankConnectionHome,
+  Home,
+  UserManagerHome,
+} from "../home";
 
 export const Routes = () => {
   return (
@@ -17,6 +22,11 @@ export const Routes = () => {
       <Route path="/signin-callback" exact={true} component={LoginRedirect} />
       <Route path="/authclient" exact={true} component={AuthClientHome} />
       <Route path="/usermanager" exact={true} component={UserManagerHome} />
+      <Route
+        path="/blankconnection"
+        exact={true}
+        component={BlankConnectionHome}
+      />
     </Switch>
   );
 };

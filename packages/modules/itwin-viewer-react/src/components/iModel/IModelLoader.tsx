@@ -7,6 +7,8 @@ import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
 import {
+  BlankConnection,
+  BlankConnectionProps,
   IModelApp,
   IModelConnection,
   MessageBoxIconType,
@@ -40,6 +42,7 @@ import { ViewCreator } from "../../services/iModel/ViewCreator";
 import Initializer from "../../services/Initializer";
 import { ai } from "../../services/telemetry/TelemetryService";
 import {
+  BlankConnectionViewState,
   ItwinViewerUi,
   ViewerBackstageItem,
   ViewerFrontstage,
@@ -59,6 +62,8 @@ export interface ModelLoaderProps {
   backstageItems?: ViewerBackstageItem[];
   uiFrameworkVersion?: FrameworkVersion;
   viewportOptions?: IModelViewportControlOptions;
+  blankConnection?: BlankConnectionProps;
+  blankConnectionViewState?: BlankConnectionViewState;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -73,6 +78,8 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     backstageItems,
     uiFrameworkVersion,
     viewportOptions,
+    blankConnection,
+    blankConnectionViewState,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -89,6 +96,25 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     useEffect(() => {
       setError(errorManager.fatalError);
     }, [errorManager.fatalError]);
+
+    /**
+     * Initialize a blank connection and viewState
+     * @param blankConnection
+     */
+    const initBlankConnection = (
+      blankConnection: BlankConnectionProps,
+      viewStateOptions?: BlankConnectionViewState
+    ) => {
+      const imodelConnection = BlankConnection.create(blankConnection);
+      const viewState = ViewCreator.createBlankViewState(
+        imodelConnection,
+        viewStateOptions
+      );
+      UiFramework.setIModelConnection(imodelConnection);
+      UiFramework.setDefaultViewState(viewState);
+      setViewState(viewState);
+      setConnected(true);
+    };
 
     useEffect(() => {
       const getModelConnection = async () => {
@@ -114,13 +140,22 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             }
           }
         }
+
+        setConnected(false);
+
+        if (blankConnection) {
+          return initBlankConnection(blankConnection, blankConnectionViewState);
+        }
+
         if (!(contextId && iModelId) && !snapshotPath) {
           throw new Error(
-            "Please provide a valid contextId and iModelId or a local snapshotPath"
+            IModelApp.i18n.translateWithNamespace(
+              "iTwinViewer",
+              "missingConnectionProps"
+            )
           );
         }
 
-        setConnected(false);
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
         if (snapshotPath) {
@@ -131,6 +166,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         if (imodelConnection) {
           // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection
           UiFramework.setIModelConnection(imodelConnection);
+
           SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
           if (onIModelConnected) {
