@@ -60,7 +60,7 @@ export class ItwinViewer {
   uiFrameworkVersion: FrameworkVersion | undefined;
   viewportOptions: IModelViewportControlOptions | undefined;
   uiProviders: UiItemsProvider[] | undefined;
-  extensions?: ViewerExtension[] | undefined;
+  extensions: ViewerExtension[] | undefined;
 
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
