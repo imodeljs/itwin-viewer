@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 22 Feb 2021 19:29:08 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Feb 2021 21:02:38 GMT and should not be manually modified.
+
+## 6.1.1
+Tue, 23 Feb 2021 21:02:38 GMT
+
+### Patches
+
+- Modified viewer to reregister uiProviders on prop change
 
 ## 6.1.0
 Mon, 22 Feb 2021 19:29:08 GMT

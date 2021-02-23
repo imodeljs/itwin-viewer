@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.1.1",
+      "tag": "@bentley/itwin-viewer-react_v6.1.1",
+      "date": "Tue, 23 Feb 2021 21:02:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Modified viewer to reregister uiProviders on prop change"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.1.0",
       "tag": "@bentley/itwin-viewer-react_v6.1.0",
       "date": "Mon, 22 Feb 2021 19:29:08 GMT",
