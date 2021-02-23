@@ -7,7 +7,6 @@ import { BlankConnectionProps } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React, { useEffect, useState } from "react";
 
-import { useExtensions, useTheme } from "../hooks";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
 import {
@@ -51,8 +50,6 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
     false
   );
   const [uiConfig, setUiConfig] = useState<ItwinViewerUi>();
-  const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
-  useTheme(iModelJsInitialized, theme);
 
   useEffect(() => {
     if (!iModelJsInitialized) {
@@ -69,7 +66,6 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
           onIModelAppInit,
           additionalI18nNamespaces,
           additionalRpcInterfaces,
-          uiProviders,
         }
       )
         .then(() => {
@@ -98,10 +94,10 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
     setUiConfig(blankViewerUiConfig);
   }, [defaultUiConfig]);
 
-  return iModelJsInitialized && extensionsLoaded ? (
+  return iModelJsInitialized ? (
     <ErrorBoundary>
       <IModelLoader
-        uiConfig={uiConfig}
+        defaultUiConfig={uiConfig}
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
         frontstages={frontstages}
@@ -110,6 +106,9 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
         viewportOptions={viewportOptions}
         blankConnection={blankConnection}
         blankConnectionViewState={viewStateOptions}
+        uiProviders={uiProviders}
+        theme={theme}
+        extensions={extensions}
       />
     </ErrorBoundary>
   ) : null;

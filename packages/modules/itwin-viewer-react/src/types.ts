@@ -14,7 +14,6 @@ import {
   RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
-  BlankConnectionProps,
   DesktopAuthorizationClient,
   IModelConnection,
   ViewChangeOptions,
@@ -103,9 +102,7 @@ export interface ItwinViewerParams extends ItwinViewerCommonParams {
   elementId: string;
 }
 
-export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
-  /** authorization configuration */
-  authConfig: AuthorizationOptions;
+export interface IModelLoaderParams {
   /** color theme */
   theme?: ColorTheme | string;
   /** Default UI configuration */
@@ -120,6 +117,17 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   uiFrameworkVersion?: FrameworkVersion;
   /** additional viewport options for the default frontstage's viewport control */
   viewportOptions?: IModelViewportControlOptions;
+  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
+  uiProviders?: UiItemsProvider[];
+  /** iModel.js extensions to load */
+  extensions?: ViewerExtension[];
+}
+
+export interface ItwinViewerCommonParams
+  extends ItwinViewerInitializerParams,
+    IModelLoaderParams {
+  /** authorization configuration */
+  authConfig: AuthorizationOptions;
 }
 
 export interface ItwinViewerInitializerParams {
@@ -143,8 +151,6 @@ export interface ItwinViewerInitializerParams {
   additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
   /** override the default message that sends users to the iTwin Synchronizer when there are data-related errors with an iModel. Pass empty string to override with no message. */
   iModelDataErrorMessage?: string;
-  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
-  uiProviders?: UiItemsProvider[];
 }
 
 /**

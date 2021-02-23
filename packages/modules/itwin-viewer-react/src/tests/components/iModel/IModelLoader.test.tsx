@@ -13,8 +13,13 @@ import {
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { UrlDiscoveryClient } from "@bentley/itwin-client";
-import { BackstageItemUtilities } from "@bentley/ui-abstract";
-import { FrontstageProps, FrontstageProvider } from "@bentley/ui-framework";
+import { BackstageItemUtilities, UiItemsManager } from "@bentley/ui-abstract";
+import {
+  ColorTheme,
+  FrontstageProps,
+  FrontstageProvider,
+  UiFramework,
+} from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
@@ -26,6 +31,7 @@ import {
   ViewerBackstageItem,
   ViewerFrontstage,
 } from "../../../types";
+import { TestUiProvider, TestUiProvider2 } from "../../mocks/MockUiProviders";
 
 jest.mock("@bentley/ui-framework");
 jest.mock("@bentley/ui-abstract");
@@ -213,5 +219,86 @@ describe("IModelLoader", () => {
       {},
       viewStateOptions
     );
+  });
+
+  it("sets the theme to the provided theme", async () => {
+    const { getByTestId } = render(
+      <IModelLoader
+        contextId={mockContextId}
+        iModelId={mockIModelId}
+        theme={ColorTheme.Dark}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
+  });
+
+  it("registers and unregisters ui providers", async () => {
+    jest.spyOn(UiItemsManager, "register");
+    jest.spyOn(UiItemsManager, "unregister");
+
+    const result = render(
+      <IModelLoader
+        contextId={mockContextId}
+        iModelId={mockIModelId}
+        uiProviders={[new TestUiProvider()]}
+      />
+    );
+
+    await waitFor(() => result.getByTestId("loader-wrapper"));
+
+    expect(UiItemsManager.register).toHaveBeenCalledTimes(1);
+
+    result.rerender(
+      <IModelLoader
+        contextId={mockContextId}
+        iModelId={mockIModelId}
+        uiProviders={[new TestUiProvider2()]}
+      />
+    );
+
+    await waitFor(() => result.getByTestId("loader-wrapper"));
+
+    expect(UiItemsManager.unregister).toHaveBeenCalledTimes(1);
+  });
+
+  it("loads the specified extensions and only registers each unique url once", async () => {
+    const extensions = [
+      {
+        name: "Extension1",
+        url: "http://localhost:3001",
+      },
+      {
+        name: "Extension2",
+        url: "http://localhost:3002",
+      },
+      {
+        name: "Extension3",
+        url: "http://localhost:3001",
+        version: "2",
+        args: ["one", "two"],
+      },
+    ];
+
+    const { getByTestId } = render(
+      <IModelLoader
+        contextId={mockContextId}
+        iModelId={mockIModelId}
+        extensions={extensions}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(
+      IModelApp.extensionAdmin.addExtensionLoaderFront
+    ).toHaveBeenCalledTimes(2);
+
+    expect(IModelApp.extensionAdmin.loadExtension).toHaveBeenCalledTimes(3);
+    expect(
+      IModelApp.extensionAdmin.loadExtension
+    ).toHaveBeenCalledWith("Extension3", "2", ["one", "two"]);
   });
 });

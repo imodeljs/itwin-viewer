@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router";
 
 import { GeometryDecorator } from "../../decorators/GeometryDecorator";
-import { TestUiProvider, TestUiProvider2 } from "../../providers";
+import { TestUiProvider2 } from "../../providers";
 import { oidcClient } from "../../services/auth/AuthInstances";
 import { Header } from "./";
 import styles from "./Home.module.scss";
@@ -68,7 +68,7 @@ export const BlankConnectionHome: React.FC = () => {
           extensions={extensions}
           productId={productId}
           onIModelAppInit={iModelAppInit}
-          uiProviders={[new TestUiProvider(), new TestUiProvider2()]}
+          uiProviders={[new TestUiProvider2()]}
         />
       )}
     </div>

@@ -6,16 +6,14 @@
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React, { useEffect, useState } from "react";
 
-import { useExtensions, useTheme } from "../hooks";
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
-import { ItwinViewerCommonParams, ViewerExtension } from "../types";
+import { ItwinViewerCommonParams } from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
 export interface ViewerProps extends ItwinViewerCommonParams {
   contextId?: string;
   iModelId?: string;
-  extensions?: ViewerExtension[];
   changeSetId?: string;
   snapshotPath?: string;
 }
@@ -48,9 +46,6 @@ export const Viewer: React.FC<ViewerProps> = ({
   const [iModelJsInitialized, setIModelJsInitialized] = useState<boolean>(
     false
   );
-  const extensionsLoaded = useExtensions(iModelJsInitialized, extensions);
-  useTheme(iModelJsInitialized, theme);
-
   useEffect(() => {
     if (!iModelJsInitialized) {
       const authClient = getAuthClient(authConfig);
@@ -66,7 +61,6 @@ export const Viewer: React.FC<ViewerProps> = ({
           onIModelAppInit,
           additionalI18nNamespaces,
           additionalRpcInterfaces,
-          uiProviders,
         }
       )
         .then(() => {
@@ -82,13 +76,13 @@ export const Viewer: React.FC<ViewerProps> = ({
     }
   }, [authConfig]);
 
-  return iModelJsInitialized && extensionsLoaded ? (
+  return iModelJsInitialized ? (
     <ErrorBoundary>
       <IModelLoader
         contextId={contextId}
         iModelId={iModelId}
         changeSetId={changeSetId}
-        uiConfig={defaultUiConfig}
+        defaultUiConfig={defaultUiConfig}
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
         snapshotPath={snapshotPath}
@@ -96,6 +90,9 @@ export const Viewer: React.FC<ViewerProps> = ({
         backstageItems={backstageItems}
         uiFrameworkVersion={uiFrameworkVersion}
         viewportOptions={viewportOptions}
+        uiProviders={uiProviders}
+        theme={theme}
+        extensions={extensions}
       />
     </ErrorBoundary>
   ) : null;

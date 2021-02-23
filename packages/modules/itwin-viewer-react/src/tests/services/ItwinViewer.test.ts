@@ -191,20 +191,6 @@ describe("iTwinViewer", () => {
     );
   });
 
-  it("sets the theme to the provided theme", async () => {
-    const viewer = new ItwinViewer({
-      elementId,
-      authConfig: {
-        oidcClient: MockAuthorizationClient.oidcClient,
-      },
-      theme: ColorTheme.Dark,
-    });
-
-    await viewer.load({ contextId: mockProjectId, iModelId: mockiModelId });
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
-  });
-
   it("queries the iModel with the provided changeSetId", async () => {
     const changeSetId = "123";
 
@@ -432,21 +418,5 @@ describe("iTwinViewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
-  });
-
-  it("registers ui providers", async () => {
-    jest.spyOn(UiItemsManager, "register");
-
-    new ItwinViewer({
-      elementId,
-      authConfig: {
-        oidcClient: MockAuthorizationClient.oidcClient,
-      },
-      uiProviders: [new TestUiProvider(), new TestUiProvider2()],
-    });
-
-    await Initializer.initialized;
-
-    expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
   });
 });
