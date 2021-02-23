@@ -23,8 +23,6 @@ import {
   BackstageStageLauncher,
 } from "@bentley/ui-abstract";
 import {
-  FrameworkVersion,
-  IModelViewportControlOptions,
   StateManager,
   SyncUiEventDispatcher,
   UiFramework,
@@ -33,6 +31,7 @@ import { withAITracking } from "@microsoft/applicationinsights-react-js";
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
+import { useExtensions, useTheme, useUiProviders } from "../../hooks";
 import {
   getDefaultViewIds,
   openImodel,
@@ -43,25 +42,19 @@ import Initializer from "../../services/Initializer";
 import { ai } from "../../services/telemetry/TelemetryService";
 import {
   BlankConnectionViewState,
-  ItwinViewerUi,
+  IModelLoaderParams,
   ViewerBackstageItem,
   ViewerFrontstage,
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
 
-export interface ModelLoaderProps {
+export interface ModelLoaderProps extends IModelLoaderParams {
   contextId?: string;
   iModelId?: string;
   changeSetId?: string;
-  uiConfig?: ItwinViewerUi;
   appInsightsKey?: string;
-  onIModelConnected?: (iModel: IModelConnection) => void;
   snapshotPath?: string;
-  frontstages?: ViewerFrontstage[];
-  backstageItems?: ViewerBackstageItem[];
-  uiFrameworkVersion?: FrameworkVersion;
-  viewportOptions?: IModelViewportControlOptions;
   blankConnection?: BlankConnectionProps;
   blankConnectionViewState?: BlankConnectionViewState;
 }
@@ -71,7 +64,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     iModelId,
     contextId,
     changeSetId,
-    uiConfig,
+    defaultUiConfig,
     onIModelConnected,
     snapshotPath,
     frontstages,
@@ -80,6 +73,9 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     viewportOptions,
     blankConnection,
     blankConnectionViewState,
+    uiProviders,
+    theme,
+    extensions,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -90,6 +86,10 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     >();
     const [viewState, setViewState] = useState<ViewState>();
     const [connected, setConnected] = useState<boolean>(false);
+    const extensionsLoaded = useExtensions(extensions);
+
+    useUiProviders(uiProviders);
+    useTheme(theme);
 
     // trigger error boundary when fatal error is thrown
     const errorManager = useErrorManager({});
@@ -287,7 +287,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         // initialize the DefaultFrontstage that contains the views that we want
         const defaultFrontstageProvider = new DefaultFrontstage(
           [viewState],
-          uiConfig,
+          defaultUiConfig,
           viewportOptions
         );
 
@@ -309,6 +309,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           {finalFrontstages &&
           finalBackstageItems &&
           connected &&
+          extensionsLoaded &&
           StateManager.store ? (
             <Provider store={StateManager.store}>
               <IModelViewer

@@ -6,12 +6,9 @@
 import { UiItemsManager, UiItemsProvider } from "@bentley/ui-abstract";
 import { useEffect } from "react";
 
-export function useUiProviders(
-  imjsInitialized: boolean,
-  uiProviders?: UiItemsProvider[]
-): void {
+export function useUiProviders(uiProviders?: UiItemsProvider[]): void {
   useEffect(() => {
-    if (imjsInitialized && uiProviders) {
+    if (uiProviders) {
       uiProviders.forEach((uiProvider) => {
         UiItemsManager.register(uiProvider);
       });
@@ -21,5 +18,5 @@ export function useUiProviders(
         });
       };
     }
-  }, [uiProviders, imjsInitialized]);
+  }, [uiProviders]);
 }

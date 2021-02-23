@@ -14,7 +14,6 @@ import {
   RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
-  BlankConnectionProps,
   DesktopAuthorizationClient,
   IModelConnection,
   ViewChangeOptions,
@@ -103,9 +102,7 @@ export interface ItwinViewerParams extends ItwinViewerCommonParams {
   elementId: string;
 }
 
-export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
-  /** authorization configuration */
-  authConfig: AuthorizationOptions;
+export interface IModelLoaderParams {
   /** color theme */
   theme?: ColorTheme | string;
   /** Default UI configuration */
@@ -122,6 +119,15 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   viewportOptions?: IModelViewportControlOptions;
   /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
   uiProviders?: UiItemsProvider[];
+  /** iModel.js extensions to load */
+  extensions?: ViewerExtension[];
+}
+
+export interface ItwinViewerCommonParams
+  extends ItwinViewerInitializerParams,
+    IModelLoaderParams {
+  /** authorization configuration */
+  authConfig: AuthorizationOptions;
 }
 
 export interface ItwinViewerInitializerParams {

@@ -11,10 +11,7 @@ import { useEffect, useState } from "react";
 
 import { ExtensionInstance, ExtensionUrl, ViewerExtension } from "../types";
 
-export function useExtensions(
-  imjsInitialized: boolean,
-  extensions?: ViewerExtension[]
-): boolean {
+export function useExtensions(extensions?: ViewerExtension[]): boolean {
   const [extensionUrls, setExtensionUrls] = useState<ExtensionUrl[]>([]);
   const [extensionInstances, setExtensionInstances] = useState<
     ExtensionInstance[]
@@ -61,37 +58,33 @@ export function useExtensions(
   }, [extensions]);
 
   useEffect(() => {
-    if (imjsInitialized) {
-      extensionUrls?.forEach((extensionUrl) => {
-        if (!extensionUrl.loaded) {
-          IModelApp.extensionAdmin.addExtensionLoaderFront(
-            new ExternalServerExtensionLoader(extensionUrl.url)
-          );
-          extensionUrl.loaded = true;
-        }
-      });
-    }
-  }, [extensionUrls, imjsInitialized]);
+    extensionUrls?.forEach((extensionUrl) => {
+      if (!extensionUrl.loaded) {
+        IModelApp.extensionAdmin.addExtensionLoaderFront(
+          new ExternalServerExtensionLoader(extensionUrl.url)
+        );
+        extensionUrl.loaded = true;
+      }
+    });
+  }, [extensionUrls]);
 
   useEffect(() => {
-    if (imjsInitialized) {
-      extensionInstances?.forEach((extensionInstance) => {
-        if (!extensionInstance.loaded) {
-          IModelApp.extensionAdmin
-            .loadExtension(
-              extensionInstance.name,
-              extensionInstance.version,
-              extensionInstance.args
-            )
-            .then(() => (extensionInstance.loaded = true))
-            .catch((error) => {
-              throw error;
-            });
-        }
-      });
-      setExtensionsLoaded(true);
-    }
-  }, [extensionInstances, imjsInitialized]);
+    extensionInstances?.forEach((extensionInstance) => {
+      if (!extensionInstance.loaded) {
+        IModelApp.extensionAdmin
+          .loadExtension(
+            extensionInstance.name,
+            extensionInstance.version,
+            extensionInstance.args
+          )
+          .then(() => (extensionInstance.loaded = true))
+          .catch((error) => {
+            throw error;
+          });
+      }
+    });
+    setExtensionsLoaded(true);
+  }, [extensionInstances]);
 
   return extensionsLoaded;
 }
