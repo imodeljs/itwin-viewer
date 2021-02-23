@@ -15,8 +15,6 @@ import {
 import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
-import { UiItemsManager } from "@bentley/ui-abstract";
-import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
@@ -30,7 +28,6 @@ import {
   IModelBackendOptions,
 } from "../../types";
 import MockOidcClient from "../mocks/MockOidcClient";
-import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -110,45 +107,6 @@ describe("Viewer", () => {
     expect(viewerContainer).toBeInTheDocument();
   });
 
-  it("loads the specified extensions and only registers each unique url once", async () => {
-    const extensions = [
-      {
-        name: "Extension1",
-        url: "http://localhost:3001",
-      },
-      {
-        name: "Extension2",
-        url: "http://localhost:3002",
-      },
-      {
-        name: "Extension3",
-        url: "http://localhost:3001",
-        version: "2",
-        args: ["one", "two"],
-      },
-    ];
-
-    const { getByTestId } = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        extensions={extensions}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(
-      IModelApp.extensionAdmin.addExtensionLoaderFront
-    ).toHaveBeenCalledTimes(2);
-
-    expect(IModelApp.extensionAdmin.loadExtension).toHaveBeenCalledTimes(3);
-    expect(
-      IModelApp.extensionAdmin.loadExtension
-    ).toHaveBeenCalledWith("Extension3", "2", ["one", "two"]);
-  });
-
   it("initializes the viewer with the provided backend configuration", async () => {
     jest.spyOn(Initializer, "initialize");
 
@@ -183,22 +141,6 @@ describe("Viewer", () => {
         productId: "0000",
       }
     );
-  });
-
-  it("sets the theme to the provided theme", async () => {
-    const { getByTestId } = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        productId={"0000"}
-        theme={ColorTheme.Dark}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
 
   it("queries the iModel with the provided changeSetId", async () => {
@@ -403,53 +345,5 @@ describe("Viewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
-  });
-
-  it("registers ui providers", async () => {
-    jest.spyOn(UiItemsManager, "register");
-
-    const { getByTestId } = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        uiProviders={[new TestUiProvider(), new TestUiProvider2()]}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(UiItemsManager.register).toHaveBeenCalledTimes(2);
-  });
-
-  it("reregisters ui providers", async () => {
-    jest.spyOn(UiItemsManager, "register");
-    jest.spyOn(UiItemsManager, "unregister");
-
-    const result = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        uiProviders={[new TestUiProvider()]}
-      />
-    );
-
-    await waitFor(() => result.getByTestId("loader-wrapper"));
-
-    expect(UiItemsManager.register).toHaveBeenCalledTimes(1);
-
-    result.rerender(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        uiProviders={[new TestUiProvider2()]}
-      />
-    );
-
-    await waitFor(() => result.getByTestId("loader-wrapper"));
-
-    expect(UiItemsManager.unregister).toHaveBeenCalledTimes(1);
   });
 });
