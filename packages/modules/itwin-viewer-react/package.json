@@ -37,7 +37,8 @@
     "rebuild": "npm run clean:build && npm run build"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "build/**/*"
   ],
   "dependencies": {
     "@bentley/icons-generic-webfont": "^1.0.15",

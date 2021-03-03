@@ -35,7 +35,8 @@
     "rebuild": "npm run clean:build && npm run build"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "build/**/*"
   ],
   "dependencies": {
     "apollo-client": "^2.6.4",
