@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-error-handling-react
 
-This log was last generated on Wed, 27 Jan 2021 13:46:09 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Mar 2021 20:18:37 GMT and should not be manually modified.
+
+## 3.1.1
+Wed, 03 Mar 2021 20:18:37 GMT
+
+### Patches
+
+- deliver esm build
 
 ## 3.1.0
 Wed, 27 Jan 2021 13:46:09 GMT

@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Tue, 23 Feb 2021 21:02:38 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Mar 2021 20:18:37 GMT and should not be manually modified.
+
+## 6.1.2
+Wed, 03 Mar 2021 20:18:37 GMT
+
+### Patches
+
+- deliver esm builds
 
 ## 6.1.1
 Tue, 23 Feb 2021 21:02:38 GMT
