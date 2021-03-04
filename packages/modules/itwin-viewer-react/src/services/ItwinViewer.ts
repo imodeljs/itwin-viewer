@@ -11,11 +11,11 @@ import {
   RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
+import { UiItemsProvider } from "@bentley/ui-abstract";
 import {
   ColorTheme,
   FrameworkVersion,
   IModelViewportControlOptions,
-  UiFramework,
 } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -25,7 +25,7 @@ import IModelLoader, {
   ModelLoaderProps,
 } from "../components/iModel/IModelLoader";
 import AuthorizationClient from "../services/auth/AuthorizationClient";
-import { ItwinViewerParams, ItwinViewerUi } from "../types";
+import { ItwinViewerParams, ItwinViewerUi, ViewerExtension } from "../types";
 import Initializer from "./Initializer";
 import { trackEvent } from "./telemetry/TelemetryService";
 
@@ -59,6 +59,8 @@ export class ItwinViewer {
   frontstages: ViewerFrontstage[] | undefined;
   uiFrameworkVersion: FrameworkVersion | undefined;
   viewportOptions: IModelViewportControlOptions | undefined;
+  uiProviders: UiItemsProvider[] | undefined;
+  extensions: ViewerExtension[] | undefined;
 
   onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
 
@@ -75,6 +77,8 @@ export class ItwinViewer {
     this.frontstages = options.frontstages;
     this.uiFrameworkVersion = options.uiFrameworkVersion;
     this.viewportOptions = options.viewportOptions;
+    this.uiProviders = options.uiProviders;
+    this.extensions = options.extensions;
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
@@ -87,6 +91,7 @@ export class ItwinViewer {
         i18nUrlTemplate: options.i18nUrlTemplate,
         onIModelAppInit: options.onIModelAppInit,
         additionalI18nNamespaces: options.additionalI18nNamespaces,
+        additionalRpcInterfaces: options.additionalRpcInterfaces,
       }
     ).catch((error) => {
       throw error;
@@ -106,11 +111,6 @@ export class ItwinViewer {
     }
     // ensure iModel.js initialization completes
     await Initializer.initialized;
-    // set the theme
-    if (this.theme) {
-      // use the provided theme
-      UiFramework.setColorTheme(this.theme);
-    }
 
     // render the viewer for the given iModel on the given element
     ReactDOM.render(
@@ -128,6 +128,9 @@ export class ItwinViewer {
           frontstages: this.frontstages,
           uiFrameworkVersion: this.uiFrameworkVersion,
           viewportOptions: this.viewportOptions,
+          uiProviders: this.uiProviders,
+          theme: this.theme,
+          extensions: this.extensions,
         } as ModelLoaderProps)
       ),
       document.getElementById(this.elementId)

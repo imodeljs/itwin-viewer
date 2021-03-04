@@ -10,32 +10,38 @@ import {
   ElectronRpcParams,
   IModelReadRpcInterface,
   IModelTileRpcInterface,
+  RpcInterface,
+  RpcInterfaceDefinition,
   SnapshotIModelRpcInterface,
 } from "@bentley/imodeljs-common";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
 
-const getSupportedRpcs = () => {
+const getSupportedRpcs = (
+  additionalRpcInterfaces: RpcInterfaceDefinition<RpcInterface>[]
+) => {
   return [
     IModelReadRpcInterface,
     IModelTileRpcInterface,
     PresentationRpcInterface,
     SnapshotIModelRpcInterface,
+    ...additionalRpcInterfaces,
   ];
 };
 
 export const initRpc = (
   rpcParams: BentleyCloudRpcParams | ElectronRpcParams,
-  isDesktop?: boolean
+  isDesktop = false,
+  additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[]
 ) => {
   if (isDesktop) {
     ElectronRpcManager.initializeClient(
       rpcParams as ElectronRpcParams,
-      getSupportedRpcs()
+      getSupportedRpcs(additionalRpcInterfaces || [])
     );
   } else {
     BentleyCloudRpcManager.initializeClient(
       rpcParams as BentleyCloudRpcParams,
-      getSupportedRpcs()
+      getSupportedRpcs(additionalRpcInterfaces || [])
     );
   }
 };

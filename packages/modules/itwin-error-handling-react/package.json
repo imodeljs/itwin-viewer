@@ -1,6 +1,6 @@
 {
   "name": "@bentley/itwin-error-handling-react",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "description": "iTwin Error Handling frontend components",
   "main": "lib/index.js",
   "module": "build/index.js",
@@ -35,7 +35,8 @@
     "rebuild": "npm run clean:build && npm run build"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "build/**/*"
   ],
   "dependencies": {
     "apollo-client": "^2.6.4",
@@ -45,7 +46,8 @@
     "i18next-browser-languagedetector": "^4.0.2",
     "react-helmet-async": "1.0.4",
     "react-i18next": "11.3.3",
-    "react-transition-group": "4.1.1"
+    "react-transition-group": "4.1.1",
+    "sanitize-html": "^2.3.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -74,7 +76,8 @@
     "react-test-renderer": "16.13.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "@types/sanitize-html": "^1.27.1"
   },
   "peerDependencies": {
     "@bentley/ui-core": "^2.6.4",

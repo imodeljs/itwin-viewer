@@ -6,10 +6,6 @@
 
 .imodelbusy__centered {
   color: var(--buic-foreground-body-rgb, 000, 000, 000);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
 
   .imodelbusy__loadingTitle {

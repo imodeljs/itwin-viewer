@@ -3,8 +3,7 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "configurations": [
-    {
+  "configurations": [{
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}",
       "request": "attach",
@@ -15,11 +14,16 @@
       "name": "Tests",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceFolder}/packages/modules/itwin-viewer-react/node_modules/.bin/jest",
-      "args": ["--runInBand", "--watch"],
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceFolder}/packages/modules/itwin-viewer-react/node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch"
+      ],
       "cwd": "${workspaceFolder}/packages/modules/itwin-viewer-react",
       "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    }
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229
+    },
   ]
 }

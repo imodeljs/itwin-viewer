@@ -5,9 +5,16 @@
 
 import "@testing-library/jest-dom/extend-expect";
 
+import {
+  BentleyCloudRpcManager,
+  IModelReadRpcInterface,
+  IModelTileRpcInterface,
+  IModelWriteRpcInterface,
+  SnapshotIModelRpcInterface,
+} from "@bentley/imodeljs-common";
 import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
-import { ColorTheme, UiFramework } from "@bentley/ui-framework";
+import { PresentationRpcInterface } from "@bentley/presentation-common";
 import { render, waitFor } from "@testing-library/react";
 import React from "react";
 
@@ -100,45 +107,6 @@ describe("Viewer", () => {
     expect(viewerContainer).toBeInTheDocument();
   });
 
-  it("loads the specified extensions and only registers each unique url once", async () => {
-    const extensions = [
-      {
-        name: "Extension1",
-        url: "http://localhost:3001",
-      },
-      {
-        name: "Extension2",
-        url: "http://localhost:3002",
-      },
-      {
-        name: "Extension3",
-        url: "http://localhost:3001",
-        version: "2",
-        args: ["one", "two"],
-      },
-    ];
-
-    const { getByTestId } = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        extensions={extensions}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(
-      IModelApp.extensionAdmin.addExtensionLoaderFront
-    ).toHaveBeenCalledTimes(2);
-
-    expect(IModelApp.extensionAdmin.loadExtension).toHaveBeenCalledTimes(3);
-    expect(
-      IModelApp.extensionAdmin.loadExtension
-    ).toHaveBeenCalledWith("Extension3", "2", ["one", "two"]);
-  });
-
   it("initializes the viewer with the provided backend configuration", async () => {
     jest.spyOn(Initializer, "initialize");
 
@@ -173,22 +141,6 @@ describe("Viewer", () => {
         productId: "0000",
       }
     );
-  });
-
-  it("sets the theme to the provided theme", async () => {
-    const { getByTestId } = render(
-      <Viewer
-        contextId={mockProjectId}
-        iModelId={mockIModelId}
-        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-        productId={"0000"}
-        theme={ColorTheme.Dark}
-      />
-    );
-
-    await waitFor(() => getByTestId("loader-wrapper"));
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
 
   it("queries the iModel with the provided changeSetId", async () => {
@@ -368,5 +320,30 @@ describe("Viewer", () => {
 
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
+
+  it("registers additional rpc interfaces", async () => {
+    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
+
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        additionalRpcInterfaces={[IModelWriteRpcInterface]}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(
+      BentleyCloudRpcManager.initializeClient
+    ).toHaveBeenCalledWith(expect.anything(), [
+      IModelReadRpcInterface,
+      IModelTileRpcInterface,
+      PresentationRpcInterface,
+      SnapshotIModelRpcInterface,
+      IModelWriteRpcInterface,
+    ]);
   });
 });

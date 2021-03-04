@@ -4,10 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
+  BentleyCloudRpcManager,
+  IModelReadRpcInterface,
+  IModelTileRpcInterface,
+  IModelWriteRpcInterface,
+  SnapshotIModelRpcInterface,
+} from "@bentley/imodeljs-common";
+import {
   ExternalServerExtensionLoader,
   IModelApp,
 } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
+import { PresentationRpcInterface } from "@bentley/presentation-common";
+import { UiItemsManager } from "@bentley/ui-abstract";
 import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -24,6 +33,7 @@ import {
 } from "../../types";
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
+import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -179,20 +189,6 @@ describe("iTwinViewer", () => {
         productId: undefined,
       }
     );
-  });
-
-  it("sets the theme to the provided theme", async () => {
-    const viewer = new ItwinViewer({
-      elementId,
-      authConfig: {
-        oidcClient: MockAuthorizationClient.oidcClient,
-      },
-      theme: ColorTheme.Dark,
-    });
-
-    await viewer.load({ contextId: mockProjectId, iModelId: mockiModelId });
-
-    expect(UiFramework.setColorTheme).toHaveBeenCalledWith(ColorTheme.Dark);
   });
 
   it("queries the iModel with the provided changeSetId", async () => {
@@ -398,5 +394,29 @@ describe("iTwinViewer", () => {
 
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test1");
     expect(IModelApp.i18n.registerNamespace).toHaveBeenCalledWith("test2");
+  });
+
+  it("registers additional rpc interfaces", async () => {
+    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
+
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      additionalRpcInterfaces: [IModelWriteRpcInterface],
+    });
+
+    await Initializer.initialized;
+
+    expect(
+      BentleyCloudRpcManager.initializeClient
+    ).toHaveBeenCalledWith(expect.anything(), [
+      IModelReadRpcInterface,
+      IModelTileRpcInterface,
+      PresentationRpcInterface,
+      SnapshotIModelRpcInterface,
+      IModelWriteRpcInterface,
+    ]);
   });
 });

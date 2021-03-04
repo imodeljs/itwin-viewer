@@ -2,6 +2,172 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.1.2",
+      "tag": "@bentley/itwin-viewer-react_v6.1.2",
+      "date": "Wed, 03 Mar 2021 20:18:37 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "deliver esm builds"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@bentley/itwin-error-handling-react\" from `3.1.0` to `3.1.1`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.1.1",
+      "tag": "@bentley/itwin-viewer-react_v6.1.1",
+      "date": "Tue, 23 Feb 2021 21:02:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Modified viewer to reregister uiProviders on prop change"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.1.0",
+      "tag": "@bentley/itwin-viewer-react_v6.1.0",
+      "date": "Mon, 22 Feb 2021 19:29:08 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add BlankViewer component for blank iModel connections"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.0.4",
+      "tag": "@bentley/itwin-viewer-react_v6.0.4",
+      "date": "Wed, 10 Feb 2021 19:10:29 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove DrawingViewDefinition from list of accepted classes"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.0.3",
+      "tag": "@bentley/itwin-viewer-react_v6.0.3",
+      "date": "Tue, 09 Feb 2021 20:56:47 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "add viewportOptions to dependency list"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.0.2",
+      "tag": "@bentley/itwin-viewer-react_v6.0.2",
+      "date": "Tue, 09 Feb 2021 20:45:37 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update statusbar to pass ReactNode and not a function to return a ReactNode."
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.0.1",
+      "tag": "@bentley/itwin-viewer-react_v6.0.1",
+      "date": "Tue, 09 Feb 2021 00:48:09 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix typo in README"
+          }
+        ]
+      }
+    },
+    {
+      "version": "6.0.0",
+      "tag": "@bentley/itwin-viewer-react_v6.0.0",
+      "date": "Fri, 05 Feb 2021 20:14:46 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Fix loading spinner position and change viewer height to 100%. REQUIRES CONTAINER ELEMENTS TO HAVE AN EXPLICIT HEIGHT"
+          }
+        ]
+      }
+    },
+    {
+      "version": "5.10.0",
+      "tag": "@bentley/itwin-viewer-react_v5.10.0",
+      "date": "Mon, 01 Feb 2021 18:57:57 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to provide UI providers to the viewer"
+          }
+        ]
+      }
+    },
+    {
+      "version": "5.9.0",
+      "tag": "@bentley/itwin-viewer-react_v5.9.0",
+      "date": "Wed, 27 Jan 2021 13:46:09 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "better handle data-related errors and allow configurability of message"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@bentley/itwin-error-handling-react\" from `3.0.0` to `3.1.0`"
+          }
+        ]
+      }
+    },
+    {
+      "version": "5.8.2",
+      "tag": "@bentley/itwin-viewer-react_v5.8.2",
+      "date": "Tue, 26 Jan 2021 20:28:07 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "move up UiFramework.setIModelConnection in order to be able to fetch connection from StateManager in the onIModelConnected callback"
+          }
+        ]
+      }
+    },
+    {
+      "version": "5.8.1",
+      "tag": "@bentley/itwin-viewer-react_v5.8.1",
+      "date": "Mon, 25 Jan 2021 21:51:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add message for empty iModels"
+          }
+        ]
+      }
+    },
+    {
+      "version": "5.8.0",
+      "tag": "@bentley/itwin-viewer-react_v5.8.0",
+      "date": "Fri, 22 Jan 2021 17:10:24 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the ability to provide additional rpc interfaces to be registered"
+          }
+        ]
+      }
+    },
+    {
       "version": "5.7.0",
       "tag": "@bentley/itwin-viewer-react_v5.7.0",
       "date": "Fri, 18 Dec 2020 13:05:20 GMT",

@@ -2,6 +2,18 @@
   "name": "@bentley/cra-template-itwin-viewer",
   "entries": [
     {
+      "version": "4.0.0",
+      "tag": "@bentley/cra-template-itwin-viewer_v4.0.0",
+      "date": "Tue, 09 Feb 2021 00:48:09 GMT",
+      "comments": {
+        "major": [
+          {
+            "comment": "Upgrade viewer to v6"
+          }
+        ]
+      }
+    },
+    {
       "version": "3.0.0",
       "tag": "@bentley/cra-template-itwin-viewer_v3.0.0",
       "date": "Tue, 05 Jan 2021 20:11:01 GMT",

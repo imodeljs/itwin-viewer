@@ -13,6 +13,8 @@ import {
 } from "@bentley/imodeljs-frontend";
 import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
 
+import Initializer from "../Initializer";
+
 /** determine the proper version of the iModel to open
  * 1. If named versions exist, get the named version that contains the latest changeset
  * 2. If no named version exists, return the latest changeset
@@ -44,10 +46,9 @@ const getVersion = async (
 
 /** parse the comma-delimited config value that is a list of accepted schema:classnames or return a default */
 const getAcceptedViewClasses = (): string[] => {
-  // TODO configurable?
+  // TODO configurable? support for 2d (DrawingViewDefinition)?
   const acceptedClasses = [
     "BisCore:SpatialViewDefinition",
-    "BisCore:DrawingViewDefinition",
     "BisCore:OrthographicViewDefinition",
   ];
   return acceptedClasses;
@@ -71,11 +72,17 @@ export const openImodel = async (
     );
     return connection;
   } catch (error) {
-    console.error(
-      `Error opening the iModel: ${imodelId} in Project: ${contextId}`,
-      error
+    console.log(`Error opening the iModel connection: ${error}`);
+    const connectionError = IModelApp.i18n.translateWithNamespace(
+      "iTwinViewer",
+      "iModels.connectionError"
     );
-    throw error;
+    const msg = await Initializer.getIModelDataErrorMessage(
+      contextId,
+      imodelId,
+      connectionError
+    );
+    throw msg;
   }
 };
 
@@ -96,7 +103,7 @@ export const getDefaultViewIds = async (
     (spec) => acceptedViewClasses.indexOf(spec.classFullName) !== -1
   );
   if (acceptedViewSpecs.length < 1) {
-    throw new Error("No valid view definitions in imodel");
+    return [];
   }
   const ids = acceptedViewSpecs.map((spec) => {
     return spec.id as Id64String;

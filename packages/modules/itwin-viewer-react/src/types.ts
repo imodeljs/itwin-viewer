@@ -4,15 +4,21 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
+import { Vector3d, XAndY, XYAndZ } from "@bentley/geometry-core";
 import {
   BentleyCloudRpcParams,
+  ColorDef,
   ElectronRpcParams,
+  RenderMode,
+  RpcInterface,
+  RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
   DesktopAuthorizationClient,
   IModelConnection,
+  ViewChangeOptions,
 } from "@bentley/imodeljs-frontend";
-import { BackstageItem } from "@bentley/ui-abstract";
+import { BackstageItem, UiItemsProvider } from "@bentley/ui-abstract";
 import {
   ColorTheme,
   FrameworkVersion,
@@ -96,9 +102,7 @@ export interface ItwinViewerParams extends ItwinViewerCommonParams {
   elementId: string;
 }
 
-export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
-  /** authorization configuration */
-  authConfig: AuthorizationOptions;
+export interface IModelLoaderParams {
   /** color theme */
   theme?: ColorTheme | string;
   /** Default UI configuration */
@@ -113,6 +117,17 @@ export interface ItwinViewerCommonParams extends ItwinViewerInitializerParams {
   uiFrameworkVersion?: FrameworkVersion;
   /** additional viewport options for the default frontstage's viewport control */
   viewportOptions?: IModelViewportControlOptions;
+  /** UI Providers to register https://www.itwinjs.org/learning/ui/abstract/uiitemsprovider/ */
+  uiProviders?: UiItemsProvider[];
+  /** iModel.js extensions to load */
+  extensions?: ViewerExtension[];
+}
+
+export interface ItwinViewerCommonParams
+  extends ItwinViewerInitializerParams,
+    IModelLoaderParams {
+  /** authorization configuration */
+  authConfig: AuthorizationOptions;
 }
 
 export interface ItwinViewerInitializerParams {
@@ -132,6 +147,10 @@ export interface ItwinViewerInitializerParams {
   onIModelAppInit?: () => void;
   /** additional i18n namespaces to register */
   additionalI18nNamespaces?: string[];
+  /** custom rpc interfaces (assumes that they are supported in your backend) */
+  additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[];
+  /** override the default message that sends users to the iTwin Synchronizer when there are data-related errors with an iModel. Pass empty string to override with no message. */
+  iModelDataErrorMessage?: string;
 }
 
 /**
@@ -213,4 +232,55 @@ export interface ItwinViewerUi {
   hideTreeView?: boolean;
   hidePropertyGrid?: boolean;
   hideDefaultStatusBar?: boolean;
+}
+
+/**
+ * Extension options
+ */
+export interface ViewerExtension {
+  name: string;
+  url?: string;
+  version?: string;
+  args?: string[];
+}
+
+export interface ExtensionUrl {
+  url: string;
+  loaded: boolean;
+}
+
+export interface ExtensionInstance {
+  name: string;
+  loaded: boolean;
+  version?: string;
+  args?: string[];
+}
+
+/**
+ * Blank connection ViewState types
+ */
+export interface BlankConnectionViewStateLookAt {
+  eyePoint: XYAndZ;
+  targetPoint: XYAndZ;
+  upVector: Vector3d;
+  newExtents?: XAndY;
+  frontDistance?: number;
+  backDistance?: number;
+  opts?: ViewChangeOptions;
+}
+
+export interface BlankConnectionViewStateDisplayStyle {
+  backgroundColor?: ColorDef;
+}
+
+export interface BlankConnectionViewStateViewFlags {
+  grid?: boolean;
+  renderMode?: RenderMode;
+}
+
+export interface BlankConnectionViewState {
+  setAllow3dManipulations?: boolean;
+  lookAt?: BlankConnectionViewStateLookAt;
+  displayStyle?: BlankConnectionViewStateDisplayStyle;
+  viewFlags?: BlankConnectionViewStateViewFlags;
 }

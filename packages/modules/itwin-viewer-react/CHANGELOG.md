@@ -1,6 +1,97 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 18 Dec 2020 13:05:20 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Mar 2021 20:18:37 GMT and should not be manually modified.
+
+## 6.1.2
+Wed, 03 Mar 2021 20:18:37 GMT
+
+### Patches
+
+- deliver esm builds
+
+## 6.1.1
+Tue, 23 Feb 2021 21:02:38 GMT
+
+### Patches
+
+- Modified viewer to reregister uiProviders on prop change
+
+## 6.1.0
+Mon, 22 Feb 2021 19:29:08 GMT
+
+### Minor changes
+
+- Add BlankViewer component for blank iModel connections
+
+## 6.0.4
+Wed, 10 Feb 2021 19:10:29 GMT
+
+### Patches
+
+- Remove DrawingViewDefinition from list of accepted classes
+
+## 6.0.3
+Tue, 09 Feb 2021 20:56:47 GMT
+
+### Patches
+
+- add viewportOptions to dependency list
+
+## 6.0.2
+Tue, 09 Feb 2021 20:45:37 GMT
+
+### Patches
+
+- Update statusbar to pass ReactNode and not a function to return a ReactNode.
+
+## 6.0.1
+Tue, 09 Feb 2021 00:48:09 GMT
+
+### Patches
+
+- Fix typo in README
+
+## 6.0.0
+Fri, 05 Feb 2021 20:14:46 GMT
+
+### Breaking changes
+
+- Fix loading spinner position and change viewer height to 100%. REQUIRES CONTAINER ELEMENTS TO HAVE AN EXPLICIT HEIGHT
+
+## 5.10.0
+Mon, 01 Feb 2021 18:57:57 GMT
+
+### Minor changes
+
+- Add the ability to provide UI providers to the viewer
+
+## 5.9.0
+Wed, 27 Jan 2021 13:46:09 GMT
+
+### Minor changes
+
+- better handle data-related errors and allow configurability of message
+
+## 5.8.2
+Tue, 26 Jan 2021 20:28:07 GMT
+
+### Patches
+
+- move up UiFramework.setIModelConnection in order to be able to fetch connection from StateManager in the onIModelConnected callback
+
+## 5.8.1
+Mon, 25 Jan 2021 21:51:38 GMT
+
+### Patches
+
+- Add message for empty iModels
+
+## 5.8.0
+Fri, 22 Jan 2021 17:10:24 GMT
+
+### Minor changes
+
+- Add the ability to provide additional rpc interfaces to be registered
 
 ## 5.7.0
 Fri, 18 Dec 2020 13:05:20 GMT

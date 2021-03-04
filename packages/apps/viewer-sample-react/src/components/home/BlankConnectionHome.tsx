@@ -3,17 +3,20 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { IModelConnection } from "@bentley/imodeljs-frontend";
-import { Viewer, ViewerExtension } from "@bentley/itwin-viewer-react";
+import { Range3d } from "@bentley/geometry-core";
+import { Cartographic, ColorDef } from "@bentley/imodeljs-common";
+import { IModelApp } from "@bentley/imodeljs-frontend";
+import { BlankViewer, ViewerExtension } from "@bentley/itwin-viewer-react";
 import React, { useState } from "react";
 import { useLocation } from "react-router";
 
-import { TestUiProvider, TestUiProvider2 } from "../../providers";
+import { GeometryDecorator } from "../../decorators/GeometryDecorator";
+import { TestUiProvider2 } from "../../providers";
 import { oidcClient } from "../../services/auth/AuthInstances";
 import { Header } from "./";
 import styles from "./Home.module.scss";
 
-export const UserManagerHome: React.FC = () => {
+export const BlankConnectionHome: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(oidcClient.loggedIn);
   const location = useLocation();
   const extensions: ViewerExtension[] = [
@@ -40,23 +43,32 @@ export const UserManagerHome: React.FC = () => {
     }
   };
 
-  const iModelConnected = (iModel: IModelConnection) => {
-    console.log("iModel Connected!");
-    console.log(iModel);
+  const iModelAppInit = () => {
+    const decorator = new GeometryDecorator();
+    IModelApp.viewManager.addDecorator(decorator);
+    decorator.drawBase();
   };
 
   return (
     <div className={styles.home}>
       <Header handleLoginToggle={toggleLogin} loggedIn={loggedIn} />
       {loggedIn && (
-        <Viewer
+        <BlankViewer
           authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
-          contextId={process.env.IMJS_OIDC_CLIENT_CONTEXT_ID}
-          iModelId={process.env.IMJS_OIDC_CLIENT_IMODEL_ID}
+          blankConnection={{
+            name: "GeometryConnection",
+            location: Cartographic.fromDegrees(0, 0, 0),
+            extents: new Range3d(-30, -30, -30, 30, 30, 30),
+          }}
+          viewStateOptions={{
+            displayStyle: {
+              backgroundColor: ColorDef.blue,
+            },
+          }}
           extensions={extensions}
           productId={productId}
-          onIModelConnected={iModelConnected}
-          uiProviders={[new TestUiProvider(), new TestUiProvider2()]}
+          onIModelAppInit={iModelAppInit}
+          uiProviders={[new TestUiProvider2()]}
         />
       )}
     </div>

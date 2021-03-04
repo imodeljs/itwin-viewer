@@ -1,12 +1,13 @@
 /*---------------------------------------------------------------------------------------------
-* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
-* See LICENSE.md in the project root for license terms and full copyright notice.
-*--------------------------------------------------------------------------------------------*/
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { Subheading, Subheading2 } from "@bentley/ui-core";
 import classNames from "classnames";
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import sanitizeHtml from "sanitize-html";
 
 import styles from "./FallbackUi.module.scss";
 
@@ -27,6 +28,7 @@ export const FallbackUi = ({
   text,
   withHelmet,
 }: Props) => {
+  const innerText = sanitizeHtml(text);
   return (
     <div className={classNames(styles.container, className)}>
       {withHelmet && <Helmet title={title} />}
@@ -36,7 +38,7 @@ export const FallbackUi = ({
           <Subheading2>{title}</Subheading2>
         </p>
         <p className={styles.message} data-testid="test-fallback-text">
-          <Subheading>{text}</Subheading>
+          <Subheading dangerouslySetInnerHTML={{ __html: innerText }} />
         </p>
       </div>
     </div>

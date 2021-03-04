@@ -7,8 +7,12 @@ import "@bentley/icons-generic-webfont/dist/bentley-icons-generic-webfont.css";
 import "./IModelLoader.scss";
 
 import {
+  BlankConnection,
+  BlankConnectionProps,
   IModelApp,
   IModelConnection,
+  MessageBoxIconType,
+  MessageBoxType,
   SnapshotConnection,
   ViewState,
 } from "@bentley/imodeljs-frontend";
@@ -19,8 +23,6 @@ import {
   BackstageStageLauncher,
 } from "@bentley/ui-abstract";
 import {
-  FrameworkVersion,
-  IModelViewportControlOptions,
   StateManager,
   SyncUiEventDispatcher,
   UiFramework,
@@ -29,33 +31,32 @@ import { withAITracking } from "@microsoft/applicationinsights-react-js";
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
+import { useExtensions, useTheme, useUiProviders } from "../../hooks";
 import {
   getDefaultViewIds,
   openImodel,
 } from "../../services/iModel/IModelService";
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
+import Initializer from "../../services/Initializer";
 import { ai } from "../../services/telemetry/TelemetryService";
 import {
-  ItwinViewerUi,
+  BlankConnectionViewState,
+  IModelLoaderParams,
   ViewerBackstageItem,
   ViewerFrontstage,
 } from "../../types";
 import { DefaultFrontstage } from "../app-ui/frontstages/DefaultFrontstage";
 import { IModelBusy, IModelViewer } from "./";
 
-export interface ModelLoaderProps {
+export interface ModelLoaderProps extends IModelLoaderParams {
   contextId?: string;
   iModelId?: string;
   changeSetId?: string;
-  uiConfig?: ItwinViewerUi;
   appInsightsKey?: string;
-  onIModelConnected?: (iModel: IModelConnection) => void;
   snapshotPath?: string;
-  frontstages?: ViewerFrontstage[];
-  backstageItems?: ViewerBackstageItem[];
-  uiFrameworkVersion?: FrameworkVersion;
-  viewportOptions?: IModelViewportControlOptions;
+  blankConnection?: BlankConnectionProps;
+  blankConnectionViewState?: BlankConnectionViewState;
 }
 
 const Loader: React.FC<ModelLoaderProps> = React.memo(
@@ -63,13 +64,18 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     iModelId,
     contextId,
     changeSetId,
-    uiConfig,
+    defaultUiConfig,
     onIModelConnected,
     snapshotPath,
     frontstages,
     backstageItems,
     uiFrameworkVersion,
     viewportOptions,
+    blankConnection,
+    blankConnectionViewState,
+    uiProviders,
+    theme,
+    extensions,
   }: ModelLoaderProps) => {
     const [error, setError] = useState<Error>();
     const [finalFrontstages, setFinalFrontstages] = useState<
@@ -80,12 +86,35 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     >();
     const [viewState, setViewState] = useState<ViewState>();
     const [connected, setConnected] = useState<boolean>(false);
+    const extensionsLoaded = useExtensions(extensions);
+
+    useUiProviders(uiProviders);
+    useTheme(theme);
 
     // trigger error boundary when fatal error is thrown
     const errorManager = useErrorManager({});
     useEffect(() => {
       setError(errorManager.fatalError);
     }, [errorManager.fatalError]);
+
+    /**
+     * Initialize a blank connection and viewState
+     * @param blankConnection
+     */
+    const initBlankConnection = (
+      blankConnection: BlankConnectionProps,
+      viewStateOptions?: BlankConnectionViewState
+    ) => {
+      const imodelConnection = BlankConnection.create(blankConnection);
+      const viewState = ViewCreator.createBlankViewState(
+        imodelConnection,
+        viewStateOptions
+      );
+      UiFramework.setIModelConnection(imodelConnection);
+      UiFramework.setDefaultViewState(viewState);
+      setViewState(viewState);
+      setConnected(true);
+    };
 
     useEffect(() => {
       const getModelConnection = async () => {
@@ -111,13 +140,22 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             }
           }
         }
+
+        setConnected(false);
+
+        if (blankConnection) {
+          return initBlankConnection(blankConnection, blankConnectionViewState);
+        }
+
         if (!(contextId && iModelId) && !snapshotPath) {
           throw new Error(
-            "Please provide a valid contextId and iModelId or a local snapshotPath"
+            IModelApp.i18n.translateWithNamespace(
+              "iTwinViewer",
+              "missingConnectionProps"
+            )
           );
         }
 
-        setConnected(false);
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
         if (snapshotPath) {
@@ -126,14 +164,38 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           imodelConnection = await openImodel(contextId, iModelId, changeSetId);
         }
         if (imodelConnection) {
+          // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection
+          UiFramework.setIModelConnection(imodelConnection);
+
+          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
+
           if (onIModelConnected) {
             onIModelConnected(imodelConnection);
           }
-          // TODO revist this logic for the viewer
-          // pass the default viewids to the frontstage.
-          // currently we pass the first 2 spatial views to support split screen
-          // this logic will likely change when we have proper use cases
+
           const viewIds = await getDefaultViewIds(imodelConnection);
+
+          if (viewIds.length === 0 && contextId && iModelId) {
+            // no valid view data in the model. Direct the user to the synchronization portal
+            const msgDiv = document.createElement("div");
+            const msg = await Initializer.getIModelDataErrorMessage(
+              contextId,
+              iModelId,
+              IModelApp.i18n.translateWithNamespace(
+                "iTwinViewer",
+                "iModels.emptyIModelError"
+              )
+            );
+            msgDiv.innerHTML = msg;
+            // this can and should be async. No need to wait on it
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            IModelApp.notifications.openMessageBox(
+              MessageBoxType.Ok,
+              msgDiv,
+              MessageBoxIconType.Critical
+            );
+          }
+
           // attempt to construct a default viewState
           const savedViewState = await ViewCreator.createDefaultView(
             imodelConnection,
@@ -146,12 +208,8 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
             throw new Error("No default view state for the imodel!");
           }
 
-          // Tell the SyncUiEventDispatcher about the iModelConnection
-          UiFramework.setIModelConnection(imodelConnection);
           // Set default view state
           UiFramework.setDefaultViewState(savedViewState);
-
-          SyncUiEventDispatcher.initializeConnectionEvents(imodelConnection);
 
           // TODO revist for snapshots once settings are removed
           if (!snapshotPath) {
@@ -229,7 +287,7 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         // initialize the DefaultFrontstage that contains the views that we want
         const defaultFrontstageProvider = new DefaultFrontstage(
           [viewState],
-          uiConfig,
+          defaultUiConfig,
           viewportOptions
         );
 
@@ -241,23 +299,31 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
       }
 
       setFinalFrontstages(allFrontstages);
-    }, [frontstages, viewState]);
+    }, [frontstages, viewportOptions, viewState]);
 
     if (error) {
       throw error;
     } else {
-      return finalFrontstages && finalBackstageItems && connected ? (
+      return (
         <div className="itwin-viewer-container">
-          <Provider store={StateManager.store}>
-            <IModelViewer
-              frontstages={finalFrontstages}
-              backstageItems={finalBackstageItems}
-              uiFrameworkVersion={uiFrameworkVersion}
-            />
-          </Provider>
+          {finalFrontstages &&
+          finalBackstageItems &&
+          connected &&
+          extensionsLoaded &&
+          StateManager.store ? (
+            <Provider store={StateManager.store}>
+              <IModelViewer
+                frontstages={finalFrontstages}
+                backstageItems={finalBackstageItems}
+                uiFrameworkVersion={uiFrameworkVersion}
+              />
+            </Provider>
+          ) : (
+            <div className="itwin-viewer-loading-container">
+              <IModelBusy />
+            </div>
+          )}
         </div>
-      ) : (
-        <IModelBusy />
       );
     }
   }

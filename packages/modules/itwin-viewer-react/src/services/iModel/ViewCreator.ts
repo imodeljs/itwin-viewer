@@ -4,20 +4,27 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Id64Array, Id64String } from "@bentley/bentleyjs-core";
+import { Point3d, Vector3d } from "@bentley/geometry-core";
 import {
   BackgroundMapType,
   Code,
+  ColorDef,
   IModel,
   RenderMode,
   ViewStateProps,
 } from "@bentley/imodeljs-common";
 import {
+  BlankConnection,
   DisplayStyle3dState,
+  IModelApp,
   IModelConnection,
   SpatialViewState,
   StandardViewId,
   ViewState,
 } from "@bentley/imodeljs-frontend";
+
+import { BlankConnectionViewState } from "../../types";
+import Initializer from "../Initializer";
 
 /** Options for ViewCreator to override certain state */
 export interface ViewCreatorOptions {
@@ -210,45 +217,113 @@ export class ViewCreator {
     viewDefId?: Id64String,
     options?: ViewCreatorOptions
   ): Promise<ViewState | undefined> {
-    const categories: Id64Array = await ViewCreator.getAllCategories(
-      iModelConnection
-    );
-    const models = modelIds
-      ? modelIds
-      : await ViewCreator._getAllModels(iModelConnection);
-    if (!models) {
-      return undefined;
-    }
+    try {
+      const categories: Id64Array = await ViewCreator.getAllCategories(
+        iModelConnection
+      );
+      const models = modelIds
+        ? modelIds
+        : await ViewCreator._getAllModels(iModelConnection);
+      if (!models) {
+        return undefined;
+      }
 
-    const props = await ViewCreator._manufactureViewStateProps(
-      iModelConnection,
-      categories,
-      models,
-      viewDefId
-    );
-    const viewState = SpatialViewState.createFromProps(props, iModelConnection);
-    if (!viewState) {
-      return undefined;
-    }
+      const props = await ViewCreator._manufactureViewStateProps(
+        iModelConnection,
+        categories,
+        models,
+        viewDefId
+      );
+      const viewState = SpatialViewState.createFromProps(
+        props,
+        iModelConnection
+      );
+      if (!viewState) {
+        return undefined;
+      }
 
-    await viewState.load();
+      await viewState.load();
 
-    this._applyOptions(viewState, options);
+      this._applyOptions(viewState, options);
 
-    if (iModelConnection.isGeoLocated) {
-      viewState.viewFlags.backgroundMap = true;
-      if (
-        (viewState.getDisplayStyle3d().settings.backgroundMap
-          .providerName as string) !== "BingProvider"
-      ) {
-        viewState.getDisplayStyle3d().changeBackgroundMapProps({
-          providerName: "BingProvider",
-          providerData: { mapType: BackgroundMapType.Hybrid },
-        });
+      if (iModelConnection.isGeoLocated) {
+        viewState.viewFlags.backgroundMap = true;
+        if (
+          (viewState.getDisplayStyle3d().settings.backgroundMap
+            .providerName as string) !== "BingProvider"
+        ) {
+          viewState.getDisplayStyle3d().changeBackgroundMapProps({
+            providerName: "BingProvider",
+            providerData: { mapType: BackgroundMapType.Hybrid },
+          });
+        }
+      }
+      return viewState;
+    } catch (error) {
+      console.log(`Error obtaining default viewState: ${error}`);
+      const viewStateError = IModelApp.i18n.translateWithNamespace(
+        "iTwinViewer",
+        "iModels.viewStateError"
+      );
+      if (iModelConnection.contextId && iModelConnection.iModelId) {
+        const msg = await Initializer.getIModelDataErrorMessage(
+          iModelConnection.contextId,
+          iModelConnection.iModelId,
+          viewStateError
+        );
+        throw msg;
+      } else {
+        throw viewStateError;
       }
     }
-    return viewState;
   }
+
+  /**
+   * Generate a default viewState for a blank connection
+   * @param iModel
+   * @param viewStateOptions
+   */
+  public static createBlankViewState = (
+    iModel: BlankConnection,
+    viewStateOptions?: BlankConnectionViewState
+  ) => {
+    const ext = iModel.projectExtents;
+    const viewState = SpatialViewState.createBlank(
+      iModel,
+      ext.low,
+      ext.high.minus(ext.low)
+    );
+
+    const allow3dManipulations =
+      viewStateOptions?.setAllow3dManipulations !== undefined
+        ? viewStateOptions?.setAllow3dManipulations
+        : true;
+
+    viewState.setAllow3dManipulations(allow3dManipulations);
+
+    const viewStateLookAt = viewStateOptions?.lookAt || {
+      eyePoint: new Point3d(15, 15, 15),
+      targetPoint: new Point3d(0, 0, 0),
+      upVector: new Vector3d(0, 0, 1),
+    };
+
+    viewState.lookAt(
+      viewStateLookAt.eyePoint,
+      viewStateLookAt.targetPoint,
+      viewStateLookAt.upVector,
+      viewStateLookAt.newExtents,
+      viewStateLookAt.frontDistance,
+      viewStateLookAt.backDistance,
+      viewStateLookAt.opts
+    );
+
+    viewState.displayStyle.backgroundColor =
+      viewStateOptions?.displayStyle?.backgroundColor ?? ColorDef.white;
+    viewState.viewFlags.grid = viewStateOptions?.viewFlags?.grid ?? false;
+    viewState.viewFlags.renderMode =
+      viewStateOptions?.viewFlags?.renderMode ?? RenderMode.SmoothShade;
+    return viewState;
+  };
 
   private static _applyOptions(
     viewState: SpatialViewState,

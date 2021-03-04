@@ -29,10 +29,10 @@ In your webpack.config file:
       new IModeljsLibraryExportsPlugin(),
 ```
 
-If you are creating a new application and are using React, it is advised to use create-react-app with @bentley/react-scripts, which already include this plugin, as well as some other optimizations:
+If you are creating a new application and are using React, it is advised that you use create-react-app with @bentley/react-scripts, which already include this plugin, as well as some other optimizations. There is also a predefined template that includes the iTwin Viewer package:
 
 ```
-npx create-react-app my-app --scripts-version @bentley/react-scripts --template typescript
+npx create-react-app my-app --scripts-version @bentley/react-scripts --template @bentley/itwin-viewer
 ```
 
 ## React component
@@ -109,7 +109,7 @@ export const UserManagerHome = () => {
 - `extensions` - array of extensions to load in the viewer
 - `backend` - backend connection info (defaults to the General Purpose backend)
 - `theme` - override the default theme
-- `defaultUIConfig` - hide or override default tooling and widgets
+- `defaultUiConfig` - hide or override default tooling and widgets
   - `contentManipulationTools` - options for the content manipulation section (top left)
     - `cornerItem` - replace the default backstage navigation button with a new item
     - `hideDefaultHorizontalItems` - hide all horizontal tools in the top left section of the viewer
@@ -151,6 +151,8 @@ export const UserManagerHome = () => {
 - `onIModelAppInit` - Callback function that executes after IModelApp.startup completes
 - `viewportOptions` - Additional options for the default frontstage's IModelViewportControl
 - `additionalI18nNamespaces` - Additional i18n namespaces to register
+- `additionalRpcInterfaces` - Additional rpc interfaces to register (assumes that they are supported in your backend)
+- `iModelDataErrorMessage` - Override the default message that sends users to the iTwin Synchronization Portal when there are data-related errors with an iModel. Pass empty string to override with no message.
 
 ## Typescript API
 
@@ -180,6 +182,82 @@ if (viewer) {
   viewer.load({ contextId, iModelId });
 }
 ```
+
+## Blank Viewer
+
+For cases where you would prefer to use a [Blank iModelConnection](https://www.itwinjs.org/learning/frontend/blankconnection/), you should use the BlankViewer React component.
+
+```javascript
+import {
+  BlankConnectionViewState,
+  BlankViewer,
+  ViewerExtension,
+} from "@bentley/itwin-viewer-react";
+import React, { useState, useEffect } from "react";
+import { Range3d } from "@bentley/geometry-core";
+import { Cartographic, ColorDef } from "@bentley/imodeljs-common";
+/**
+ * The following is a function that returns an instance of an oidc-client UserManager that is configured to authorize an iModel.js backend connection via the Bentley IMS authority
+ * See https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/components/home/UserManagerHome.tsx and https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/services/auth/OidcClient.ts for an example
+ * Alternatively, you can pass an iModel.js AuthorizationClient to the oidcClient property of the authConfig prop
+ * See https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/components/home/AuthClientHome.tsx and https://github.com/imodeljs/itwin-viewer/blob/master/packages/apps/viewer-sample-react/src/services/auth/AuthorizationClient.ts for an example
+ */
+import { getUserManager } from "./MyOidcClient";
+
+export const UserManagerHome = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const blankConnection: BlankConnectionProps = {
+    name: "GeometryConnection",
+    location: Cartographic.fromDegrees(0, 0, 0),
+    extents: new Range3d(-30, -30, -30, 30, 30, 30),
+  };
+  const viewStateOptions: BlankConnectionViewState = {
+    displayStyle: {
+      backgroundColor: ColorDef.blue,
+    },
+  };
+
+  // list of extensions with their name and url where they are being served
+  const extensions: ViewerExtension[] = [
+    {
+      name: "dialogItemsSample",
+    },
+  ];
+
+  useEffect(() => {
+    getUserManager()
+      .getUser()
+      .then((user) => {
+        if (user && !user.expired) {
+          setLoggedIn(true);
+        }
+      });
+  }, []);
+
+  return (
+    <div>
+      {loggedIn && (
+        <BlankViewer
+          authConfig={{ getUserManagerFunction: getUserManager }}
+          blankConnection={blankConnection}
+          viewStateOptions={viewStateOptions}
+          extensions={extensions}
+        />
+      )}
+    </div>
+  );
+};
+```
+
+It allows for most of the same optional props as the Viewer component, with a few differences:
+
+#### Required
+
+- `blankConnection` - Data to use to create the BlankConnection (name, location, extents, etc.). Note that no contextId, iModelId, or snapshot is required for this component
+
+#### Optional
+
+- `viewStateOptions` - Override options for the ViewState that is generated for the BlankConnection
 
 # Development
 

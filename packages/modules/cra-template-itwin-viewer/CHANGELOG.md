@@ -1,6 +1,13 @@
 # Change Log - @bentley/cra-template-itwin-viewer
 
-This log was last generated on Tue, 05 Jan 2021 20:11:01 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Feb 2021 00:48:09 GMT and should not be manually modified.
+
+## 4.0.0
+Tue, 09 Feb 2021 00:48:09 GMT
+
+### Breaking changes
+
+- Upgrade viewer to v6
 
 ## 3.0.0
 Tue, 05 Jan 2021 20:11:01 GMT

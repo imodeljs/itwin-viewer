@@ -3,36 +3,37 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { BlankConnectionProps } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React, { useEffect, useState } from "react";
 
 import Initializer from "../services/Initializer";
 import { getAuthClient } from "../services/ItwinViewer";
-import { ItwinViewerCommonParams } from "../types";
+import {
+  BlankConnectionViewState,
+  ItwinViewerCommonParams,
+  ItwinViewerUi,
+  ViewerExtension,
+} from "../types";
 import IModelLoader from "./iModel/IModelLoader";
 
-export interface ViewerProps extends ItwinViewerCommonParams {
-  contextId?: string;
-  iModelId?: string;
-  changeSetId?: string;
-  snapshotPath?: string;
+export interface BlankViewerProps extends ItwinViewerCommonParams {
+  blankConnection: BlankConnectionProps;
+  viewStateOptions?: BlankConnectionViewState;
+  extensions?: ViewerExtension[];
 }
 
-export const Viewer: React.FC<ViewerProps> = ({
+export const BlankViewer: React.FC<BlankViewerProps> = ({
   authConfig,
   extensions,
-  iModelId,
-  contextId,
   appInsightsKey,
   backend,
   productId,
   theme,
-  changeSetId,
   defaultUiConfig,
   imjsAppInsightsKey,
   onIModelConnected,
   i18nUrlTemplate,
-  snapshotPath,
   desktopApp,
   frontstages,
   backstageItems,
@@ -42,10 +43,14 @@ export const Viewer: React.FC<ViewerProps> = ({
   additionalI18nNamespaces,
   additionalRpcInterfaces,
   uiProviders,
-}: ViewerProps) => {
+  blankConnection,
+  viewStateOptions,
+}: BlankViewerProps) => {
   const [iModelJsInitialized, setIModelJsInitialized] = useState<boolean>(
     false
   );
+  const [uiConfig, setUiConfig] = useState<ItwinViewerUi>();
+
   useEffect(() => {
     if (!iModelJsInitialized) {
       const authClient = getAuthClient(authConfig);
@@ -76,20 +81,31 @@ export const Viewer: React.FC<ViewerProps> = ({
     }
   }, [authConfig]);
 
+  useEffect(() => {
+    // hide the property grid and treeview by default, but allow to be overridden via props
+    const defaultBlankViewerUiConfig: ItwinViewerUi = {
+      hidePropertyGrid: true,
+      hideTreeView: true,
+    };
+    const blankViewerUiConfig = {
+      ...defaultBlankViewerUiConfig,
+      ...defaultUiConfig,
+    };
+    setUiConfig(blankViewerUiConfig);
+  }, [defaultUiConfig]);
+
   return iModelJsInitialized ? (
     <ErrorBoundary>
       <IModelLoader
-        contextId={contextId}
-        iModelId={iModelId}
-        changeSetId={changeSetId}
-        defaultUiConfig={defaultUiConfig}
+        defaultUiConfig={uiConfig}
         appInsightsKey={appInsightsKey}
         onIModelConnected={onIModelConnected}
-        snapshotPath={snapshotPath}
         frontstages={frontstages}
         backstageItems={backstageItems}
         uiFrameworkVersion={uiFrameworkVersion}
         viewportOptions={viewportOptions}
+        blankConnection={blankConnection}
+        blankConnectionViewState={viewStateOptions}
         uiProviders={uiProviders}
         theme={theme}
         extensions={extensions}
