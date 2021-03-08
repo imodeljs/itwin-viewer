@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 03 Mar 2021 20:18:37 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Mar 2021 18:35:03 GMT and should not be manually modified.
+
+## 6.1.3
+Mon, 08 Mar 2021 18:35:03 GMT
+
+### Patches
+
+- remove unecessary deps
 
 ## 6.1.2
 Wed, 03 Mar 2021 20:18:37 GMT
