@@ -52,9 +52,7 @@
     "oidc-client": "^1.10.1",
     "react-redux": "^7.2.0",
     "react-spring": "^8.0.27",
-    "redux": "^4.0.5",
-    "redux-devtools-extension": "^2.13.8",
-    "rewire": "^5.0.0"
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@bentley/bentleyjs-core": "^2.6.4",
