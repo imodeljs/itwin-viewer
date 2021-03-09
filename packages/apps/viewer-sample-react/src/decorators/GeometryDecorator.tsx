@@ -52,8 +52,6 @@ interface CustomPoint {
 }
 
 export class GeometryDecorator implements Decorator {
-  private image: HTMLImageElement | undefined;
-
   private graphics: RenderGraphic | undefined;
 
   private points: CustomPoint[] = [];

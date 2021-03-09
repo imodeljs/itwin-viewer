@@ -29,3 +29,5 @@ common/temp/
 **/report.**.json
 
 *.eslintcache
+
+*.env.*.local
