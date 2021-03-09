@@ -1,5 +1,0 @@
-{
-    "eslint.options": {
-        "resolvePluginsRelativeTo": "../common/scripts/node_modules/@bentley/eslint-plugin",
-    }
-}
