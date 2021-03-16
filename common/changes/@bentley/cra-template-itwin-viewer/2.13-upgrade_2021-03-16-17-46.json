@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/cra-template-itwin-viewer",
+      "comment": "Upgrade to iModel.js 2.13.x and react to breaking changes",
+      "type": "major"
+    }
+  ],
+  "packageName": "@bentley/cra-template-itwin-viewer",
+  "email": "6283674+kckst8@users.noreply.github.com"
+}
