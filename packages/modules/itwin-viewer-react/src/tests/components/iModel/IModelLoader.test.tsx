@@ -91,6 +91,14 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     BlankConnection: {
       create: jest.fn().mockReturnValue({}),
     },
+    ItemField: {},
+    CompassMode: {},
+    RotationMode: {},
+    AccuDraw: class {},
+    ToolAdmin: class {},
+    WebViewerApp: {
+      startup: jest.fn().mockResolvedValue(true),
+    },
   };
 });
 jest.mock("../../../services/iModel/IModelService");

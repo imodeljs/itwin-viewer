@@ -5,10 +5,11 @@
 
 import { FrontendAuthorizationClient } from "@bentley/frontend-authorization-client";
 import {
+  BriefcaseConnection,
+  CheckpointConnection,
   Extension,
   ExternalServerExtensionLoader,
   IModelApp,
-  RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import { UiItemsProvider } from "@bentley/ui-abstract";
@@ -62,7 +63,9 @@ export class ItwinViewer {
   uiProviders: UiItemsProvider[] | undefined;
   extensions: ViewerExtension[] | undefined;
 
-  onIModelConnected: ((iModel: RemoteBriefcaseConnection) => void) | undefined;
+  onIModelConnected:
+    | ((iModel: CheckpointConnection | BriefcaseConnection) => void)
+    | undefined;
 
   constructor(options: ItwinViewerParams) {
     if (!options.elementId) {

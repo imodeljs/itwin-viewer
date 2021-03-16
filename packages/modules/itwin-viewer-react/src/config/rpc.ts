@@ -3,20 +3,66 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { ClientRequestContext } from "@bentley/bentleyjs-core";
 import {
-  BentleyCloudRpcManager,
   BentleyCloudRpcParams,
-  ElectronRpcManager,
-  ElectronRpcParams,
   IModelReadRpcInterface,
   IModelTileRpcInterface,
   RpcInterface,
   RpcInterfaceDefinition,
   SnapshotIModelRpcInterface,
 } from "@bentley/imodeljs-common";
+import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
 
-const getSupportedRpcs = (
+import { IModelBackendOptions } from "../types";
+
+/** get rpc connection info */
+const getHostedConnectionInfo = async (
+  backendOptions?: IModelBackendOptions
+): Promise<BentleyCloudRpcParams> => {
+  const urlClient = new UrlDiscoveryClient();
+  const requestContext = new ClientRequestContext();
+
+  if (backendOptions?.hostedBackend) {
+    if (!backendOptions.hostedBackend.hostType) {
+      //TODO localize
+      throw new Error("Please provide a host type for the iModel.js backend");
+    }
+    if (!backendOptions.hostedBackend.title) {
+      //TODO localize
+      throw new Error("Please provide the title for the iModel.js backend");
+    }
+    if (!backendOptions.hostedBackend.version) {
+      //TODO localize
+      throw new Error("Please provide a version for the iModel.js backend");
+    }
+    const orchestratorUrl = await urlClient.discoverUrl(
+      requestContext,
+      `iModelJsOrchestrator.${backendOptions.hostedBackend.hostType}`,
+      backendOptions.buddiRegion
+    );
+    return {
+      info: {
+        title: backendOptions.hostedBackend.title,
+        version: backendOptions.hostedBackend.version,
+      },
+      uriPrefix: orchestratorUrl,
+    };
+  } else {
+    const orchestratorUrl = await urlClient.discoverUrl(
+      requestContext,
+      "iModelJsOrchestrator.K8S",
+      backendOptions?.buddiRegion
+    );
+    return {
+      info: { title: "general-purpose-imodeljs-backend", version: "v2.0" },
+      uriPrefix: orchestratorUrl,
+    };
+  }
+};
+
+export const getSupportedRpcs = (
   additionalRpcInterfaces: RpcInterfaceDefinition<RpcInterface>[]
 ) => {
   return [
@@ -28,20 +74,14 @@ const getSupportedRpcs = (
   ];
 };
 
-export const initRpc = (
-  rpcParams: BentleyCloudRpcParams | ElectronRpcParams,
-  isDesktop = false,
-  additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[]
-) => {
-  if (isDesktop) {
-    ElectronRpcManager.initializeClient(
-      rpcParams as ElectronRpcParams,
-      getSupportedRpcs(additionalRpcInterfaces || [])
-    );
+export const getRpcParams = async (
+  backendOptions?: IModelBackendOptions
+): Promise<BentleyCloudRpcParams> => {
+  // if rpc params for a custom backend are provided, use those
+  if (backendOptions?.customBackend && backendOptions.customBackend.rpcParams) {
+    return backendOptions.customBackend.rpcParams;
   } else {
-    BentleyCloudRpcManager.initializeClient(
-      rpcParams as BentleyCloudRpcParams,
-      getSupportedRpcs(additionalRpcInterfaces || [])
-    );
+    // otherwise construct params for a hosted connection
+    return await getHostedConnectionInfo(backendOptions);
   }
 };

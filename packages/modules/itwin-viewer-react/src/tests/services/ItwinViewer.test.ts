@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {
-  BentleyCloudRpcManager,
   IModelReadRpcInterface,
   IModelTileRpcInterface,
   IModelWriteRpcInterface,
@@ -13,11 +12,10 @@ import {
 import {
   ExternalServerExtensionLoader,
   IModelApp,
+  WebViewerApp,
 } from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
-import { UiItemsManager } from "@bentley/ui-abstract";
-import { ColorTheme, UiFramework } from "@bentley/ui-framework";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -33,7 +31,6 @@ import {
 } from "../../types";
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
-import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -77,6 +74,14 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     Tool: jest.fn(),
     SnapshotConnection: {
       openFile: jest.fn(),
+    },
+    ItemField: {},
+    CompassMode: {},
+    RotationMode: {},
+    AccuDraw: class {},
+    ToolAdmin: class {},
+    WebViewerApp: {
+      startup: jest.fn().mockResolvedValue(true),
     },
   };
 });
@@ -397,8 +402,6 @@ describe("iTwinViewer", () => {
   });
 
   it("registers additional rpc interfaces", async () => {
-    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
-
     new ItwinViewer({
       elementId,
       authConfig: {
@@ -409,14 +412,30 @@ describe("iTwinViewer", () => {
 
     await Initializer.initialized;
 
-    expect(
-      BentleyCloudRpcManager.initializeClient
-    ).toHaveBeenCalledWith(expect.anything(), [
-      IModelReadRpcInterface,
-      IModelTileRpcInterface,
-      PresentationRpcInterface,
-      SnapshotIModelRpcInterface,
-      IModelWriteRpcInterface,
-    ]);
+    expect(WebViewerApp.startup).toHaveBeenCalledWith({
+      webViewerApp: {
+        rpcParams: {
+          info: {
+            title: "general-purpose-imodeljs-backend",
+            version: "v2.0",
+          },
+          uriPrefix: "https://api.bentley.com/imodeljs",
+        },
+      },
+      iModelApp: {
+        applicationId: "3098",
+        authorizationClient: expect.anything(),
+        i18n: expect.anything(),
+        notifications: expect.anything(),
+        rpcInterfaces: [
+          IModelReadRpcInterface,
+          IModelTileRpcInterface,
+          PresentationRpcInterface,
+          SnapshotIModelRpcInterface,
+          IModelWriteRpcInterface,
+        ],
+        uiAdmin: expect.anything(),
+      },
+    });
   });
 });

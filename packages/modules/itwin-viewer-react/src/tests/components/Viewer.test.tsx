@@ -6,13 +6,16 @@
 import "@testing-library/jest-dom/extend-expect";
 
 import {
-  BentleyCloudRpcManager,
   IModelReadRpcInterface,
   IModelTileRpcInterface,
   IModelWriteRpcInterface,
   SnapshotIModelRpcInterface,
 } from "@bentley/imodeljs-common";
-import { IModelApp, SnapshotConnection } from "@bentley/imodeljs-frontend";
+import {
+  IModelApp,
+  SnapshotConnection,
+  WebViewerApp,
+} from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { PresentationRpcInterface } from "@bentley/presentation-common";
 import { render, waitFor } from "@testing-library/react";
@@ -77,6 +80,14 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     },
     SnapshotConnection: {
       openFile: jest.fn(),
+    },
+    ItemField: {},
+    CompassMode: {},
+    RotationMode: {},
+    AccuDraw: class {},
+    ToolAdmin: class {},
+    WebViewerApp: {
+      startup: jest.fn().mockResolvedValue(true),
     },
   };
 });
@@ -323,8 +334,6 @@ describe("Viewer", () => {
   });
 
   it("registers additional rpc interfaces", async () => {
-    jest.spyOn(BentleyCloudRpcManager, "initializeClient");
-
     const { getByTestId } = render(
       <Viewer
         contextId={mockProjectId}
@@ -336,14 +345,30 @@ describe("Viewer", () => {
 
     await waitFor(() => getByTestId("loader-wrapper"));
 
-    expect(
-      BentleyCloudRpcManager.initializeClient
-    ).toHaveBeenCalledWith(expect.anything(), [
-      IModelReadRpcInterface,
-      IModelTileRpcInterface,
-      PresentationRpcInterface,
-      SnapshotIModelRpcInterface,
-      IModelWriteRpcInterface,
-    ]);
+    expect(WebViewerApp.startup).toHaveBeenCalledWith({
+      webViewerApp: {
+        rpcParams: {
+          info: {
+            title: "general-purpose-imodeljs-backend",
+            version: "v2.0",
+          },
+          uriPrefix: "https://api.bentley.com/imodeljs",
+        },
+      },
+      iModelApp: {
+        applicationId: "3098",
+        authorizationClient: expect.anything(),
+        i18n: expect.anything(),
+        notifications: expect.anything(),
+        rpcInterfaces: [
+          IModelReadRpcInterface,
+          IModelTileRpcInterface,
+          PresentationRpcInterface,
+          SnapshotIModelRpcInterface,
+          IModelWriteRpcInterface,
+        ],
+        uiAdmin: expect.anything(),
+      },
+    });
   });
 });

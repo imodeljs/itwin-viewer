@@ -3,15 +3,16 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { ClientRequestContext } from "@bentley/bentleyjs-core";
+import { ClientRequestContext, ProcessDetector } from "@bentley/bentleyjs-core";
 import { Config } from "@bentley/bentleyjs-core";
+import { ElectronApp } from "@bentley/electron-manager/lib/ElectronFrontend";
 import { FrontendApplicationInsightsClient } from "@bentley/frontend-application-insights-client";
 import {
-  BentleyCloudRpcParams,
-  RpcInterface,
-  RpcInterfaceDefinition,
-} from "@bentley/imodeljs-common";
-import { IModelApp, IModelAppOptions } from "@bentley/imodeljs-frontend";
+  IModelApp,
+  IModelAppOptions,
+  NativeAppLogger,
+  WebViewerApp,
+} from "@bentley/imodeljs-frontend";
 import { I18N } from "@bentley/imodeljs-i18n";
 import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { Presentation } from "@bentley/presentation-frontend";
@@ -28,7 +29,7 @@ import {
   UiFramework,
 } from "@bentley/ui-framework";
 
-import { initRpc } from "../config/rpc";
+import { getRpcParams, getSupportedRpcs } from "../config/rpc";
 import { IModelBackendOptions, ItwinViewerInitializerParams } from "../types";
 import { ai, trackEvent } from "./telemetry/TelemetryService";
 
@@ -38,74 +39,6 @@ class Initializer {
   private static _initializing = false;
   private static _iModelDataErrorMessage: string | undefined;
   private static _synchronizerRootUrl: string | undefined;
-
-  /** initialize rpc */
-  private static async _initializeRpc(
-    backendOptions?: IModelBackendOptions,
-    isDesktop?: boolean,
-    additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[]
-  ): Promise<void> {
-    // if rpc params for a custom backend are provided, initialized with those
-    if (
-      backendOptions?.customBackend &&
-      backendOptions.customBackend.rpcParams
-    ) {
-      return initRpc(
-        backendOptions.customBackend.rpcParams,
-        isDesktop,
-        additionalRpcInterfaces
-      );
-    }
-    const rpcParams = await this._getHostedConnectionInfo(backendOptions);
-    if (rpcParams) {
-      return initRpc(rpcParams, isDesktop, additionalRpcInterfaces);
-    }
-  }
-
-  /** get rpc connection info */
-  private static async _getHostedConnectionInfo(
-    backendOptions?: IModelBackendOptions
-  ): Promise<BentleyCloudRpcParams | undefined> {
-    const urlClient = new UrlDiscoveryClient();
-    const requestContext = new ClientRequestContext();
-
-    if (backendOptions?.hostedBackend) {
-      if (!backendOptions.hostedBackend.hostType) {
-        //TODO localize
-        throw new Error("Please provide a host type for the iModel.js backend");
-      }
-      if (!backendOptions.hostedBackend.title) {
-        //TODO localize
-        throw new Error("Please provide the title for the iModel.js backend");
-      }
-      if (!backendOptions.hostedBackend.version) {
-        //TODO localize
-        throw new Error("Please provide a version for the iModel.js backend");
-      }
-      const orchestratorUrl = await urlClient.discoverUrl(
-        requestContext,
-        `iModelJsOrchestrator.${backendOptions.hostedBackend.hostType}`,
-        backendOptions.buddiRegion
-      );
-      return {
-        info: {
-          title: backendOptions.hostedBackend.title,
-          version: backendOptions.hostedBackend.version,
-        },
-        uriPrefix: orchestratorUrl,
-      };
-    } else {
-      const orchestratorUrl = await urlClient.discoverUrl(
-        requestContext,
-        "iModelJsOrchestrator.K8S",
-        backendOptions?.buddiRegion
-      );
-      return {
-        info: { title: "general-purpose-imodeljs-backend", version: "v2.0" },
-        uriPrefix: orchestratorUrl,
-      };
-    }
-  }
 
   public static async getSynchronizerUrl(
     contextId: string,
@@ -222,7 +155,22 @@ class Initializer {
 
         this.setupEnv(viewerOptions?.backend);
 
-        await IModelApp.startup(appOptions);
+        // app startup
+        if (ProcessDetector.isElectronAppFrontend) {
+          await ElectronApp.startup({ iModelApp: appOptions });
+          NativeAppLogger.initialize();
+        } else {
+          const rpcParams = await getRpcParams(viewerOptions?.backend);
+          appOptions.rpcInterfaces = getSupportedRpcs(
+            viewerOptions?.additionalRpcInterfaces || []
+          );
+          await WebViewerApp.startup({
+            webViewerApp: {
+              rpcParams: rpcParams,
+            },
+            iModelApp: appOptions,
+          });
+        }
 
         // execute the iModelApp initialization callback if provided
         if (viewerOptions?.onIModelAppInit) {
@@ -276,13 +224,6 @@ class Initializer {
         IModelApp.uiAdmin.updateFeatureFlags({ allowKeyinPalette: true });
 
         ConfigurableUiManager.initialize();
-
-        // initialize RPC communication
-        await Initializer._initializeRpc(
-          viewerOptions?.backend,
-          viewerOptions?.desktopApp,
-          viewerOptions?.additionalRpcInterfaces
-        );
 
         if (viewerOptions?.appInsightsKey) {
           trackEvent("iTwinViewer.Viewer.Initialized");

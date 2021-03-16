@@ -34,7 +34,7 @@ import { Provider } from "react-redux";
 import { useExtensions, useTheme, useUiProviders } from "../../hooks";
 import {
   getDefaultViewIds,
-  openImodel,
+  openRemoteImodel,
 } from "../../services/iModel/IModelService";
 import { SelectionScopeClient } from "../../services/iModel/SelectionScopeClient";
 import { ViewCreator } from "../../services/iModel/ViewCreator";
@@ -158,10 +158,15 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
 
         let imodelConnection: IModelConnection | undefined;
         // create a new imodelConnection for the passed project and imodel ids
+        // TODO add the ability to open a BriefcaseConnection for Electron apps
         if (snapshotPath) {
           imodelConnection = await SnapshotConnection.openFile(snapshotPath);
         } else if (contextId && iModelId) {
-          imodelConnection = await openImodel(contextId, iModelId, changeSetId);
+          imodelConnection = await openRemoteImodel(
+            contextId,
+            iModelId,
+            changeSetId
+          );
         }
         if (imodelConnection) {
           // Tell the SyncUiEventDispatcher and StateManager about the iModelConnection

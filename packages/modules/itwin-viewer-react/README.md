@@ -101,7 +101,6 @@ export const UserManagerHome = () => {
 - `iModelId` - GUID for the iModel that you wish to view (it should be ommitted if using a snapshotPath instead)
 - `snapshotPath` - path to a local snapshot file (it should be ommitted if using a contextId/iModelId)
 - `authConfig` - an instance of an iModel.js `DesktopAuthorizationClient` or a function that returns an oidc-client UserManager
-- `desktopApp` - set to `true` to notify the Viewer that it is being used in a native desktop application
 
 #### Optional
 

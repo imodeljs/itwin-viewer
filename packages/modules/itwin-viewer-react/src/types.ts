@@ -8,7 +8,6 @@ import { Vector3d, XAndY, XYAndZ } from "@bentley/geometry-core";
 import {
   BentleyCloudRpcParams,
   ColorDef,
-  ElectronRpcParams,
   RenderMode,
   RpcInterface,
   RpcInterfaceDefinition,
@@ -58,7 +57,7 @@ export interface HostedBackendConfig {
  * Custom rpc configuration
  */
 export interface CustomBackendConfig {
-  rpcParams: BentleyCloudRpcParams | ElectronRpcParams;
+  rpcParams: BentleyCloudRpcParams;
 }
 
 /**
@@ -141,8 +140,6 @@ export interface ItwinViewerInitializerParams {
   productId?: string;
   /** urlTemplate for querying i18n json files */
   i18nUrlTemplate?: string;
-  /** is this in the context of a desktop/electron app */
-  desktopApp?: boolean;
   /** callback after iModelApp is initialized */
   onIModelAppInit?: () => void;
   /** additional i18n namespaces to register */

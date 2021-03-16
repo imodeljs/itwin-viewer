@@ -3,13 +3,13 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
-import { Id64, Id64String, OpenMode } from "@bentley/bentleyjs-core";
+import { Id64, Id64String } from "@bentley/bentleyjs-core";
 import { IModelHubClient, VersionQuery } from "@bentley/imodelhub-client";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import {
+  CheckpointConnection,
   IModelApp,
   IModelConnection,
-  RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { AuthorizedClientRequestContext } from "@bentley/itwin-client";
 
@@ -55,22 +55,16 @@ const getAcceptedViewClasses = (): string[] => {
 };
 
 /** open and return an IModelConnection from a project's wsgId and an imodel's wsgId */
-export const openImodel = async (
+export const openRemoteImodel = async (
   contextId: string,
   imodelId: string,
   changeSetId?: string
-): Promise<RemoteBriefcaseConnection | undefined> => {
+): Promise<CheckpointConnection | undefined> => {
   try {
     // get the version to query
     const version = await getVersion(imodelId, changeSetId);
-    // else create a new connection
-    const connection = await RemoteBriefcaseConnection.open(
-      contextId,
-      imodelId,
-      OpenMode.Readonly,
-      version
-    );
-    return connection;
+    // create a new connection
+    return await CheckpointConnection.openRemote(contextId, imodelId, version);
   } catch (error) {
     console.log(`Error opening the iModel connection: ${error}`);
     const connectionError = IModelApp.i18n.translateWithNamespace(
