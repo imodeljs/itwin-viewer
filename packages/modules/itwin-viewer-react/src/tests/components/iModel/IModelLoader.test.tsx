@@ -9,8 +9,8 @@ import { Cartographic, ColorDef } from "@bentley/imodeljs-common";
 import {
   BlankConnection,
   BlankConnectionProps,
+  CheckpointConnection,
   IModelApp,
-  RemoteBriefcaseConnection,
 } from "@bentley/imodeljs-frontend";
 import { UrlDiscoveryClient } from "@bentley/itwin-client";
 import { BackstageItemUtilities, UiItemsManager } from "@bentley/ui-abstract";
@@ -132,8 +132,8 @@ describe("IModelLoader", () => {
   beforeEach(() => {
     jest.spyOn(IModelServices, "getDefaultViewIds").mockResolvedValue([]);
     jest
-      .spyOn(IModelServices, "openImodel")
-      .mockResolvedValue({} as RemoteBriefcaseConnection);
+      .spyOn(IModelServices, "openRemoteImodel")
+      .mockResolvedValue({} as CheckpointConnection);
     jest
       .spyOn(UrlDiscoveryClient.prototype, "discoverUrl")
       .mockResolvedValue("https://test.com");
