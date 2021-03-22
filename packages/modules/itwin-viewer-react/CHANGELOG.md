@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 08 Mar 2021 18:35:03 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Mar 2021 19:45:02 GMT and should not be manually modified.
+
+## 6.1.4
+Mon, 22 Mar 2021 19:45:02 GMT
+
+### Patches
+
+- Fixed an issue with the viewFlags being set in the createBlankViewState function. Previously was modifying the viewFlags directly, now the viewFlags are cloned, modified, and the reset for the viewState.
 
 ## 6.1.3
 Mon, 08 Mar 2021 18:35:03 GMT

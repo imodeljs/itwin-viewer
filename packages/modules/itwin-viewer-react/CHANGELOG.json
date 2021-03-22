@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.1.4",
+      "tag": "@bentley/itwin-viewer-react_v6.1.4",
+      "date": "Mon, 22 Mar 2021 19:45:02 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed an issue with the viewFlags being set in the createBlankViewState function. Previously was modifying the viewFlags directly, now the viewFlags are cloned, modified, and the reset for the viewState."
+          }
+        ]
+      }
+    },
+    {
       "version": "6.1.3",
       "tag": "@bentley/itwin-viewer-react_v6.1.3",
       "date": "Mon, 08 Mar 2021 18:35:03 GMT",
