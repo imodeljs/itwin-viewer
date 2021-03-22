@@ -2,10 +2,6 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------------------------
- * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
- * See LICENSE.md in the project root for license terms and full copyright notice.
- *--------------------------------------------------------------------------------------------*/
 
 import { Id64Array, Id64String } from "@bentley/bentleyjs-core";
 import { Point3d, Vector3d } from "@bentley/geometry-core";
@@ -328,7 +324,6 @@ export class ViewCreator {
     flags.renderMode =
       viewStateOptions?.viewFlags?.renderMode ?? RenderMode.SmoothShade;
     viewState.displayStyle.viewFlags = flags;
-
     return viewState;
   };
 
