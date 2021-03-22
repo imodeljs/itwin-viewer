@@ -319,9 +319,11 @@ export class ViewCreator {
 
     viewState.displayStyle.backgroundColor =
       viewStateOptions?.displayStyle?.backgroundColor ?? ColorDef.white;
-    viewState.viewFlags.grid = viewStateOptions?.viewFlags?.grid ?? false;
-    viewState.viewFlags.renderMode =
+    const flags = viewState.viewFlags.clone();
+    flags.grid = viewStateOptions?.viewFlags?.grid ?? false;
+    flags.renderMode =
       viewStateOptions?.viewFlags?.renderMode ?? RenderMode.SmoothShade;
+    viewState.displayStyle.viewFlags = flags;
     return viewState;
   };
 
