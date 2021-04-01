@@ -43,6 +43,7 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
   additionalI18nNamespaces,
   additionalRpcInterfaces,
   uiProviders,
+  toolAdmin,
   blankConnection,
   viewStateOptions,
 }: BlankViewerProps) => {
@@ -55,7 +56,7 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
     if (!iModelJsInitialized) {
       const authClient = getAuthClient(authConfig);
       Initializer.initialize(
-        { authorizationClient: authClient },
+        { authorizationClient: authClient, toolAdmin },
         {
           appInsightsKey,
           backend,
