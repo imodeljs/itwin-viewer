@@ -53,7 +53,7 @@ We follow the normal [GitHub pull request workflow](https://help.github.com/en/g
 
 Every change must be tested with proper unit tests. Integration tests are highly encouraged in libraries with critical workflows to ensure end-to-end consistency.
 
-Every change must be described with a change log: Run "rush change" on your committed and always choose "patch" as the change type. Commit your change log along with your pull request.
+Every change must be described with a change log: Run `rush change` on your committed and choose the appropriate change type. Commit your change log along with your pull request.
 
 ### Code Change Workflow
 

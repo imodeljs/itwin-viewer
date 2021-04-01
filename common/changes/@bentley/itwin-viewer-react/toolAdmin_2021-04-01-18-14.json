@@ -3,7 +3,7 @@
     {
       "packageName": "@bentley/itwin-viewer-react",
       "comment": "Added support for ToolAdmin",
-      "type": "patch"
+      "type": "minor"
     }
   ],
   "packageName": "@bentley/itwin-viewer-react",
