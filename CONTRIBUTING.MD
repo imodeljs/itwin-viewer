@@ -58,8 +58,9 @@ Every change must be described with a change log: Run "rush change" on your comm
 ### Code Change Workflow
 
 1. Make source code changes on a new Git branch.
+1. Add unit tests.
 1. Ensure unit tests pass when run locally: `rush test`.
-1. Test changes with viewer-sample-react
+1. Test changes with viewer-sample-react.
     - From root directory - `rushx build`
     - From packages\apps\viewer-sample-react - `rushx start`
     - Make changes to viewer-sample-react, if necessary
