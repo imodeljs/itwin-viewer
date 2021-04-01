@@ -82,7 +82,7 @@ export class ItwinViewer {
 
     const authClient = getAuthClient(options.authConfig);
     Initializer.initialize(
-      { authorizationClient: authClient },
+      { authorizationClient: authClient, toolAdmin: options.toolAdmin },
       {
         appInsightsKey: options.appInsightsKey,
         backend: options.backend,

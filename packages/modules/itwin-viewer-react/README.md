@@ -153,6 +153,7 @@ export const UserManagerHome = () => {
 - `additionalI18nNamespaces` - Additional i18n namespaces to register
 - `additionalRpcInterfaces` - Additional rpc interfaces to register (assumes that they are supported in your backend)
 - `iModelDataErrorMessage` - Override the default message that sends users to the iTwin Synchronization Portal when there are data-related errors with an iModel. Pass empty string to override with no message.
+- `toolAdmin` - Optional `ToolAdmin` to register
 
 ## Typescript API
 

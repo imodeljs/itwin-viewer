@@ -28,6 +28,7 @@ import {
   IModelBackendOptions,
 } from "../../types";
 import MockOidcClient from "../mocks/MockOidcClient";
+import { MockToolAdmin } from "../mocks/MockToolAdmin";
 
 jest.mock("@bentley/imodeljs-i18n");
 jest.mock("../../services/auth/AuthorizationClient");
@@ -46,6 +47,7 @@ jest.mock("@microsoft/applicationinsights-react-js", () => ({
 }));
 
 jest.mock("@bentley/imodeljs-frontend", () => {
+  const noMock = jest.requireActual("@bentley/imodeljs-frontend");
   return {
     IModelApp: {
       startup: jest.fn(),
@@ -78,6 +80,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     SnapshotConnection: {
       openFile: jest.fn(),
     },
+    ToolAdmin: noMock.ToolAdmin,
   };
 });
 
@@ -345,5 +348,29 @@ describe("Viewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
+  });
+
+  it("registers optional toolAdmin", async () => {
+    jest.spyOn(Initializer, "initialize");
+    const myToolAdmin = new MockToolAdmin();
+
+    const { getByTestId } = render(
+      <Viewer
+        contextId={mockProjectId}
+        iModelId={mockIModelId}
+        authConfig={{ getUserManagerFunction: oidcClient.getUserManager }}
+        toolAdmin={myToolAdmin}
+      />
+    );
+
+    await waitFor(() => getByTestId("loader-wrapper"));
+
+    expect(Initializer.initialize).toHaveBeenCalledWith(
+      {
+        authorizationClient: {},
+        toolAdmin: myToolAdmin,
+      },
+      {}
+    );
   });
 });

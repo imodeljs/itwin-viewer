@@ -33,6 +33,7 @@ import {
 } from "../../types";
 import MockAuthorizationClient from "../mocks/MockAuthorizationClient";
 import MockOidcClient from "../mocks/MockOidcClient";
+import { MockToolAdmin } from "../mocks/MockToolAdmin";
 import { TestUiProvider, TestUiProvider2 } from "../mocks/MockUiProviders";
 
 jest.mock("@bentley/imodeljs-i18n");
@@ -49,6 +50,7 @@ jest.mock("@microsoft/applicationinsights-react-js", () => ({
 jest.mock("@bentley/ui-framework");
 jest.mock("@bentley/presentation-frontend");
 jest.mock("@bentley/imodeljs-frontend", () => {
+  const noMock = jest.requireActual("@bentley/imodeljs-frontend");
   return {
     IModelApp: {
       startup: jest.fn().mockResolvedValue(true),
@@ -78,6 +80,7 @@ jest.mock("@bentley/imodeljs-frontend", () => {
     SnapshotConnection: {
       openFile: jest.fn(),
     },
+    ToolAdmin: noMock.ToolAdmin,
   };
 });
 jest.mock("../../services/telemetry/TelemetryService");
@@ -418,5 +421,28 @@ describe("iTwinViewer", () => {
       SnapshotIModelRpcInterface,
       IModelWriteRpcInterface,
     ]);
+  });
+
+  it("registers optional toolAdmin", async () => {
+    jest.spyOn(Initializer, "initialize");
+    const myToolAdmin = new MockToolAdmin();
+
+    new ItwinViewer({
+      elementId,
+      authConfig: {
+        oidcClient: MockAuthorizationClient.oidcClient,
+      },
+      toolAdmin: myToolAdmin,
+    });
+
+    await Initializer.initialized;
+
+    expect(Initializer.initialize).toHaveBeenCalledWith(
+      {
+        authorizationClient: MockAuthorizationClient.oidcClient,
+        toolAdmin: myToolAdmin,
+      },
+      {}
+    );
   });
 });
