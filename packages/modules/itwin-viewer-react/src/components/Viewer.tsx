@@ -42,6 +42,7 @@ export const Viewer: React.FC<ViewerProps> = ({
   additionalI18nNamespaces,
   additionalRpcInterfaces,
   uiProviders,
+  toolAdmin,
 }: ViewerProps) => {
   const [iModelJsInitialized, setIModelJsInitialized] = useState<boolean>(
     false
@@ -50,7 +51,7 @@ export const Viewer: React.FC<ViewerProps> = ({
     if (!iModelJsInitialized) {
       const authClient = getAuthClient(authConfig);
       Initializer.initialize(
-        { authorizationClient: authClient },
+        { authorizationClient: authClient, toolAdmin },
         {
           appInsightsKey,
           backend,
