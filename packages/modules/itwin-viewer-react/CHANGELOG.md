@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Mon, 22 Mar 2021 19:45:02 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Apr 2021 20:42:34 GMT and should not be manually modified.
+
+## 6.2.0
+Thu, 01 Apr 2021 20:42:34 GMT
+
+### Minor changes
+
+- Added support for ToolAdmin
 
 ## 6.1.4
 Mon, 22 Mar 2021 19:45:02 GMT

@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.0",
+      "tag": "@bentley/itwin-viewer-react_v6.2.0",
+      "date": "Thu, 01 Apr 2021 20:42:34 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Added support for ToolAdmin"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.1.4",
       "tag": "@bentley/itwin-viewer-react_v6.1.4",
       "date": "Mon, 22 Mar 2021 19:45:02 GMT",
