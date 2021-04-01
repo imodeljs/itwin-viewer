@@ -75,7 +75,7 @@ export const Viewer: React.FC<ViewerProps> = ({
           throw error;
         });
     }
-  }, [authConfig, toolAdmin]);
+  }, [authConfig]);
 
   return iModelJsInitialized ? (
     <ErrorBoundary>
