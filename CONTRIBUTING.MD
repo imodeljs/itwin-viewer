@@ -58,10 +58,15 @@ Every change must be described with a change log: Run "rush change" on your comm
 ### Code Change Workflow
 
 1. Make source code changes on a new Git branch.
-2. Ensure unit tests pass when run locally: `rush test`.
-3. Commit your changes.
-4. Add a changelog entry (which could potentially cover several commits): `rush change`.
-5. Follow prompts to enter a change description or press ENTER if the change does not warrant a changelog entry. If multiple packages have changed, multiple sets of prompts will be presented.
-6. Completing the `rush change` prompts will cause new changelog entry JSON files to be created.
-7. Commit the changelog JSON files.
-8. Publish changes to the branch and open a pull request.
+1. Ensure unit tests pass when run locally: `rush test`.
+1. Test changes with viewer-sample-react
+    - From root directory - `rushx build`
+    - From packages\apps\viewer-sample-react - `rushx start`
+    - Make changes to viewer-sample-react, if necessary
+    - Test changes
+1. Commit your changes.
+1. Add a changelog entry (which could potentially cover several commits): `rush change`.
+1. Follow prompts to enter a change description or press ENTER if the change does not warrant a changelog entry. If multiple packages have changed, multiple sets of prompts will be presented.
+1. Completing the `rush change` prompts will cause new changelog entry JSON files to be created.
+1. Commit the changelog JSON files.
+1. Publish changes to the branch and open a pull request.
