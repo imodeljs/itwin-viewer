@@ -229,6 +229,21 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
     }, [contextId, iModelId, snapshotPath, frontstages, backstageItems]);
 
     useEffect(() => {
+      const closeIModelConnection = async () => {
+        const iModelConn = UiFramework.getIModelConnection();
+        if (iModelConn) {
+          await iModelConn.close();
+        }
+      };
+
+      return () => {
+        closeIModelConnection().catch((error) => {
+          errorManager.throwFatalError(error);
+        });
+      };
+    }, [contextId, iModelId, snapshotPath]);
+
+    useEffect(() => {
       const allBackstageItems: ViewerBackstageItem[] = [];
       if (backstageItems) {
         backstageItems.forEach((backstageItem) => {
