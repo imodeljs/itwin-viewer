@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 01 Apr 2021 20:42:34 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Apr 2021 20:24:22 GMT and should not be manually modified.
+
+## 6.2.1
+Fri, 16 Apr 2021 20:24:22 GMT
+
+### Patches
+
+- close connection when model/snapshot changes to fix memory leak
 
 ## 6.2.0
 Thu, 01 Apr 2021 20:42:34 GMT
