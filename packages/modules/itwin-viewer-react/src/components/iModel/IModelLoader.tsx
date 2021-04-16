@@ -223,21 +223,6 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         }
       };
 
-      getModelConnection().catch((error) => {
-        errorManager.throwFatalError(error);
-      });
-    }, [
-      contextId,
-      iModelId,
-      changeSetId,
-      snapshotPath,
-      frontstages,
-      backstageItems,
-      blankConnection,
-      blankConnectionViewState,
-    ]);
-
-    useEffect(() => {
       const closeIModelConnection = async () => {
         const iModelConn = UiFramework.getIModelConnection();
         if (iModelConn) {
@@ -245,12 +230,24 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         }
       };
 
+      getModelConnection().catch((error) => {
+        errorManager.throwFatalError(error);
+      });
+
       return () => {
-        closeIModelConnection().catch((error) => {
-          errorManager.throwFatalError(error);
+        closeIModelConnection().catch(() => {
+          /* no-op */
         });
       };
-    }, [contextId, iModelId, changeSetId, snapshotPath, blankConnection]);
+    }, [
+      contextId,
+      iModelId,
+      changeSetId,
+      snapshotPath,
+      frontstages,
+      blankConnection,
+      blankConnectionViewState,
+    ]);
 
     useEffect(() => {
       const allBackstageItems: ViewerBackstageItem[] = [];
