@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.1",
+      "tag": "@bentley/itwin-viewer-react_v6.2.1",
+      "date": "Fri, 16 Apr 2021 20:50:08 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "close connection when model/snapshot changes to fix memory leak"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.2.0",
       "tag": "@bentley/itwin-viewer-react_v6.2.0",
       "date": "Thu, 01 Apr 2021 20:42:34 GMT",
