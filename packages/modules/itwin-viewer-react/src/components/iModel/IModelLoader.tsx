@@ -103,7 +103,8 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
      */
     const initBlankConnection = (
       blankConnection: BlankConnectionProps,
-      viewStateOptions?: BlankConnectionViewState
+      viewStateOptions?: BlankConnectionViewState,
+      onIModelConnected?: (iModel: IModelConnection) => void
     ) => {
       const imodelConnection = BlankConnection.create(blankConnection);
       const viewState = ViewCreator.createBlankViewState(
@@ -111,7 +112,13 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         viewStateOptions
       );
       UiFramework.setIModelConnection(imodelConnection);
+
+      if (onIModelConnected) {
+        onIModelConnected(imodelConnection);
+      }
+
       UiFramework.setDefaultViewState(viewState);
+
       setViewState(viewState);
       setConnected(true);
     };
@@ -144,7 +151,11 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
         setConnected(false);
 
         if (blankConnection) {
-          return initBlankConnection(blankConnection, blankConnectionViewState);
+          return initBlankConnection(
+            blankConnection,
+            blankConnectionViewState,
+            onIModelConnected
+          );
         }
 
         if (!(contextId && iModelId) && !snapshotPath) {
@@ -218,7 +229,6 @@ const Loader: React.FC<ModelLoaderProps> = React.memo(
           }
 
           setViewState(savedViewState);
-
           setConnected(true);
         }
       };
