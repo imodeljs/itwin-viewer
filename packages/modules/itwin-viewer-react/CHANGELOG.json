@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.2",
+      "tag": "@bentley/itwin-viewer-react_v6.2.2",
+      "date": "Wed, 21 Apr 2021 17:48:42 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "run onIModelConnected callback when creating a BlankViewer"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.2.1",
       "tag": "@bentley/itwin-viewer-react_v6.2.1",
       "date": "Fri, 16 Apr 2021 20:50:08 GMT",

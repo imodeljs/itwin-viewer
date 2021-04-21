@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 16 Apr 2021 20:50:08 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Apr 2021 17:48:42 GMT and should not be manually modified.
+
+## 6.2.2
+Wed, 21 Apr 2021 17:48:42 GMT
+
+### Patches
+
+- run onIModelConnected callback when creating a BlankViewer
 
 ## 6.2.1
 Fri, 16 Apr 2021 20:50:08 GMT
