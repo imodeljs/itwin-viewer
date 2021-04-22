@@ -3,6 +3,7 @@
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
 
+import { IModelBankClient } from "@bentley/imodelhub-client";
 import { ErrorBoundary } from "@bentley/itwin-error-handling-react";
 import React, { useEffect, useState } from "react";
 
@@ -50,8 +51,15 @@ export const Viewer: React.FC<ViewerProps> = ({
   useEffect(() => {
     if (!iModelJsInitialized) {
       const authClient = getAuthClient(authConfig);
-      Initializer.initialize(
-        { authorizationClient: authClient, toolAdmin },
+      const viewerOptions = Initializer.initialize(
+        {
+          authorizationClient: authClient,
+          imodelClient: new IModelBankClient(
+            "https://dev-imodelbank.bentley.com",
+            undefined
+          ),
+          toolAdmin,
+        },
         {
           appInsightsKey,
           backend,

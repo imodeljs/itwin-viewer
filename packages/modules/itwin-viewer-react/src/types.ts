@@ -8,13 +8,11 @@ import { Vector3d, XAndY, XYAndZ } from "@bentley/geometry-core";
 import {
   BentleyCloudRpcParams,
   ColorDef,
-  ElectronRpcParams,
   RenderMode,
   RpcInterface,
   RpcInterfaceDefinition,
 } from "@bentley/imodeljs-common";
 import {
-  DesktopAuthorizationClient,
   IModelConnection,
   ToolAdmin,
   ViewChangeOptions,
@@ -59,7 +57,7 @@ export interface HostedBackendConfig {
  * Custom rpc configuration
  */
 export interface CustomBackendConfig {
-  rpcParams: BentleyCloudRpcParams | ElectronRpcParams;
+  rpcParams: BentleyCloudRpcParams;
 }
 
 /**
@@ -67,7 +65,7 @@ export interface CustomBackendConfig {
  */
 export interface AuthorizationOptions {
   /** provide an existing iModel.js authorization client */
-  oidcClient?: FrontendAuthorizationClient | DesktopAuthorizationClient;
+  oidcClient?: FrontendAuthorizationClient;
   /** reference to a function that returns a pre-configured oidc UserManager */
   getUserManagerFunction?: () => UserManager;
 }

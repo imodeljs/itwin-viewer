@@ -6,8 +6,6 @@
 import {
   BentleyCloudRpcManager,
   BentleyCloudRpcParams,
-  ElectronRpcManager,
-  ElectronRpcParams,
   IModelReadRpcInterface,
   IModelTileRpcInterface,
   RpcInterface,
@@ -29,19 +27,11 @@ const getSupportedRpcs = (
 };
 
 export const initRpc = (
-  rpcParams: BentleyCloudRpcParams | ElectronRpcParams,
-  isDesktop = false,
+  rpcParams: BentleyCloudRpcParams,
   additionalRpcInterfaces?: RpcInterfaceDefinition<RpcInterface>[]
 ) => {
-  if (isDesktop) {
-    ElectronRpcManager.initializeClient(
-      rpcParams as ElectronRpcParams,
-      getSupportedRpcs(additionalRpcInterfaces || [])
-    );
-  } else {
-    BentleyCloudRpcManager.initializeClient(
-      rpcParams as BentleyCloudRpcParams,
-      getSupportedRpcs(additionalRpcInterfaces || [])
-    );
-  }
+  BentleyCloudRpcManager.initializeClient(
+    rpcParams as BentleyCloudRpcParams,
+    getSupportedRpcs(additionalRpcInterfaces || [])
+  );
 };

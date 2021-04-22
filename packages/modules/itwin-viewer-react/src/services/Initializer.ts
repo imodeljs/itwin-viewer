@@ -53,13 +53,12 @@ class Initializer {
     ) {
       return initRpc(
         backendOptions.customBackend.rpcParams,
-        isDesktop,
         additionalRpcInterfaces
       );
     }
     const rpcParams = await this._getHostedConnectionInfo(backendOptions);
     if (rpcParams) {
-      return initRpc(rpcParams, isDesktop, additionalRpcInterfaces);
+      return initRpc(rpcParams, additionalRpcInterfaces);
     }
   }
 
