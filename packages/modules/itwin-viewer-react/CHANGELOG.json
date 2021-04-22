@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.3",
+      "tag": "@bentley/itwin-viewer-react_v6.2.3",
+      "date": "Thu, 22 Apr 2021 13:25:06 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "bump tree-widget-react ver"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.2.2",
       "tag": "@bentley/itwin-viewer-react_v6.2.2",
       "date": "Wed, 21 Apr 2021 17:48:42 GMT",

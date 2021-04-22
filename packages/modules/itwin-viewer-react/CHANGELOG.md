@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Wed, 21 Apr 2021 17:48:42 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Apr 2021 13:25:06 GMT and should not be manually modified.
+
+## 6.2.3
+Thu, 22 Apr 2021 13:25:06 GMT
+
+### Patches
+
+- bump tree-widget-react ver
 
 ## 6.2.2
 Wed, 21 Apr 2021 17:48:42 GMT
