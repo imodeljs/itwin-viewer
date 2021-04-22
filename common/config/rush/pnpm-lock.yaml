@@ -26,7 +26,7 @@ dependencies:
   '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
   '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
   '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
-  '@bentley/tree-widget-react': 1.2.5_04aebb10856995cfcea732b49dda6117
+  '@bentley/tree-widget-react': 1.2.8_04aebb10856995cfcea732b49dda6117
   '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
   '@bentley/ui-components': 2.6.4_1c2fc51d5b0bf1709fad3a804ba2b64f
   '@bentley/ui-core': 2.6.4_23d5a887a2ab6b36e5e013fdcd253801
@@ -96,8 +96,6 @@ dependencies:
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: 4.0.5
-  redux-devtools-extension: 2.13.8_redux@4.0.5
-  rewire: 5.0.0
   rimraf: 3.0.2
   sanitize-html: 2.3.1
   stylelint: 13.6.1
@@ -3178,7 +3176,7 @@ packages:
       '@bentley/itwin-client': ^2.6.4
     resolution:
       integrity: sha512-rhZliRnjleaiMqRDRaXzPlIEl5sPiVzBi2uPnbAJrX5OmXCGLOrQHo456OA6yQkwAOpD/veljssDR2b8+Dq0Dw==
-  /@bentley/tree-widget-react/1.2.5_04aebb10856995cfcea732b49dda6117:
+  /@bentley/tree-widget-react/1.2.8_04aebb10856995cfcea732b49dda6117:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -3232,8 +3230,8 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-IPAm7DU/Ri0UERGegT27sDIQXdFFyNA6YFzfxd+UdbhQDCmW0+k7OxEZrZ1AvgW9gUgarWcHawjhczS4lgC5jA==
-  /@bentley/tree-widget-react/1.2.5_68ef192efbfd49164c02592d4a0b6e59:
+      integrity: sha512-7ZD8kDufMtXeR9zHkWLvCa6SDOrMcoPZ4J79NYQIuBSu5ZNLbr+yjNCQ7YSMdf+ec9aTJk8tGXQYvMPpqMsh3Q==
+  /@bentley/tree-widget-react/1.2.8_68ef192efbfd49164c02592d4a0b6e59:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
       '@bentley/frontend-authorization-client': 2.6.4_9cd0233021ffe3057683d572b5cf4828
@@ -3289,7 +3287,7 @@ packages:
       react: ^16.8.0
       react-dom: ^16.8.0
     resolution:
-      integrity: sha512-IPAm7DU/Ri0UERGegT27sDIQXdFFyNA6YFzfxd+UdbhQDCmW0+k7OxEZrZ1AvgW9gUgarWcHawjhczS4lgC5jA==
+      integrity: sha512-7ZD8kDufMtXeR9zHkWLvCa6SDOrMcoPZ4J79NYQIuBSu5ZNLbr+yjNCQ7YSMdf+ec9aTJk8tGXQYvMPpqMsh3Q==
   /@bentley/ui-abstract/2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2:
     dependencies:
       '@bentley/bentleyjs-core': 2.6.4
@@ -20716,7 +20714,7 @@ packages:
       '@bentley/rbac-client': 2.6.4_@bentley+itwin-client@2.6.4
       '@bentley/react-scripts': 3.4.1_55861a501baecc4b786728c3c23803aa
       '@bentley/telemetry-client': 2.6.4_@bentley+itwin-client@2.6.4
-      '@bentley/tree-widget-react': 1.2.5_68ef192efbfd49164c02592d4a0b6e59
+      '@bentley/tree-widget-react': 1.2.8_68ef192efbfd49164c02592d4a0b6e59
       '@bentley/ui-abstract': 2.6.4_b9c26d9ad5eef2bc801ca3346139c6c2
       '@bentley/ui-components': 2.6.4_4a0ac98b8f2714b72d1e144c0d95ebe8
       '@bentley/ui-core': 2.6.4_da91f9a552badb807cd96420d5bf59f1
@@ -20770,7 +20768,7 @@ packages:
     dev: false
     name: '@rush-temp/itwin-viewer-react'
     resolution:
-      integrity: sha512-62wrfqqJ0KAJX7+R1EKJ44JgoTnQ7jG7cffhplEJx3VM2xnhxXcGPw1x2wvg5NLbW7j7wJ3uihYWKfwNtXk/8Q==
+      integrity: sha512-OPZlaTfNegzUEy97WFSPgZiVpGeOeZZ1aK7hKL5sThzxXyZh77JzAX0sKgpfFC51ZrdyS2fsynBtLDotng3a4w==
       tarball: 'file:projects/itwin-viewer-react.tgz'
     version: 0.0.0
   'file:projects/itwin-viewer-scripts.tgz_typescript@3.9.6':
@@ -20876,7 +20874,7 @@ packages:
       react-redux: '*'
       redux: '*'
     resolution:
-      integrity: sha512-8XXmbR5aqMX53eXTU1zXUrbIfuPGZaFO7p/KafJKCD/qms6/Q9w48oHNVG471yFkkzZJkVu8DCJ/mZj6Icn09Q==
+      integrity: sha512-AxdH/pR04+P1jVbgntbgWp4RyDeZHTXZQrcXz4rIjQW3ryRhjRaQrXWzxbD83AmPRaNmI5Mpu/ZXwBauYxrqPw==
       tarball: 'file:projects/viewer-sample-react.tgz'
     version: 0.0.0
 registry: ''
@@ -20908,7 +20906,7 @@ specifiers:
   '@bentley/rbac-client': ^2.6.4
   '@bentley/react-scripts': 3.4.1
   '@bentley/telemetry-client': ^2.6.4
-  '@bentley/tree-widget-react': ^1.2.5
+  '@bentley/tree-widget-react': ^1.2.8
   '@bentley/ui-abstract': ^2.6.4
   '@bentley/ui-components': ^2.6.4
   '@bentley/ui-core': ^2.6.4
@@ -20978,8 +20976,6 @@ specifiers:
   react-test-renderer: 16.13.1
   react-transition-group: 4.1.1
   redux: ^4.0.5
-  redux-devtools-extension: ^2.13.8
-  rewire: ^5.0.0
   rimraf: ^3.0.2
   sanitize-html: ^2.3.1
   stylelint: ^13.6.1
