@@ -18,6 +18,14 @@ export const AuthClientHome: React.FC = () => {
     AuthorizationClient.oidcClient && AuthorizationClient.oidcClient.hasSignedIn
   );
   const location = useLocation();
+  const backendOptions = {
+    customBackend: {
+      rpcParams: {
+        info: { title: "sample-backend", version: "1.0" },
+        uriPrefix: "https://dev-imodelbank.bentley.com/imodeljs",
+      },
+    },
+  };
 
   useEffect(() => {
     if (!AuthorizationClient.oidcClient) {
@@ -63,6 +71,7 @@ export const AuthClientHome: React.FC = () => {
           authConfig={{ oidcClient: AuthorizationClient.oidcClient }}
           contextId={process.env.IMJS_AUTH_CLIENT_CONTEXT_ID as string}
           iModelId={process.env.IMJS_AUTH_CLIENT_IMODEL_ID as string}
+          backend={backendOptions}
           appInsightsKey={process.env.IMJS_APPLICATION_INSIGHTS_KEY}
           theme={ColorTheme.Dark}
           defaultUiConfig={{

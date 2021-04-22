@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Id64, Id64String, OpenMode } from "@bentley/bentleyjs-core";
-import { IModelHubClient, VersionQuery } from "@bentley/imodelhub-client";
+import { VersionQuery } from "@bentley/imodelhub-client";
 import { IModelVersion } from "@bentley/imodeljs-common";
 import {
   IModelApp,
@@ -29,8 +29,7 @@ const getVersion = async (
   const token = await IModelApp.authorizationClient?.getAccessToken();
   if (token) {
     const requestContext = new AuthorizedClientRequestContext(token);
-    const hubClient = new IModelHubClient();
-    const namedVersions = await hubClient.versions.get(
+    const namedVersions = await IModelApp.iModelClient.versions.get(
       requestContext,
       iModelId,
       new VersionQuery().top(1)
