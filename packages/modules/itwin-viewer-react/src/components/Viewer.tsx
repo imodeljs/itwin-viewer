@@ -74,6 +74,7 @@ export const Viewer: React.FC<ViewerProps> = ({
         .catch((error) => {
           throw error;
         });
+      return Initializer.cancel;
     }
   }, [authConfig]);
 
