@@ -2,6 +2,18 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.4",
+      "tag": "@bentley/itwin-viewer-react_v6.2.4",
+      "date": "Fri, 23 Apr 2021 17:25:56 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Added cancel method to stop initialization when unmounting"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.2.3",
       "tag": "@bentley/itwin-viewer-react_v6.2.3",
       "date": "Thu, 22 Apr 2021 13:25:06 GMT",

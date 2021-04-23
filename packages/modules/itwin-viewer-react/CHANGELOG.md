@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Thu, 22 Apr 2021 13:25:06 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Apr 2021 17:25:56 GMT and should not be manually modified.
+
+## 6.2.4
+Fri, 23 Apr 2021 17:25:56 GMT
+
+### Patches
+
+- Added cancel method to stop initialization when unmounting
 
 ## 6.2.3
 Thu, 22 Apr 2021 13:25:06 GMT
