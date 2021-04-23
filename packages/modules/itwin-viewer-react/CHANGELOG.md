@@ -1,6 +1,13 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 23 Apr 2021 17:25:56 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Apr 2021 17:59:55 GMT and should not be manually modified.
+
+## 6.2.5
+Fri, 23 Apr 2021 17:59:55 GMT
+
+### Patches
+
+- Added cancel method for initializer in blank viewer
 
 ## 6.2.4
 Fri, 23 Apr 2021 17:25:56 GMT
