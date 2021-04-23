@@ -2,6 +2,10 @@
  * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
  * See LICENSE.md in the project root for license terms and full copyright notice.
  *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+ * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+ * See LICENSE.md in the project root for license terms and full copyright notice.
+ *--------------------------------------------------------------------------------------------*/
 
 import { ClientRequestContext } from "@bentley/bentleyjs-core";
 import { Config } from "@bentley/bentleyjs-core";
@@ -38,6 +42,7 @@ class Initializer {
   private static _initializing = false;
   private static _iModelDataErrorMessage: string | undefined;
   private static _synchronizerRootUrl: string | undefined;
+  private static _reject: (() => void) | undefined;
 
   /** initialize rpc */
   private static async _initializeRpc(
@@ -134,6 +139,56 @@ class Initializer {
     return this._initialized;
   }
 
+  /** expose initialized cancel method */
+  public static cancel: () => void = () => {
+    if (Initializer._initializing) {
+      if (Initializer._reject) {
+        Initializer._reject();
+      }
+      try {
+        Presentation.presentation.dispose();
+      } catch (err) {
+        // Do nothing, its possible that we never started.
+      }
+      try {
+        Presentation.terminate();
+      } catch (err) {
+        // Do nothing, its possible that we never started.
+      }
+      try {
+        if (UiFramework.initialized) {
+          UiFramework.terminate();
+        }
+      } catch (err) {
+        // Do nothing.
+      }
+      try {
+        if (UiComponents.initialized) {
+          UiComponents.terminate();
+        }
+      } catch (err) {
+        // Do nothing.
+      }
+      try {
+        if (UiCore.initialized) {
+          UiCore.terminate();
+        }
+      } catch (err) {
+        // Do nothing
+      }
+      try {
+        IModelApp.i18n
+          .languageList()
+          .forEach((ns) => IModelApp.i18n.unregisterNamespace(ns));
+      } catch (err) {
+        // Do nothing
+      }
+      IModelApp.shutdown().catch((_err) => {
+        // Do nothing, its possible that we never started.
+      });
+    }
+  };
+
   /** Message to display when there are iModel data-related errors */
   public static async getIModelDataErrorMessage(
     contextId: string,
@@ -191,6 +246,7 @@ class Initializer {
 
     this._initialized = new Promise(async (resolve, reject) => {
       try {
+        Initializer._reject = () => reject("Cancelled");
         const appOptions = iModelAppOptions ? { ...iModelAppOptions } : {};
 
         // Use the AppNotificationManager subclass from ui-framework to get prompts and messages
@@ -297,11 +353,13 @@ class Initializer {
 
         console.log("iModel.js initialized");
 
-        this._initializing = false;
         resolve();
       } catch (error) {
         console.error(error);
         reject(error);
+      } finally {
+        Initializer._initializing = false;
+        Initializer._reject = undefined;
       }
     });
   }
