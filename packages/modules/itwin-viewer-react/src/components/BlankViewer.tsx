@@ -80,6 +80,7 @@ export const BlankViewer: React.FC<BlankViewerProps> = ({
           throw error;
         });
     }
+    return Initializer.cancel;
   }, [authConfig]);
 
   useEffect(() => {
