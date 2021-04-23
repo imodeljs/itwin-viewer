@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@bentley/itwin-viewer-react",
+      "comment": "Added cancel method for initializer in blank viewer",
+      "type": "patch"
+    }
+  ],
+  "packageName": "@bentley/itwin-viewer-react",
+  "email": "stefan.retief@bentley.com"
+}
