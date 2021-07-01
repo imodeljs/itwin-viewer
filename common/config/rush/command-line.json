@@ -21,17 +21,6 @@
       "ignoreDependencyOrder": false,
       "ignoreMissingScript": false,
       "allowWarningsInSuccessfulBuild": true
-    },
-    {
-      "commandKind": "bulk",
-      "name": "rebuild",
-      "summary": "Clean and rebuild the entire set of projects",
-      "description": "Iterates through each package in the monorepo and runs the 'rebuild' script",
-      "safeForSimultaneousRushProcesses": false,
-      "enableParallelism": true,
-      "ignoreDependencyOrder": false,
-      "ignoreMissingScript": false,
-      "allowWarningsInSuccessfulBuild": true
     }
   ],
   "parameters": []
