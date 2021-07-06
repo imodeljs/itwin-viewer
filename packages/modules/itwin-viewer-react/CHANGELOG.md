@@ -1,6 +1,14 @@
 # Change Log - @bentley/itwin-viewer-react
 
-This log was last generated on Fri, 23 Apr 2021 17:59:55 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jul 2021 17:34:38 GMT and should not be manually modified.
+
+## 6.2.6
+Tue, 06 Jul 2021 17:34:38 GMT
+
+### Patches
+
+- resolve audit failure from cve 1753 by removing unecessary dep on node-sass"
+- Deprecate
 
 ## 6.2.5
 Fri, 23 Apr 2021 17:59:55 GMT

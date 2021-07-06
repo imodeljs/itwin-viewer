@@ -2,6 +2,26 @@
   "name": "@bentley/cra-template-itwin-viewer",
   "entries": [
     {
+      "version": "4.1.0",
+      "tag": "@bentley/cra-template-itwin-viewer_v4.1.0",
+      "date": "Tue, 06 Jul 2021 17:34:38 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Default to using fast sass loader, bump react-scripts to 4.x, drop unecessary dep on svgr/webpack"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "add other public assets like favicon, logos, manifest"
+          },
+          {
+            "comment": "Deprecate"
+          }
+        ]
+      }
+    },
+    {
       "version": "4.0.0",
       "tag": "@bentley/cra-template-itwin-viewer_v4.0.0",
       "date": "Tue, 09 Feb 2021 00:48:09 GMT",

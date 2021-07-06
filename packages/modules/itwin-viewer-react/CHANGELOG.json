@@ -2,6 +2,26 @@
   "name": "@bentley/itwin-viewer-react",
   "entries": [
     {
+      "version": "6.2.6",
+      "tag": "@bentley/itwin-viewer-react_v6.2.6",
+      "date": "Tue, 06 Jul 2021 17:34:38 GMT",
+      "comments": {
+        "patch": [
+          {
+            "comment": "resolve audit failure from cve 1753 by removing unecessary dep on node-sass\""
+          },
+          {
+            "comment": "Deprecate"
+          }
+        ],
+        "dependency": [
+          {
+            "comment": "Updating dependency \"@bentley/itwin-error-handling-react\" from `3.1.1` to `3.1.2`"
+          }
+        ]
+      }
+    },
+    {
       "version": "6.2.5",
       "tag": "@bentley/itwin-viewer-react_v6.2.5",
       "date": "Fri, 23 Apr 2021 17:59:55 GMT",

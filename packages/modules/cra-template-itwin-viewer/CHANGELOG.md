@@ -1,6 +1,18 @@
 # Change Log - @bentley/cra-template-itwin-viewer
 
-This log was last generated on Tue, 09 Feb 2021 00:48:09 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Jul 2021 17:34:38 GMT and should not be manually modified.
+
+## 4.1.0
+Tue, 06 Jul 2021 17:34:38 GMT
+
+### Minor changes
+
+- Default to using fast sass loader, bump react-scripts to 4.x, drop unecessary dep on svgr/webpack
+
+### Patches
+
+- add other public assets like favicon, logos, manifest
+- Deprecate
 
 ## 4.0.0
 Tue, 09 Feb 2021 00:48:09 GMT
