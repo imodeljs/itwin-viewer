@@ -1,6 +1,6 @@
 {
   "name": "@bentley/itwin-viewer-react",
-  "version": "6.2.5",
+  "version": "6.2.6",
   "description": "Configurable iModel.js viewer",
   "main": "lib/index.js",
   "module": "build/index.js",
@@ -42,7 +42,7 @@
   ],
   "dependencies": {
     "@bentley/icons-generic-webfont": "^1.0.15",
-    "@bentley/itwin-error-handling-react": "3.1.1",
+    "@bentley/itwin-error-handling-react": "3.1.2",
     "@bentley/property-grid-react": "^1.2.1",
     "@bentley/tree-widget-react": "^1.2.8",
     "@microsoft/applicationinsights-react-js": "2.3.1",
